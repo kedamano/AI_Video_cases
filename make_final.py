@@ -1,7 +1,21 @@
-import subprocess, os, sys
+import subprocess, os, sys, shutil
 
-FF = r"C:\Users\lcl13\.workbuddy\binaries\python\envs\video\Lib\site-packages\imageio_ffmpeg\binaries\ffmpeg-win-x86_64-v7.1.exe"
-BASE = r"D:/work/AI TEST/glass_after"
+
+def _find_ffmpeg():
+    """优先使用 imageio-ffmpeg 自带二进制，其次回退到系统 PATH。"""
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        pass
+    p = shutil.which("ffmpeg")
+    if p:
+        return p
+    sys.exit("ffmpeg 未找到：请 pip install imageio-ffmpeg，或把 ffmpeg 加入 PATH")
+
+
+FF = _find_ffmpeg()
+BASE = os.path.dirname(os.path.abspath(__file__))
 VID = os.path.join(BASE, "videos")
 TMP = os.path.join(BASE, "clips_tmp")
 os.makedirs(TMP, exist_ok=True)

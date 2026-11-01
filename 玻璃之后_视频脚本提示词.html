@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《玻璃之后》视频脚本提示词 · 都市纪实电影感</title>
+<style>
+  :root{
+    --bg:#faf9f6;
+    --card:#ffffff;
+    --ink:#1b1f26;
+    --ink-2:#3b424d;
+    --muted:#6b7280;
+    --line:#e6e3dc;
+    --hl:#dfe8fb;
+    --hl-2:#eef3fd;
+    --accent:#2f4f8f;
+    --warm:#b4642c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;padding:0 0 80px;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:15px;line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- header ---------- */
+  header{
+    padding:56px 0 34px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:38px;
+  }
+  .kicker{
+    display:inline-block;font-size:12px;letter-spacing:.22em;
+    color:var(--accent);text-transform:uppercase;font-weight:600;
+    margin-bottom:14px;
+  }
+  h1{
+    font-size:34px;line-height:1.3;margin:0 0 12px;font-weight:700;letter-spacing:-.01em;
+  }
+  h1 .en{color:var(--muted);font-weight:400;font-size:19px;letter-spacing:.06em;display:block;margin-top:8px;}
+  .lede{color:var(--ink-2);max-width:760px;margin:0 0 22px;font-size:15.5px;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{
+    font-size:12.5px;color:var(--ink-2);background:var(--card);
+    border:1px solid var(--line);border-radius:100px;padding:5px 14px;
+  }
+  .chip b{color:var(--accent);font-weight:600;}
+
+  /* ---------- sections ---------- */
+  h2{
+    font-size:22px;margin:52px 0 8px;padding-left:14px;
+    border-left:4px solid var(--accent);line-height:1.4;font-weight:700;
+  }
+  h3{
+    font-size:17px;margin:36px 0 12px;color:var(--ink);font-weight:700;
+    display:flex;align-items:center;gap:9px;
+  }
+  h3::before{
+    content:"";width:7px;height:7px;background:var(--accent);
+    border-radius:2px;flex:none;
+  }
+  h4{font-size:15px;margin:22px 0 8px;font-weight:700;color:var(--ink-2);}
+  p{margin:10px 0;}
+  ul{margin:10px 0;padding-left:0;list-style:none;}
+  ul ul{margin:6px 0 6px 22px;}
+  li{position:relative;padding-left:20px;margin:7px 0;color:var(--ink-2);}
+  li::before{
+    content:"";position:absolute;left:4px;top:.72em;
+    width:5px;height:5px;border-radius:50%;background:#b9c2d0;
+  }
+  ul ul li::before{background:#d3dae4;width:4px;height:4px;}
+  .hl{background:var(--hl);padding:.5px 4px;border-radius:2px;color:var(--ink);font-weight:600;}
+  .hl-2{background:var(--hl-2);padding:.5px 4px;border-radius:2px;}
+  strong{color:var(--ink);font-weight:600;}
+
+  /* ---------- table ---------- */
+  .table-note{
+    font-size:13px;color:var(--muted);margin:14px 0 14px;
+    background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 16px;
+  }
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;min-width:1000px;font-size:13px;line-height:1.65;}
+  thead th{
+    background:#f4f2ec;color:var(--ink);font-weight:600;font-size:12.5px;
+    padding:12px 12px;text-align:left;white-space:nowrap;
+    border-bottom:1px solid var(--line);position:sticky;top:0;
+  }
+  tbody td{
+    padding:14px 12px;border-bottom:1px solid #efece6;vertical-align:top;color:var(--ink-2);
+  }
+  tbody tr:nth-child(even){background:#fbfaf7;}
+  tbody tr:last-child td{border-bottom:none;}
+  td.idx{text-align:center;color:var(--muted);font-variant-numeric:tabular-nums;width:46px;}
+  td.time{white-space:nowrap;color:var(--accent);font-variant-numeric:tabular-nums;font-size:12.5px;width:88px;}
+  td.pic{min-width:300px;}
+  td.vid{min-width:250px;background:rgba(223,232,251,.28);}
+  td.aud{min-width:120px;font-size:12.5px;}
+  td.txt{min-width:96px;font-size:12.5px;color:var(--muted);}
+  .tag{color:var(--warm);font-weight:600;}
+
+  /* ---------- prompt block ---------- */
+  .prompt-box{
+    background:#1b1f26;color:#d8dee9;border-radius:10px;padding:22px 24px;
+    font-family:"SF Mono",Menlo,Consolas,"Courier New",monospace;
+    font-size:12.5px;line-height:1.9;white-space:pre-wrap;overflow-x:auto;margin:16px 0;
+  }
+  .prompt-box .k{color:#8fd0ff;}
+  .prompt-box .v{color:#f0c27b;}
+
+  /* ---------- toolbar ---------- */
+  .toolbar{
+    position:fixed;right:24px;bottom:24px;z-index:50;
+  }
+  .btn{
+    background:var(--ink);color:#fff;border:none;border-radius:100px;
+    padding:11px 20px;font-size:13px;cursor:pointer;font-family:inherit;
+    box-shadow:0 6px 20px rgba(0,0,0,.16);transition:.2s;
+  }
+  .btn:hover{background:var(--accent);transform:translateY(-1px);}
+  .btn.done{background:#2f7d54;}
+
+  footer{
+    margin-top:64px;padding-top:22px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--muted);
+  }
+  @media (max-width:760px){
+    h1{font-size:26px;}
+    .wrap{padding:0 16px;}
+    header{padding-top:36px;}
+  }
+  @media print{
+    .toolbar{display:none;}
+    body{background:#fff;}
+    .table-scroll{border:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="kicker">Cinematic Editorial Script</span>
+  <h1>《玻璃之后》
+    <span class="en">AFTER THE GLASS — 都市纪实电影感 · 真实摄影女主短片</span>
+  </h1>
+  <p class="lede">延续「情绪化电影感」的克制与唯美，但把场域从旷野四季换成雨后城市的一天。全片被"某种介质"隔开观看——水洼、窗玻璃、洗衣机门、车窗、便利店玻璃——观众始终隔着一层看她，亲密，又始终差一点点。</p>
+  <div class="meta">
+    <span class="chip">时长 <b>25 秒</b></span>
+    <span class="chip">分镜 <b>18 个</b></span>
+    <span class="chip">画幅 <b>16:9</b></span>
+    <span class="chip">风格 <b>都市纪实电影感</b></span>
+    <span class="chip">母题 <b>反射 / 自我确认</b></span>
+  </div>
+</header>
+
+<!-- ============ 一 ============ -->
+<h2>一、视频整体分析</h2>
+
+<h3>视频主题及要点</h3>
+<ul>
+  <li><strong>视频主题描述：</strong>一位亚裔女性在雨后的城市里独自漫游一整天——从午后街道、黄昏洗衣房、深夜便利店与地铁，到次日清晨的天台。她不断在玻璃、水洼、车窗里"撞见自己"，最终在晨光中收伞转身，完成一次没有台词的自我确认。</li>
+  <li><strong>视频要点：</strong>
+    <ul>
+      <li><strong>反射母题贯穿全片：</strong>每一个镜头都通过某种介质观看人物（雨窗、水洼、橱窗、洗衣机门、车窗、地铁灯箱、便利店玻璃），制造<span class="hl">"被看见"与"无法触碰"</span>的双重感受。</li>
+      <li><strong>时间即叙事：</strong>用<span class="hl">午后 → 黄昏 → 深夜 → 清晨</span>的光线推移替代"变装"，色温本身就是剧情，观众跟着光走完一整夜。</li>
+      <li><strong>克制的情绪特写：</strong>大量近景与特写落在眼睛、手指、呼吸白雾、发梢湿贴的颈侧，情绪全部压在皮肤之下，不外放、不表演。</li>
+      <li><strong>日常空间替代自然奇观：</strong>老城区街道、自助洗衣店、便利店冷柜、地铁站、水泥天台——真实、可复现、更有纪录片质地。</li>
+      <li><strong>声音先于音乐：</strong>雨声、洗衣机低频、冷柜嗡鸣、地铁进站风噪全部保留，音乐只是浮在声音之上的一层薄雾。</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- ============ 二 ============ -->
+<h2>二、视频固定要素分析</h2>
+
+<h3>视觉风格</h3>
+<p>风格名称：<span class="hl">都市纪实电影感（Urban Cinematic Realism）</span></p>
+<ul>
+  <li><strong>画面比例与画幅：</strong>16:9 宽屏，轻微胶片颗粒，保留真实皮肤质感（毛孔、绒毛、细微肤色不均），<span class="hl-2">明确排除 CG 感与精修磨皮</span>。</li>
+  <li><strong>色彩与色调：</strong>整体低饱和、中低对比，阴影偏青蓝，高光处点缀钠灯与钨丝灯的暖橙。
+    <ul>
+      <li><strong>雨后街道：</strong>青灰色为主，湿润柏油的高光反射，空气通透发冷。</li>
+      <li><strong>洗衣房 / 便利店：</strong>冷白日光灯（约 5000K），白瓷砖与不锈钢的硬高光，留一点过曝使画面呼吸。</li>
+      <li><strong>黄昏与天台：</strong>暖橙偏金，逆光，光晕里能看到空气尘埃。</li>
+      <li><strong>深夜地铁：</strong>深青底 + 灯箱暖白，明暗交替强对比，脸上有霓虹色反光。</li>
+    </ul>
+  </li>
+  <li><strong>光线运用：</strong>以自然散射光与城市实用光（practical light）为主。大量使用窗光侧逆光、路灯顶光、<span class="hl">水洼作为天然反光板</span>把天光打到脸上；不使用大面积柔光箱，保留面部小阴影与不完美。</li>
+  <li><strong>构图：</strong>
+    <ul>
+      <li><strong>框中框：</strong>门框、窗框、车窗、镜面、洗衣机圆门，把人物框在里面。</li>
+      <li><strong>前景遮挡：</strong>雨滴玻璃、纱帘、栏杆、低垂树叶，制造"偷看"的距离感。</li>
+      <li><strong>留白：</strong>三分法，人物常置于画面一侧，另一侧留给虚化的城市。</li>
+    </ul>
+  </li>
+  <li><strong>景别：</strong>特写 &gt; 近景 &gt; 中景，全片仅两个全景（城市空景），以人物面部特写为主。</li>
+  <li><strong>运镜：</strong>极缓的推镜、横移、跟移；保留轻微手持呼吸感；情绪最重的镜头全部用固定机位，让画面"静下来"。</li>
+</ul>
+
+<h3>主体要素</h3>
+<h4>主体名称 1：亚裔女性（素人感而非模特感）</h4>
+<ul>
+  <li><strong>人物特征：</strong>24–28 岁，身形清瘦，肩线薄，锁骨明显；面部线条干净但不锋利，内双或单眼皮，眼神安静略带钝感，气质<span class="hl">自持、疏离、不讨好镜头</span>。</li>
+  <li><strong>妆容：</strong>近素颜。底妆极薄，保留小雀斑与肤色不均；眉毛只填空隙不画轮廓；眼妆仅睫毛根部一条极细眼线；唇色为原本血色，只用润唇膏。</li>
+  <li><strong>发型：</strong>黑色中长发，发尾微湿自然垂落，耳后别一枚银色细发夹；深夜段落头发被风吹乱，<span class="hl-2">全程不做整理</span>，任由它乱。</li>
+</ul>
+
+<h4>主体名称 2：人物造型与服装</h4>
+<ul>
+  <li><strong>雨后街道造型：</strong>
+    <ul>
+      <li>服装：燕麦色长款风衣（面料微皱，不熨烫）、白色圆领纯棉 T 恤、深灰阔腿长裤、白色帆布鞋。</li>
+      <li>配饰：透明长柄伞（未撑开时当手杖垂在手里）、米色帆布托特包。</li>
+    </ul>
+  </li>
+  <li><strong>洗衣房造型：</strong>
+    <ul>
+      <li>服装：黑色细吊带背心、松垮的米白色针织开衫（自然滑落一侧肩）、浅色棉质短裤、赤脚穿一次性拖鞋。</li>
+      <li>配饰：银色细项链、手腕上的黑色发圈。</li>
+    </ul>
+  </li>
+  <li><strong>清晨天台造型：</strong>
+    <ul>
+      <li>服装：宽大的男式白衬衫（下摆自然垂落，袖口过长遮住半个手背）、浅蓝直筒牛仔裤、赤脚。</li>
+      <li>配饰：无。头发松散，脸上一夜未睡的淡青色。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>主体名称 3：关键道具</h4>
+<ul>
+  <li><strong>透明长柄伞：</strong>全片最重要的道具，开场垂在手里，结尾合上带走——伞的开合就是情绪的开合。</li>
+  <li><strong>一次性胶片相机：</strong>她偶尔举起，但<span class="hl">从头到尾没有按下过快门</span>。</li>
+  <li><strong>便利店纸杯咖啡：</strong>杯口有水汽，她咬过一口的杯沿痕迹。</li>
+  <li><strong>其他：</strong>银色细发夹、一排老式滚筒洗衣机、刚烘干的白色床单、地铁扶手、天台晾衣绳上的白床单。</li>
+</ul>
+
+<h3>场景要素</h3>
+<h4>场景名称 1：雨后老城区街道（午后）</h4>
+<ul>
+  <li><strong>环境描述：</strong>柏油路面大面积积水，倒映天空与交错电线；半降的旧卷帘门，褪色红蓝招牌，行道树还在滴水，偶有自行车碾过水洼。</li>
+  <li><strong>光线：</strong>阴天散射光，雨后空气通透，水洼把天光反射到人物下颌。</li>
+  <li><strong>画面氛围：</strong>湿、安静、像刚被冲洗过一遍的清冷。</li>
+</ul>
+
+<h4>场景名称 2：24 小时自助洗衣店（黄昏）</h4>
+<ul>
+  <li><strong>环境描述：</strong>满墙白瓷砖，一排圆形玻璃门滚筒洗衣机，塑料椅，墙上投币机与卷边告示，地面反着灯管的倒影。</li>
+  <li><strong>光线：</strong>冷白日光灯管为主光，洗衣机窗口透出的暖黄与蓝光作为副光，玻璃反光层层叠加。</li>
+  <li><strong>画面氛围：</strong>无人、机械的低频震动，孤独但有奇怪的安全感。</li>
+</ul>
+
+<h4>场景名称 3：便利店与深夜地铁站</h4>
+<ul>
+  <li><strong>环境描述：</strong>便利店冷柜的白光与玻璃门、货架的纵深消失点；地铁站台空荡，灯箱广告亮着，风从隧道口一阵阵涌来。</li>
+  <li><strong>光线：</strong>冷白 + 高饱和灯箱，人物脸上同时有霓虹色与白色的双重反光。</li>
+  <li><strong>画面氛围：</strong>清醒的疲惫，城市深夜独有的空旷感。</li>
+</ul>
+
+<h4>场景名称 4：清晨水泥天台</h4>
+<ul>
+  <li><strong>环境描述：</strong>裸露水泥地，生锈水箱，晾衣绳上挂着被风吹起的白床单，远处城市天际线浸在晨雾里。</li>
+  <li><strong>光线：</strong>日出前蓝调时刻过渡到第一缕金色逆光，有光晕与轻微丁达尔效应。</li>
+  <li><strong>画面氛围：</strong>释然、通透、终于向前。</li>
+</ul>
+
+<h3>其他固定要素</h3>
+<h4>要素名称 1：视频剪辑与节奏</h4>
+<ul>
+  <li><strong>剪辑节奏：</strong>整体舒缓，单镜 1–2 秒，情绪点可停留 2.5 秒；切点跟着音乐的呼吸与实地音效的重音走，不做无意义的快切。</li>
+  <li><strong>转场：</strong>全部硬切，零特效转场。利用<span class="hl">形状相似性</span>做视觉接续（圆形洗衣机门 → 圆形水洼 → 圆形咖啡杯口 → 地铁圆形灯箱）。</li>
+  <li><strong>视频结构：</strong>
+    <ul>
+      <li><strong>开场（0–5s）：</strong>水洼里她的倒影，模糊、被雨滴打碎又复原，定下"隔着看"的调子。</li>
+      <li><strong>主体（5–15s）：</strong>街道 → 洗衣房 → 便利店，空间连续切换，反射母题反复出现。</li>
+      <li><strong>高潮（15–21s）：</strong>地铁隧道灯光一道道掠过她的脸，她在便利店玻璃前与"另一个自己"指尖相触，音乐推到顶点。</li>
+      <li><strong>结尾（21–25s）：</strong>清晨天台，第一缕光落在她脸上，她合上伞推门走进白光，与开场的"水中倒影"形成闭环。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>要素名称 2：音乐与声音</h4>
+<ul>
+  <li><strong>音乐风格：</strong>一首极简 ambient / neo-classical 钢琴曲，约 68 BPM。前段只有钢琴单音与雨声；中段加入低频鼓点与弦乐铺底；高潮处有一段女声<span class="hl">无词吟唱（humming）</span>；尾段只留钢琴余音。</li>
+  <li><strong>实地音效：</strong>雨滴、脚踩水洼、洗衣机滚筒、冷柜嗡鸣、地铁进站风噪、天台的风。<span class="hl-2">音效音量不得低于音乐</span>，这是真实感的关键。</li>
+  <li><strong>作用：</strong>音乐不解释情绪，只负责托住情绪；真正的情绪由环境声音完成。</li>
+</ul>
+
+<!-- ============ 三 ============ -->
+<h2>三、视频分镜头脚本</h2>
+<p class="table-note">提示词写法约定：<span class="tag">图片提示词</span> 用于 AI 生图 / 首帧定帧，按「视觉风格 → 色彩与色调 → 主体 → 场景 → 构图」固定顺序书写；<span class="tag">视频提示词</span> 用于图生视频，按「镜头运动 → 画面内元素运动」书写。两者一一对应，可直接复制投喂。</p>
+
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>镜头序号</th>
+      <th>时间轴</th>
+      <th>图片提示词</th>
+      <th>视频提示词</th>
+      <th>音频信息</th>
+      <th>后期叠加文字</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="idx">1</td>
+      <td class="time">00:00–00:02</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：青灰色，低饱和度，雨后冷调。主体：无人物完整出镜，只有倒影。场景：雨后老城区街道，路面大片积水，倒映天空与交错电线，远处半降的旧卷帘门。构图：俯拍特写，画面中心只有水洼中模糊变形的倒影。</td>
+      <td class="vid">镜头运动：固定镜头，带轻微手持呼吸感。画面内元素运动：一滴水从屋檐落下砸进水面，倒影被打碎成波纹，又慢慢复原成一团模糊的人形轮廓。</td>
+      <td class="aud">BGM 起，仅钢琴单音；实地音效：雨滴落水声。</td>
+      <td class="txt">抖音水印与账号 ID 持续显示。</td>
+    </tr>
+    <tr>
+      <td class="idx">2</td>
+      <td class="time">00:02–00:03</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：青灰色，低饱和度。主体：亚裔女性，近素颜，黑色中长发，耳后别银色细发夹，燕麦色长风衣。场景：雨后街道，水面浮着一片落叶。构图：水面倒影特写，倒影中她的脸位于画面中心偏上，边缘有水纹变形。</td>
+      <td class="vid">镜头运动：极缓推镜，向水面倒影推进。画面内元素运动：她低下头看向水洼，倒影里的脸逐渐完整清晰，眼神平静，睫毛轻轻眨了一下。</td>
+      <td class="aud">钢琴继续；雨声渐弱。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">3</td>
+      <td class="time">00:03–00:05</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：青灰偏暖，雨后湿润。主体：亚裔女性，素颜，燕麦色长风衣，手持透明长柄伞未撑开，垂在身侧。场景：半降的旧卷帘门前，褪色红蓝招牌，屋檐还在滴水，行道树低垂。构图：中景，人物偏画面右侧，左侧留出街道纵深。</td>
+      <td class="vid">镜头运动：缓慢横向右移，跟随她的脚步。画面内元素运动：她抬起伞尖，轻轻拨开一片低垂的湿树叶，水珠成串散落，她侧头看了一眼树叶，继续往前走。</td>
+      <td class="aud">钢琴继续；音效：脚步踩过浅水、树叶滴水。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">4</td>
+      <td class="time">00:05–00:06</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷调，低饱和度，窗光偏青白。主体：亚裔女性，素颜，发梢微湿贴在颈侧，风衣领口竖起。场景：街边店铺玻璃窗外的街道，背景虚化。构图：面部侧脸特写，人物偏画面左侧，右侧大面积留白。</td>
+      <td class="vid">镜头运动：固定镜头。画面内元素运动：她微微呼出一口气，白雾在冷空气里散开又消失，眼神没有焦点地看着前方。</td>
+      <td class="aud">钢琴继续；音效：远处街道环境声。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">5</td>
+      <td class="time">00:06–00:07</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷灰蓝，玻璃反光。主体：亚裔女性，素颜，燕麦色风衣，站在玻璃橱窗前。场景：临街旧橱窗，玻璃上叠着她的倒影与街道的光。构图：近景，人物与倒影在画面对角位置重叠，形成双人错觉。</td>
+      <td class="vid">镜头运动：缓慢推镜。画面内元素运动：她抬手把耳后的头发别起，玻璃里的倒影动作慢了半拍，两人错位又重合。</td>
+      <td class="aud">BGM 加入极轻的低频鼓点；音效：街道远处车流。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">6</td>
+      <td class="time">00:07–00:09</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷白日光灯，白瓷砖硬高光，低饱和。主体：亚裔女性，松垮米白针织开衫滑落一侧肩，黑色细吊带背心。场景：24 小时自助洗衣店，满墙白瓷砖，一排圆形玻璃门滚筒洗衣机，塑料椅，墙上投币机。构图：中景，人物坐在画面左侧椅上，右侧是成排的圆形机门。</td>
+      <td class="vid">镜头运动：固定镜头。画面内元素运动：她身后的滚筒缓缓旋转，蓝白色衣物翻卷，她的视线落在圆形玻璃门上，脸上没有表情，只有灯管的冷白反光。</td>
+      <td class="aud">BGM 低频鼓点持续；音效：洗衣机低频嗡鸣（重要）。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">7</td>
+      <td class="time">00:09–00:10</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷白为主，瞳孔里有暖黄光斑。主体：亚裔女性眼部特写，近素颜，睫毛根根分明，皮肤有细小绒毛与真实毛孔。场景：洗衣店，背后是虚化的圆形机门灯。构图：眼部极近特写，眼球位于画面中心。</td>
+      <td class="vid">镜头运动：极缓推镜至眼部。画面内元素运动：圆形的暖黄光斑在她瞳孔里缓慢转动，她眨了一次眼，睫毛投下极短的阴影。</td>
+      <td class="aud">BGM 弦乐淡淡进入；音效：洗衣机嗡鸣减弱。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">8</td>
+      <td class="time">00:10–00:11</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷白，低饱和，玻璃上有淡淡水渍反光。主体：亚裔女性的一只手，细瘦，指节泛白，指甲无修饰。场景：洗衣机圆形玻璃门，门内衣物的色块模糊成抽象画面。构图：手部特写，手掌贴在圆形玻璃正中，圆形构图。</td>
+      <td class="vid">镜头运动：固定镜头。画面内元素运动：门内衣物不断翻卷，她的手随玻璃的机械震动轻微起伏，指尖在玻璃上留下一小片雾。</td>
+      <td class="aud">BGM 继续；音效：滚筒转动与衣物拍打声。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">9</td>
+      <td class="time">00:11–00:13</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷白偏暖，棉布高光柔和。主体：亚裔女性，黑色细吊带，赤脚蹲在地上，怀里抱着一大团刚烘干的白色床单。场景：洗衣店角落，背后是烘干机与堆叠的塑料筐。构图：近景，人物偏画面右侧，左侧是虚化的白瓷砖墙。</td>
+      <td class="vid">镜头运动：缓慢下摇，从她头顶摇到怀里抱着的床单。画面内元素运动：她把脸埋进床单里深深呼吸，肩线一点点松下来，床单的褶皱随呼吸起伏。</td>
+      <td class="aud">BGM 减弱留白；音效：布料摩擦、烘干机余转。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">10</td>
+      <td class="time">00:13–00:14</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷白 + 灯箱暖白，货架纵深。主体：亚裔女性，宽大的白衬衫，头发松散。场景：便利店冷柜前，玻璃门里是成排饮料，货架灯管形成纵深消失点。构图：中景，玻璃门上同时映出她的脸与货架，纵深构图。</td>
+      <td class="vid">镜头运动：缓慢横向左移。画面内元素运动：她伸手打开冷柜门，白色冷气涌出拂过她的脸，她的眼睛微微眯了一下。</td>
+      <td class="aud">BGM 加入弦乐铺底；音效：冷柜开门声、压缩机嗡鸣。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">11</td>
+      <td class="time">00:14–00:15</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：暖白为主，背景是便利店的冷白灯光虚化。主体：亚裔女性，低头看着手里的便利店纸杯咖啡，杯口有水汽，杯沿有咬痕。场景：便利店收银台外的窗边。构图：手与杯子的低角度特写，背景大面积虚化光斑。</td>
+      <td class="vid">镜头运动：固定镜头。画面内元素运动：热气持续从杯口升起，她轻轻吹了一下，热气被吹散又聚拢，睫毛在热气后面轻轻动。</td>
+      <td class="aud">BGM 继续；音效：便利店环境底噪。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">12</td>
+      <td class="time">00:15–00:17</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：深青底 + 灯箱暖白，高对比。主体：亚裔女性，白衬衫外披着风衣，头发被风吹起。场景：深夜空荡的地铁站台，背后是亮着的灯箱广告与黄色安全线。构图：近景，人物居中，站台向画面深处延伸。</td>
+      <td class="vid">镜头运动：固定镜头，轻微手持。画面内元素运动：地铁进站的风从隧道口涌来，掀起她的头发与风衣下摆，她闭上眼睛一秒，再睁开。</td>
+      <td class="aud">BGM 进入高潮，弦乐全铺；音效：地铁进站风噪与刹车声。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">13</td>
+      <td class="time">00:17–00:18</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：深青与暖白交替，强明暗对比。主体：亚裔女性的脸映在地铁车窗玻璃上，与车厢内部重叠。场景：行驶中的地铁车厢内，窗外隧道灯飞速掠过。构图：面部特写，玻璃上双重影像叠化。</td>
+      <td class="vid">镜头运动：固定镜头。画面内元素运动：隧道灯光一道道快速掠过她的脸，明暗高频交替，她始终睁着眼，表情没有变化。</td>
+      <td class="aud">BGM 高潮持续；音效：车厢行进轰鸣。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">14</td>
+      <td class="time">00:18–00:19</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷蓝 + 霓虹暖橙反光。主体：亚裔女性，白衬衫，站在便利店玻璃门外。场景：深夜街道，玻璃门上同时映出她的完整倒影与身后的霓虹招牌。构图：近景，人物与倒影近乎对称，形成"两个她"。</td>
+      <td class="vid">镜头运动：极缓推镜。画面内元素运动：她抬起手，隔着玻璃去碰"另一个自己"的指尖，倒影同步抬起手，两只手在玻璃上重合，指尖压出一点白。</td>
+      <td class="aud">BGM 最饱满处；音效：霓虹电流轻微嗡鸣。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">15</td>
+      <td class="time">00:19–00:21</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：冷调，低饱和，瞳孔里有远处灯光的亮点。主体：亚裔女性，正面近素颜特写，头发凌乱，白衬衫领口松开。场景：深夜街道，背景是虚化的灯箱光斑。构图：面部特写，正面直视镜头，眼睛位于画面上三分之一线。</td>
+      <td class="vid">镜头运动：固定镜头，完全静止。画面内元素运动：她保持注视镜头，只有呼吸让胸口与肩线轻微起伏，眼里的光点随呼吸微微晃动，嘴角没有笑。</td>
+      <td class="aud">BGM 弦乐拉长后突然收束；音效：城市远噪。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">16</td>
+      <td class="time">00:21–00:22</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：蓝调时刻过渡到暖金，逆光。主体：亚裔女性，宽大白衬衫，赤脚，站在天台栏杆前，头发被风吹乱。场景：清晨水泥天台，晾衣绳上挂着被风吹起的白床单，远处城市天际线浸在晨雾中。构图：中景，人物偏画面右侧，左侧是鼓起的白床单。</td>
+      <td class="vid">镜头运动：缓慢横向右移。画面内元素运动：白床单在风里鼓起又落下，反复遮住又露出她的侧影，逆光下她只剩一圈发光的轮廓。</td>
+      <td class="aud">BGM 尾声，女声无词吟唱；音效：天台的风声、床单拍打声。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">17</td>
+      <td class="time">00:22–00:23</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：暖金色，逆光，柔和光晕。主体：亚裔女性，正面特写，脸上还有一夜未睡的淡青色，睫毛与皮肤绒毛被光照亮。场景：清晨天台。构图：面部特写，人物居中，光线从画面左后方斜切过来。</td>
+      <td class="vid">镜头运动：极缓推镜。画面内元素运动：光线一点点变亮，从她脸颊边缘漫到整张脸，眼睛从微微眯着到完全睁开，瞳孔在光里缩小。</td>
+      <td class="aud">BGM 只剩钢琴余音；音效：清晨远处鸟叫。</td>
+      <td class="txt">同上。</td>
+    </tr>
+    <tr>
+      <td class="idx">18</td>
+      <td class="time">00:23–00:25</td>
+      <td class="pic">视觉风格：都市纪实电影感，真实摄影。色彩与色调：暖金逆光，画面大面积过曝。主体：亚裔女性背影，白衬衫，赤脚，手里提着合上的透明长柄伞。场景：清晨天台通往楼梯间的旧铁门，门缝里透出强烈的白光。构图：中景，人物位于画面中央偏左，长长的影子朝镜头方向拉出。</td>
+      <td class="vid">镜头运动：固定镜头。画面内元素运动：她慢慢走向铁门，抬手推门，门后的白光瞬间把整个画面吞掉，最后一帧只剩一片纯白，她的轮廓消失。</td>
+      <td class="aud">BGM 收尾，留 2 秒环境静默；音效：铁门推开的吱呀声。</td>
+      <td class="txt">同上；片尾可叠加片名「玻璃之后」。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 四 ============ -->
+<h2>四、可直接复用的提示词模板</h2>
+<p>把下面模板里的方括号内容替换掉，就能批量生成同风格的其他镜头，不会跑味。</p>
+
+<div class="prompt-box"><span class="k">【图片提示词模板 · 生图 / 首帧】</span>
+real photography, cinematic editorial style, 16:9, shot on 35mm film, subtle grain,
+<span class="k">色彩</span>：[青灰冷调 / 冷白日光灯 / 暖金逆光], low saturation, [具体色系],
+<span class="k">主体</span>：Asian woman, [24-28] years old, thin frame, near bare face with visible freckles and skin texture, black mid-length hair slightly damp, [造型：燕麦色长风衣 / 黑色吊带+松垮针织开衫 / 宽大白衬衫], no makeup look,
+<span class="k">场景</span>：[雨后街道水洼 / 白瓷砖自助洗衣店 / 深夜地铁站台 / 清晨水泥天台],
+<span class="k">光线</span>：natural light only, [侧逆光 / 灯管顶光 / 水洼反射补光 / 逆光光晕], practical lights in frame,
+<span class="k">构图</span>：[框中框 / 前景雨滴玻璃遮挡 / 三分法留白 / 圆形构图], shallow depth of field, 85mm f/1.4,
+<span class="k">质感</span>：real skin texture, pores and fine hair visible, no beauty retouch, no CGI, no illustration,
+<span class="k">情绪</span>：calm, restrained, slightly detached gaze
+
+<span class="k">【视频提示词模板 · 图生视频】</span>
+镜头运动：[极缓推镜 / 缓慢横移 / 固定镜头 + 轻微手持呼吸]，
+画面内元素运动：[具体动作：呼气成白雾 / 滚筒旋转 / 灯光掠过面部 / 床单被风吹起]，
+运动幅度极小，节奏舒缓，无人物大幅位移，保持原图色调与光影不变，
+subtle breathing motion, cinematic slow motion, 24fps look</div>
+
+<h2>五、与原脚本的差异化对照</h2>
+<ul>
+  <li><strong>场域：</strong>自然旷野 → <span class="hl">城市日常空间</span>（真实感、可复现、成本低）。</li>
+  <li><strong>叙事引擎：</strong>四季轮转变装 → <span class="hl">一昼夜的光线推移</span>（时间本身就是剧情）。</li>
+  <li><strong>视觉母题：</strong>唯美风景 → <span class="hl">反射与介质</span>（观众始终隔着玻璃看她）。</li>
+  <li><strong>情绪表达：</strong>平静、内敛、略带忧郁 → <span class="hl">克制、自持、不讨好镜头</span>（更冷，更"人"）。</li>
+  <li><strong>造型逻辑：</strong>为场景换装 → <span class="hl">为时间换衣</span>（风衣 → 居家 → 白衬衫，是同一晚的三段状态）。</li>
+  <li><strong>声音策略：</strong>音乐主导 → <span class="hl">环境音主导、音乐托底</span>。</li>
+</ul>
+
+<footer>
+  《玻璃之后》· 都市纪实电影感短片脚本提示词 · 25 秒 / 18 镜 / 16:9<br>
+  提示词遵循「视觉风格 → 色彩与色调 → 主体 → 场景 → 构图」固定语序，可直接用于 AI 生图与图生视频工具。
+</footer>
+
+</div>
+
+<div class="toolbar">
+  <button class="btn" id="copyBtn" type="button">复制全文脚本</button>
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('copyBtn');
+  btn.addEventListener('click', function(){
+    var text = document.querySelector('.wrap').innerText;
+    function done(ok){
+      btn.textContent = ok ? '已复制 ✓' : '复制失败';
+      btn.classList.add('done');
+      setTimeout(function(){
+        btn.textContent = '复制全文脚本';
+        btn.classList.remove('done');
+      }, 1800);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){ done(true); }).catch(function(){ done(false); });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(true); } catch(e) { done(false); }
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>
+</body>
+</html>
