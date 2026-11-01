@@ -500,26 +500,86 @@ subtle breathing motion, cinematic slow motion, 24fps look</div>
 <script>
 (function(){
   var btn = document.getElementById('copyBtn');
-  btn.addEventListener('click', function(){
-    var text = document.querySelector('.wrap').innerText;
-    function done(ok){
-      btn.textContent = ok ? '已复制 ✓' : '复制失败';
-      btn.classList.add('done');
-      setTimeout(function(){
-        btn.textContent = '复制全文脚本';
-        btn.classList.remove('done');
-      }, 1800);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function(){ done(true); }).catch(function(){ done(false); });
-    } else {
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
+  if (!btn) return;
+
+  function getText(){
+    var w = document.querySelector('.wrap');
+    return w ? w.innerText : document.body.innerText;
+  }
+
+  function flash(msg){
+    btn.textContent = msg;
+    btn.classList.add('done');
+    clearTimeout(btn._t);
+    btn._t = setTimeout(function(){
+      btn.textContent = '复制全文脚本';
+      btn.classList.remove('done');
+    }, 2200);
+  }
+
+  // 方案一：同步 execCommand。file:// 下同样有效，且同步执行保留用户手势。
+  function legacyCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:2em;height:2em;' +
+      'padding:0;border:none;outline:none;box-shadow:none;' +
+      'background:transparent;opacity:0;z-index:-1;';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.focus();
       ta.select();
-      try { document.execCommand('copy'); done(true); } catch(e) { done(false); }
-      document.body.removeChild(ta);
+      ta.setSelectionRange(0, text.length);
+      ok = document.execCommand('copy');
+    } catch (e) {
+      ok = false;
     }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  // 方案三：全部失败时选中正文，让用户手动 Ctrl+C
+  function selectAll(){
+    try {
+      var w = document.querySelector('.wrap') || document.body;
+      var r = document.createRange();
+      r.selectNodeContents(w);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function fallbackManual(){
+    if (selectAll()) {
+      flash('已选中，请按 Ctrl+C');
+    } else {
+      flash('复制失败');
+    }
+  }
+
+  btn.addEventListener('click', function(){
+    var text = getText();
+
+    // 1) 先走同步方案，成功率最高
+    if (legacyCopy(text)) { flash('已复制 ✓'); return; }
+
+    // 2) 再试现代 Clipboard API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function(){
+        flash('已复制 ✓');
+      }).catch(function(){
+        fallbackManual();
+      });
+      return;
+    }
+
+    // 3) 兜底
+    fallbackManual();
   });
 })();
 </script>
