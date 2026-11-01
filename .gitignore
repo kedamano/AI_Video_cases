@@ -1,11 +1,20 @@
 # 旧版 / 备份（脏版留档，不入库）
 frames_v1/
 videos_v1/
+frames_v2/
+videos_v2/
 玻璃之后_成片_v1.mp4
+玻璃之后_成片_v2.mp4
+
+# ImageGen 原始输出（已复制为 frames/shotNN.png）
+frames/fixA/
+frames/fixB/
+frames/fixC/
 
 # 中间产物与临时目录
 clips_tmp/
 _vchk/
+_vchk2/
 tmp/
 _test_shot15.mp4
 preview_7shots.mp4
