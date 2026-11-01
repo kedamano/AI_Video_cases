@@ -2,52 +2,63 @@
 
 # AI Video Cases
 
-**用 WorkBuddy 内置模型（ImageGen + VideoGen）从零生成电影感短片 · 可复现管线 · 实战踩坑笔记**
+**AI 视频生成案例库 · 可复现管线 · 实战踩坑 · 方法论沉淀**
 
 [![Stars](https://img.shields.io/github/stars/kedamano/AI_Video_cases?style=flat-square&color=ff4d1a)](https://github.com/kedamano/AI_Video_cases/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases/commits/main)
 [![Repo Size](https://img.shields.io/github/repo-size/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases)
-[![Shots](https://img.shields.io/badge/shots-18-ff4d1a?style=flat-square)](#案例-01--玻璃之后)
-[![Duration](https://img.shields.io/badge/duration-25s-ff8c42?style=flat-square)](#案例-01--玻璃之后)
-[![Resolution](https://img.shields.io/badge/1920%C3%971080-24fps-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
+[![Cases](https://img.shields.io/badge/cases-1-ff4d1a?style=flat-square)](#案例库)
+[![Shots](https://img.shields.io/badge/shots-18-ff8c42?style=flat-square)](#案例-01--玻璃之后)
+[![Duration](https://img.shields.io/badge/duration-25s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
+[![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
 
-[成品](#成品) · [快速开始](#快速开始) · [复现管线](#复现管线) · [踩坑笔记](#踩坑笔记) · [案例](#案例-01--玻璃之后)
+![《玻璃之后》预览](assets/preview.gif)
+
+*《玻璃之后》· 25 秒 / 18 镜 / 1920×1080 · 全流程由 WorkBuddy ImageGen + VideoGen 生成*
+
+[案例库](#案例库) · [方法论](docs/methodology.md) · [踩坑笔记](#踩坑笔记) · [审片清单](#审片清单) · [工具索引](#工具与资源索引) · [快速开始](#快速开始)
 
 </div>
 
-![18 镜首帧总览](contact_sheet.png)
-
 ---
+
+> An open collection of AI video generation case studies — full storyboards, exact parameters, reproducible scripts, and the mistakes we actually made. English readers: start with [Case 01](#案例-01--玻璃之后).
 
 ## 这是什么
 
-这是一个 **AI 短片生产案例库**：把一个创意从「分镜脚本」一路做到「可直接播放的成片」，全流程只用 WorkBuddy 自带的两个模型 —— `ImageGen` 生首帧、`VideoGen` 图生视频 —— 再用 ffmpeg 按分镜时长剪成片。
+**这不是作品集，是生产线。**
 
-不接任何第三方生图/生视频服务（Pollinations、LibTV 等），只消耗 WorkBuddy 积分。每个案例都附带**完整参数、可运行脚本和踩过的坑**，你可以照着复现，也可以换成自己的故事。
+打开任何一个案例，你能拿到的是：分镜脚本、每一镜的提示词、首帧图、视频原片、拼装脚本、成品，以及这一步为什么会失败。全部参数公开，没有「效果展示」式的藏私。
+
+三条原则：
+
+- **实测优先** —— 写进仓库的每个结论都在本项目里撞过，不是转述别人的经验。
+- **可复现** —— `git clone` → `git lfs pull` → `python make_final.py`，三步出片。
+- **只说有用的话** —— 没有「AI 很强大」这类空话，只有「传这个参数会报错」这类能省你两小时的话。
+
+## 30 秒看懂
+
+| 案例 | 规格 | 核心难点 | 状态 |
+| --- | --- | --- | --- |
+| [01 · 玻璃之后](#案例-01--玻璃之后) | 25s / 18 镜 / 1080p / 24fps | 同一角色跨 18 镜面部不崩、不脏 | ✅ 完成 |
+| 02 · 待定 | — | 多角色对话的一致性 | 🚧 规划中 |
+
+## 为什么值得 Star
+
+- **一条能跑起来的完整管线**，不是拼图式灵感：脚本 → 首帧 → 图生视频 → 按分镜表硬切 → 混音，每步都有对应文件。
+- **18 个镜头的真实参数**：哪一镜用什么焦段、什么光位、什么运动描述，逐条可查。
+- **7 条撞墙记录**：从「提示词把脸画脏」到「并行生图目录被合并」，都是花过钱、返过工的结论。
+- **9 条审片清单**：把「感觉不对」变成可勾选的检查项。
+- **16 个工具索引**：按任务而非星数选型，附每个工具解决的**具体**问题。
 
 ## 目录
 
-- [这是什么](#这是什么)
-- [特性](#特性)
-- [快速开始](#快速开始)
-- [复现管线](#复现管线)
-- [仓库结构](#仓库结构)
-- [案例 01 · 玻璃之后](#案例-01--玻璃之后)
-- [踩坑笔记](#踩坑笔记)
-- [方法论与复盘](docs/methodology.md)
-- [版本与留档](#版本与留档)
-- [路线图](#路线图)
-- [贡献](#贡献)
-- [许可](#许可)
-
-## 特性
-
-- **端到端可复现** —— 从分镜表到成片，每一步都有对应文件和命令，不是「效果展示」而是「生产线」。
-- **零第三方依赖** —— 生图生视频全部走 WorkBuddy 内置模型，不吃外部 API 额度。
-- **分镜驱动的时长控制** —— 18 个镜头按秒级时间轴硬切，成片严格 25.00s，不是靠模型自由发挥。
-- **已验证的面部一致性方案** —— 同一角色跨 18 镜不崩脸、不发灰，附固定提示词词块。
-- **大文件用 Git LFS** —— 视频原片与成片走 LFS，clone 后 `git lfs pull` 即可拿到全部素材。
-- **一条命令出片** —— `python make_final.py` 自动 trim → concat → 混音。
+- [这是什么](#这是什么) · [30 秒看懂](#30-秒看懂) · [为什么值得 Star](#为什么值得-star)
+- [快速开始](#快速开始) · [复现管线](#复现管线)
+- [案例库](#案例库) → [案例 01 · 玻璃之后](#案例-01--玻璃之后)
+- [方法论](docs/methodology.md) · [踩坑笔记](#踩坑笔记) · [审片清单](#审片清单)
+- [工具与资源索引](#工具与资源索引) · [仓库结构](#仓库结构)
+- [版本与留档](#版本与留档) · [路线图](#路线图) · [贡献](#贡献) · [许可](#许可)
 
 ## 快速开始
 
@@ -61,12 +72,12 @@ git lfs pull
 #    macOS:  open 玻璃之后_成片.mp4
 #    Windows: start 玻璃之后_成片.mp4
 
-# 3. 从现有素材重新出片（需要 ffmpeg）
+# 3. 从现有素材重新出片（不需要预装 ffmpeg）
 pip install imageio-ffmpeg
 python make_final.py
 ```
 
-`make_final.py` 会优先使用 `imageio-ffmpeg` 自带的 ffmpeg，找不到时回退到系统 `PATH` 中的 `ffmpeg`，因此**无需预装 ffmpeg**。
+`make_final.py` 优先使用 `imageio-ffmpeg` 自带的二进制，找不到才回退系统 `PATH`。
 
 ## 复现管线
 
@@ -82,7 +93,7 @@ python make_final.py
 WorkBuddy ImageGen
   size    = 1280x720
   quality = medium
-  prompt  = 场景描述 + CLEAN BEAUTY 词块（见下方踩坑笔记）
+  prompt  = 场景描述 + CLEAN BEAUTY 词块（见踩坑笔记）
 ```
 
 **③ 图生视频**
@@ -92,7 +103,7 @@ WorkBuddy VideoGen
   image        = frames/shotNN.png   # 传入首帧即进入图生视频模式
   seconds      = 5
   enable_audio = false               # 音轨统一在 ④ 阶段合成
-  # 注意：不要传 aspect_ratio，画幅由首帧决定，传了会报错
+  # 不要传 aspect_ratio：画幅由首帧决定，传了会报错
 ```
 
 **④ 拼装成片**
@@ -101,43 +112,25 @@ WorkBuddy VideoGen
 python make_final.py
 ```
 
-脚本内部做三件事：按 `DUR = [2,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2]` 逐段 trim 并统一到 1920×1080 / 24fps → concat 硬切 → 叠加棕噪雨声与 220/329.63Hz 正弦底垫并淡入淡出。
+内部做三件事：按 `DUR = [2,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2]` 逐段 trim 并统一到 1920×1080 / 24fps → concat 硬切 → 叠加棕噪雨声与 220/329.63Hz 正弦底垫并淡入淡出。
 
-## 仓库结构
+## 案例库
 
-```text
-.
-├── README.md
-├── docs/
-│   └── methodology.md             # 方法论与复盘（路线选择/生产流程/审片清单/工具选型）
-├── 玻璃之后_视频脚本提示词.html   # 18 镜分镜脚本（画面/运动/时长/色调/BGM）
-├── make_final.py                  # 拼装 + 混音，一条命令出片
-├── frames/
-│   └── shot01–18.png              # WorkBuddy ImageGen 首帧
-├── videos/
-│   └── shot01–18.mp4              # WorkBuddy VideoGen 图生视频原片（LFS）
-├── 玻璃之后_成片.mp4               # 成品 25s / 1080p（LFS）
-├── contact_sheet.png              # 18 镜首帧总览
-└── 成片抽帧核对.png                # 成片逐镜抽帧校验图
-```
-
-## 案例 01 · 玻璃之后
+### 案例 01 · 玻璃之后
 
 > 都市纪实电影感 · 真实摄影 · 一个雨夜到清晨的独处切片
 
-### 成品
-
 | 项目 | 参数 |
 | --- | --- |
-| 时长 | 25.00 s |
-| 画幅 | 1920×1080（16:9） |
-| 帧率 | 24 fps |
-| 编码 | H.264 + AAC 立体声 |
-| 体积 | 约 23 MB |
+| 时长 / 画幅 / 帧率 | 25.00 s / 1920×1080（16:9） / 24 fps |
+| 编码 / 体积 | H.264 + AAC 立体声 / 约 23 MB |
 | 镜头数 | 18 |
+| 单镜时长 | `2,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2` |
 | 色调 | 青灰冷调 → 暖金逆光 |
+| 生成方式 | WorkBuddy `ImageGen` 首帧 + `VideoGen` 图生视频 |
 
-### 分镜时间轴
+<details>
+<summary><b>展开 18 镜分镜时间轴</b></summary>
 
 | # | 时长 | 画面 |
 | --- | --- | --- |
@@ -154,29 +147,54 @@ python make_final.py
 | 11 | 1s | 纸杯咖啡的热气被吹散又聚拢 |
 | 12 | 2s | 深夜空站台，进站的风掀起头发 |
 | 13 | 1s | 车窗玻璃上的双重影像，隧道灯掠过 |
-| 14 | 1s | 霓虹下隔玻璃触碰"另一个自己" |
+| 14 | 1s | 霓虹下隔玻璃触碰「另一个自己」 |
 | 15 | 2s | 深夜街头正面特写，直视镜头 |
 | 16 | 1s | 天台床单在风里翻卷，只剩发光剪影 |
 | 17 | 1s | 晨光从脸颊漫到整张脸，瞳孔收缩 |
 | 18 | 2s | 走向铁门，门后白光吞掉整个画面 |
 
-### 关键设计
+</details>
 
-- **硬切不转场**：18 段全部直接拼接，靠时长节奏（2/1/2/1/1…）制造呼吸感，避免花哨转场破坏纪实感。
-- **音效后置**：视频阶段全部 `enable_audio=false`，统一在拼装阶段叠雨声与低频垫，保证 18 段音轨绝对连续。
-- **同角色跨镜一致**：所有含脸镜头共用同一段 `CLEAN BEAUTY` 描述词块，靠提示词而非参考图锁脸。
+**三条关键设计**
+
+1. **硬切不转场** —— 18 段直接拼接，靠 2/1/2/1/1 的时长节奏制造呼吸感，任何花哨转场都会破坏纪实感。
+2. **音效后置** —— 视频阶段全部 `enable_audio=false`，统一在拼装阶段叠雨声与低频垫，保证 18 段音轨绝对连续。
+3. **同角色跨镜一致** —— 所有含脸镜头共用同一段 `CLEAN BEAUTY` 描述词块，靠提示词锁脸，不依赖参考图。
+
+**相关文件**：[分镜脚本](玻璃之后_视频脚本提示词.html) · [首帧总览](contact_sheet.png) · [抽帧核对](成片抽帧核对.png) · [成片](玻璃之后_成片.mp4)
+
+## 方法论
+
+完整版见 **[docs/methodology.md](docs/methodology.md)** —— 综合三篇行业复盘与本项目实测合成。
+
+| 章节 | 解决什么问题 |
+| --- | --- |
+| 路线选择 | 视频模型（抽卡、不可复现）vs 代码渲染（`f(t)` 逐帧算、可精改）怎么分工 |
+| 生产流程 | 选题 → 脚本 → 风格，各阶段该由人还是 AI 决策 |
+| 提示词工程 | 六要素模板、三段式描述、负面约束写法 |
+| 一致性控制 | 角色 / 色调 / 时长 / 音画同步 / 首尾衔接的五类手段 |
+| 审片清单 | 发布前 9 条硬指标 |
+| 工具选型 | 按任务选，不按星数选 |
+
+三条最值得先记住的结论：
+
+1. **先选路线再写提示词** —— 写实镜头用视频模型，信息图/手绘/3D 用代码渲染，两者在剪辑阶段合成。
+2. **瓶颈不在生成，在修改与审片** —— 脚本挂一个对抗式审查子 agent，能把最耗时的返工提前化解。
+3. **一致性靠收敛，不靠运气** —— 把角色、色调、构图压成可复制的常量词块；时长由分镜表控制。
 
 ## 踩坑笔记
 
-这部分是本仓库最值钱的内容 —— 都是实际撞墙后验证过的结论。
+本仓库最值钱的部分 —— 全是撞墙后验证过的结论。
 
 | # | 问题 | 现象 | 解法 |
 | --- | --- | --- | --- |
-| 1 | 「真实感」提示词把脸画脏 | 写了 `visible freckles` / `fine skin pores` / `real skin texture` / `no beauty retouch`，人物面部灰浊、油高光、颗粒叠满 | 换成固定词块 `CLEAN BEAUTY face`（见下方），并加 `clean image, no CGI` |
-| 2 | `ImageGen` 并行出图目录被合并 | 即使给每张传不同 `output_dir`，也会落到同一目录，文件名只按 prompt 前缀派生 | 单批 ≤3 张；每张 prompt 用不同前置词（`Window profile:` / `Eye macro:` / `Night portrait:`）避免前缀撞车；生成后按返回的 `localPath` 精确改名，别靠文件名猜 |
-| 3 | `VideoGen` 图生视频不接受 `aspect_ratio` | 传了就报错 | 图生视频时画幅由输入首帧决定，删掉该参数即可 |
-| 4 | 无脸镜头也会「脏」 | 只修特写镜头后，水洼/手部/剪影镜头仍然灰浊发闷 | 「脏感」= 整体灰阶 + 重颗粒，不是只存在于脸；**全 18 镜都需统一重出** |
-| 5 | 大文件推不上 GitHub | 单个 mp4 虽 <100MB，但总量数百 MB | 用 Git LFS 跟踪 `*.mp4`，clone 端需 `git lfs pull` |
+| 1 | 「真实感」提示词把脸画脏 | 写了 `visible freckles` / `fine skin pores` / `real skin texture`，面部灰浊、油高光、颗粒叠满 | 换固定词块 `CLEAN BEAUTY face`，加 `clean image, no CGI` |
+| 2 | 脏感不只存在于脸 | 只修 7 个特写，其余 11 镜仍然发闷 | 灰阶与重颗粒是全片的，无脸镜头（水洼/手部/剪影）也要统一重出 |
+| 3 | 并行生图目录被合并 | 即使传不同 `output_dir`，多张也落到同一目录，文件名只按 prompt 前缀派生 | 单批 ≤3 张；每张用不同前置词；按返回 `localPath` 精确改名 |
+| 4 | 图生视频不接受 `aspect_ratio` | 传了直接报错 | 画幅由输入首帧决定，删掉该参数 |
+| 5 | 时长不可控 | 每段素材都是 5 秒，模型不会按你要的节奏走 | 生成阶段不管时长，拼装阶段按分镜表逐段 trim |
+| 6 | 拼接点爆音 | 多段各自带音轨，接缝处爆 | 全部 `enable_audio=false`，音轨统一后置合成 |
+| 7 | 大文件推不上 GitHub | 单文件虽 <100MB，总量数百 MB | `git lfs track "*.mp4"`，clone 端必须 `git lfs pull` |
 
 ### CLEAN BEAUTY 词块（可直接复用）
 
@@ -188,17 +206,84 @@ neatly shaped straight brows, natural dusty-rose lips,
 glossy black hair smooth and softly wavy, clean luminous complexion
 ```
 
-> `ImageGen` 没有 `negative_prompt` 参数，负面词只能写进正向 prompt；`VideoGen` 虽有该参数，直接写在 prompt 末尾同样生效。
+> `ImageGen` 没有 `negative_prompt` 参数，负面词只能写进正向 prompt；`VideoGen` 虽有该参数，写在末尾同样生效。
 
-## 方法论与复盘
+## 审片清单
 
-完整版见 **[docs/methodology.md](docs/methodology.md)** —— 综合三篇行业复盘（代码渲染路线、资讯类视频生产流程、369 个开源项目评估）与本仓库实测经验合成。
+自动化剪辑的瓶颈不在生成，而在**审片标准** —— 没有可复用的清单，Agent 就无法判断「这条能不能发」。发布前逐条过：
 
-三条最值得先看的结论：
+- [ ] **单帧信息密度**：一帧文字是否超过 12 字？超过就拆镜或删。
+- [ ] **前三秒钩子**：第一句是否说清「谁、做了什么、冲突在哪」，而不是先堆数字。
+- [ ] **叙事主线**：是否只有一条主线？无关细节是否已删。
+- [ ] **节奏**：最短镜头是否短于 1 秒（会闪）？最长是否超过 3 秒（会拖）？
+- [ ] **一致性**：脸、发型、服装、色调跨镜是否统一？
+- [ ] **声画匹配**：配音与画面切换是否对得上？有无莫名音效。
+- [ ] **TTS 读错**：人名、专有名词、数字是否读错。
+- [ ] **技术规格**：分辨率、帧率、码率、音轨是否全片一致。
+- [ ] **首尾完整**：第一帧是否黑场/脏帧？最后一帧是否停在有效画面上。
 
-1. **先选路线再写提示词**：写实镜头用视频模型（抽卡、不可复现），信息图/手绘/3D 用代码渲染（`f(t)` 逐帧算，可复现、改一个数字即可）。
-2. **瓶颈不在生成，在修改与审片**：脚本引入对抗式审查子 agent 可把返工提前；发布前过一遍固定审片清单（信息密度、钩子、节奏、一致性、声画匹配）。
-3. **一致性靠收敛，不靠运气**：把角色、色调、构图压成可复制的常量词块，跨镜共用；时长由分镜表控制，不让模型自由决定节奏。
+## 工具与资源索引
+
+按任务选，不按星数选。整理自文末三篇来源（星数为原文 2026-10-27 快照）。
+
+**代码渲染框架**
+
+| 工具 | 适合做什么 | 备注 |
+| --- | --- | --- |
+| [HyperFrames](https://github.com/heygen-com/hyperframes) | 把视频当网页写，GSAP 驱动时间轴 | 门槛最低，模型写 HTML 最稳，优先学这个 |
+| [Remotion](https://github.com/remotion-dev/remotion) | React 写视频，`interpolate` / `spring` | 多场景拼接、逐词字幕、批量模板最强 |
+| [Motion Canvas](https://github.com/motion-canvas/motion-canvas) | 编程教学、代码块动画 | 按时间顺序写剧本，自带代码块组件 |
+
+**图形与风格**
+
+| 工具 | 适合做什么 | 备注 |
+| --- | --- | --- |
+| [rough.js](https://github.com/rough-stuff/rough) | 手绘线条 | 端点随机偏移叠 2–3 条曲线 |
+| [p5.brush](https://github.com/acamposuribe/p5.brush) | 水彩、铅笔、炭笔 | 40 层 × 4.5% 不透明度叠出水彩晕开感 |
+| [three.js](https://github.com/mrdoob/three.js) | 3D 场景与镜头运动 | 镜头沿曲线走，第 t 秒决定位置 |
+| [Manim](https://github.com/ManimCommunity/manim) | 数学板书、公式动画 | 数学对象 + LaTeX 矢量路径 |
+| [Blender MCP](https://github.com/ahujasid/blender-mcp) | 黏土质感、真 3D 角色 | 让 AI 直接操作 Blender 并截图自检 |
+
+**风格库 / Agent 技能**
+
+| 项目 | 适合做什么 | 备注 |
+| --- | --- | --- |
+| [creator-style-kit](https://github.com/threeaus/creator-style-kit) | 18 套 9:16 竖屏资讯风 | 字体/配色/动效/音效/构图成套 |
+| lemo-opuscar | 59 种代码影片风格 | 零视频大模型依赖（约 8.3k 星） |
+| huashu-art-motion | 36 风格 + 9 解说语法 | 无口播艺术讲解片（约 5.4k 星） |
+| huashu-motion | 商业发布片 | 浏览器内按 `C` 键帧级改（约 1.8k 星） |
+| sweety-handdraw-video | 手绘口播科普 | 帧级对齐，CodeX / Workbuddy 均可（约 0.9k 星） |
+| map-motion | 地图路线动画 | 先 TTS 时间戳，再插值路线进度 |
+
+**剪辑与提示词资源**
+
+| 项目 | 适合做什么 | 备注 |
+| --- | --- | --- |
+| video-use | 素材 + 音轨自动粗剪 | 逐词转录下刀；**模型不看画面**，纯文本逻辑 |
+| cutloupe | 需要看到渲染帧再改 | `look` 命令把真实帧送回模型 |
+| OpenChatCut / BaoCut | 机器粗剪 + 人工精调时间线 | 填补全自动与人工之间的断层 |
+| video-shotcraft | Remotion 商业片 | 152 张结构化镜头卡 + 209 个动效预览 |
+| awesome-opus5-5-videos | 复刻代码成片特效 | 703 条可直接复制的提示词 |
+
+## 仓库结构
+
+```text
+.
+├── README.md
+├── docs/
+│   └── methodology.md             # 方法论与复盘（路线/流程/一致性/审片/选型）
+├── assets/
+│   └── preview.gif                # 开场动图预览
+├── 玻璃之后_视频脚本提示词.html   # 18 镜分镜脚本（画面/运动/时长/色调/BGM）
+├── make_final.py                  # 拼装 + 混音，一条命令出片
+├── frames/
+│   └── shot01–18.png              # WorkBuddy ImageGen 首帧
+├── videos/
+│   └── shot01–18.mp4              # WorkBuddy VideoGen 图生视频原片（LFS）
+├── 玻璃之后_成片.mp4               # 成品 25s / 1080p（LFS）
+├── contact_sheet.png              # 18 镜首帧总览
+└── 成片抽帧核对.png                # 成片逐镜抽帧校验图
+```
 
 ## 版本与留档
 
@@ -213,18 +298,21 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 - [x] 案例 01 全流程跑通（脚本 → 首帧 → 视频 → 成片）
 - [x] 18 镜面部质感统一
 - [x] Git LFS 托管视频资产
-- [ ] 增加 9:16 竖版重制（短视频平台适配）
-- [ ] 补充真实环境音采样替代合成底噪
-- [ ] 片尾叠加片名字幕
-- [ ] 新增案例 02：多角色对话场景
+- [x] 方法论与审片清单沉淀
+- [ ] 案例 02：多角色对话场景（测试跨角色一致性）
+- [ ] 案例 03：代码渲染路线（HyperFrames / Remotion 对比实拍路线）
+- [ ] 9:16 竖版重制
+- [ ] 真实环境音采样替代合成底噪
+- [ ] 把审片清单做成 `scripts/review.py`，自动检测时长分布 / 切换点 / 音轨峰值
 
 ## 贡献
 
-欢迎提 Issue 分享你的踩坑，或直接 PR 新案例。新增案例请遵循：
+欢迎提 Issue 分享踩坑，或 PR 新案例。新增案例请遵循：
 
 1. 独立子目录，内含 `脚本.html`、`make_final.py`、`frames/`、`videos/`、成片；
-2. 在 [案例](#案例-01--玻璃之后) 区追加一节，写清参数与踩坑；
-3. 视频走 Git LFS，不要把大文件直接提交进 Git 历史。
+2. 在 [案例库](#案例库) 追加一节，写清规格、关键设计与踩坑；
+3. 视频走 Git LFS，不要把大文件直接提交进 Git 历史；
+4. 新增工具请附一句「它解决什么具体问题」，不要只贴链接。
 
 ## 许可
 
@@ -234,6 +322,8 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 
 <div align="center">
 
-如果这个案例对你有帮助，点个 ⭐ **Star** 支持一下，也欢迎把它用在自己的短片里。
+**如果这个仓库帮你少走了一小时弯路，点个 ⭐ Star 让更多人看到。**
+
+[![Star History Chart](https://api.star-history.com/svg?repos=kedamano/AI_Video_cases&type=Date)](https://star-history.com/#kedamano/AI_Video_cases&Date)
 
 </div>
