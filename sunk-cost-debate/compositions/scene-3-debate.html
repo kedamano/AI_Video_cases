@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"></head>
+<body>
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0e1116; color: #f4f6f9; font-family: system-ui, sans-serif; }
+    .bg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; }
+    .panel { position: absolute; top: 60px; width: 420px; height: 400px; border-radius: 16px; padding: 28px; box-sizing: border-box; opacity: 0; }
+    .pro { left: 60px; background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.35); }
+    .con { right: 60px; background: rgba(99,164,255,0.08); border: 1px solid rgba(99,164,255,0.35); }
+    .tag { font-size: 15px; letter-spacing: 3px; margin-bottom: 6px; }
+    .pro .tag { color: #ff6b6b; }
+    .con .tag { color: #63a4ff; }
+    .headline { font-size: 26px; font-weight: 700; margin-bottom: 16px; line-height: 1.3; }
+    .point { font-size: 16px; color: #c8d0db; margin-bottom: 10px; line-height: 1.5; opacity: 0; }
+    .vs { position: absolute; left: 50%; top: 46%; transform: translate(-50%,-50%); width: 64px; height: 64px; border-radius: 50%; background: #1a1f2e; border: 2px solid #ffd166; color: #ffd166; font-size: 22px; font-weight: 800; display: flex; align-items: center; justify-content: center; opacity: 0; z-index: 10; }
+    /* 正方背景：砝码/重物 */
+    .weight { position: absolute; width: 50px; height: 60px; background: #6b4a4a; border-radius: 4px 4px 8px 8px; opacity: 0.4; }
+    .weight::before { content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 24px; height: 12px; border: 3px solid #6b4a4a; border-bottom: none; border-radius: 6px 6px 0 0; }
+    /* 反方背景：门/出口光路 */
+    .door { position: absolute; width: 50px; height: 80px; background: rgba(99,164,255,0.25); border: 2px solid #63a4ff; border-radius: 4px 4px 0 0; opacity: 0.4; }
+    .door::before { content: ''; position: absolute; right: 6px; top: 50%; width: 6px; height: 6px; background: #63a4ff; border-radius: 50%; }
+    .debater { position: absolute; width: 100px; height: 120px; opacity: 0; z-index: 5; }
+    .debater .head { width: 46px; height: 46px; border-radius: 50%; margin: 0 auto; }
+    .debater .body { width: 64px; height: 55px; margin: -3px auto 0; border-radius: 22px 22px 0 0; }
+    .d-pro { left: 200px; bottom: 30px; }
+    .d-pro .head { background: #3a2530; border: 3px solid #ff6b6b; }
+    .d-pro .body { background: #3a2530; border: 3px solid #ff6b6b; border-top: none; }
+    .d-con { right: 200px; bottom: 30px; }
+    .d-con .head { background: #25303a; border: 3px solid #63a4ff; }
+    .d-con .body { background: #25303a; border: 3px solid #63a4ff; border-top: none; }
+  </style>
+
+  <div id="root" data-composition-id="s3-debate" data-width="1280" data-height="720">
+    <div class="bg-grid"></div>
+    <!-- 正方背景砝码 -->
+    <div class="weight" id="w1" style="left: 100px; top: 480px;"></div>
+    <div class="weight" id="w2" style="left: 180px; top: 500px; transform: scale(0.7);"></div>
+    <!-- 反方背景门 -->
+    <div class="door" id="door1" style="right: 100px; top: 470px;"></div>
+    <div class="door" id="door2" style="right: 180px; top: 490px; transform: scale(0.8);"></div>
+    <div class="panel pro" id="pro">
+      <div class="tag">正方</div>
+      <div class="headline">错一次，就完了</div>
+      <div class="point" id="pp1">投入的每一年，都变成拖你下水的重物</div>
+      <div class="point" id="pp2">协和飞机超支仍继续拨款</div>
+      <div class="point" id="pp3">自助餐吃到胃痛也不肯停</div>
+    </div>
+    <div class="panel con" id="con">
+      <div class="tag">反方</div>
+      <div class="headline">沉没成本，不是成本</div>
+      <div class="point" id="cp1">已经花出去的，像泼出去的水</div>
+      <div class="point" id="cp2">真正影响下一步的，只有未来</div>
+      <div class="point" id="cp3">不被过去绑架，才能翻盘</div>
+    </div>
+    <div class="vs" id="vs">VS</div>
+    <div class="debater d-pro" id="dp"><div class="head" id="dp-head"></div><div class="body"></div></div>
+    <div class="debater d-con" id="dc"><div class="head" id="dc-head"></div><div class="body"></div></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // 背景图标
+    tl.fromTo("#w1", { opacity: 0, y: 20 }, { opacity: 0.4, y: 0, duration: 0.6 }, 0.2);
+    tl.fromTo("#w2", { opacity: 0, y: 20 }, { opacity: 0.4, y: 0, duration: 0.6 }, 0.4);
+    tl.fromTo("#door1", { opacity: 0, scale: 0.8 }, { opacity: 0.4, scale: 1, duration: 0.6 }, 0.3);
+    tl.fromTo("#door2", { opacity: 0, scale: 0.8 }, { opacity: 0.4, scale: 1, duration: 0.6 }, 0.5);
+    // 砝码下沉
+    tl.to("#w1", { y: 10, duration: 1.5, ease: "sine.inOut", yoyo: true, repeat: 4 }, 1.5);
+    tl.to("#w2", { y: 8, duration: 1.5, ease: "sine.inOut", yoyo: true, repeat: 4 }, 1.7);
+    // 门透光
+    tl.to("#door1", { boxShadow: "0 0 30px rgba(99,164,255,0.6)", duration: 1.2, ease: "sine.inOut", yoyo: true, repeat: 4 }, 1.5);
+    // 面板
+    tl.fromTo("#pro", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.2);
+    tl.fromTo("#con", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.4);
+    tl.fromTo("#dp", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.6)" }, 0.8);
+    tl.fromTo("#dc", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.6)" }, 1.0);
+    tl.fromTo("#vs", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 1.2);
+    tl.to("#vs", { scale: 1.15, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 8 }, 1.8);
+    tl.fromTo("#pp1", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.45 }, 1.8);
+    tl.fromTo("#pp2", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.45 }, 2.5);
+    tl.fromTo("#pp3", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.45 }, 3.2);
+    tl.fromTo("#cp1", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.45 }, 2.0);
+    tl.fromTo("#cp2", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.45 }, 2.7);
+    tl.fromTo("#cp3", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.45 }, 3.4);
+    // 争论头部摆动
+    tl.to("#dp-head", { rotation: -12, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 10, transformOrigin: "bottom center" }, 2.0);
+    tl.to("#dc-head", { rotation: 12, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 10, transformOrigin: "bottom center" }, 2.3);
+    window.__timelines["s3-debate"] = tl;
+  </script>
+</template>
+</body>
+</html>

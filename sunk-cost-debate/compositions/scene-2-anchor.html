@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"></head>
+<body>
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0e1116; color: #f4f6f9; font-family: system-ui, sans-serif; }
+    .bg-rays { position: absolute; inset: 0; background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,154,99,0.06) 10deg, transparent 20deg, rgba(255,154,99,0.06) 30deg, transparent 40deg, rgba(255,154,99,0.06) 50deg, transparent 60deg, rgba(255,154,99,0.06) 70deg, transparent 80deg, rgba(255,154,99,0.06) 90deg, transparent 100deg, rgba(255,154,99,0.06) 110deg, transparent 120deg, rgba(255,154,99,0.06) 130deg, transparent 140deg, rgba(255,154,99,0.06) 150deg, transparent 160deg, rgba(255,154,99,0.06) 170deg, transparent 180deg, rgba(255,154,99,0.06) 190deg, transparent 200deg, rgba(255,154,99,0.06) 210deg, transparent 220deg, rgba(255,154,99,0.06) 230deg, transparent 240deg, rgba(255,154,99,0.06) 250deg, transparent 260deg, rgba(255,154,99,0.06) 270deg, transparent 280deg, rgba(255,154,99,0.06) 290deg, transparent 300deg, rgba(255,154,99,0.06) 310deg, transparent 320deg, rgba(255,154,99,0.06) 330deg, transparent 340deg, rgba(255,154,99,0.06) 350deg, transparent 360deg); }
+    .ring { position: absolute; left: 50%; top: 46%; width: 200px; height: 200px; margin-left: -100px; margin-top: -100px; border: 2px solid #ff9a63; border-radius: 50%; opacity: 0; }
+    .big { position: absolute; left: 0; top: 46%; width: 100%; transform: translateY(-50%); text-align: center; font-size: 130px; font-weight: 800; letter-spacing: 24px; color: #ff9a63; opacity: 0; text-shadow: 0 0 60px rgba(255,154,99,0.5); z-index: 5; }
+    .small { position: absolute; left: 0; top: 64%; width: 100%; text-align: center; font-size: 24px; color: #aeb7c2; opacity: 0; letter-spacing: 6px; z-index: 5; }
+    .icon { position: absolute; opacity: 0.45; }
+    /* 家庭剪影 */
+    .family { width: 90px; height: 70px; }
+    .family .p { position: absolute; bottom: 0; }
+    .family .p .h { width: 22px; height: 22px; border-radius: 50%; background: #c8d0db; margin: 0 auto; }
+    .family .p .b { width: 30px; height: 32px; background: #c8d0db; border-radius: 12px 12px 0 0; margin: -2px auto 0; }
+    /* 碰杯/友情 */
+    .glasses { width: 70px; height: 60px; position: relative; }
+    .glasses .g { position: absolute; bottom: 0; width: 18px; height: 30px; border: 2px solid #ffd166; border-radius: 0 0 4px 4px; background: rgba(255,209,102,0.2); }
+    .glasses .g1 { left: 5px; transform: rotate(-15deg); transform-origin: bottom center; }
+    .glasses .g2 { right: 5px; transform: rotate(15deg); transform-origin: bottom center; }
+    /* 戒指/爱情 */
+    .ring-icon { width: 40px; height: 40px; border: 4px solid #ffd166; border-radius: 50%; position: relative; }
+    .ring-icon::before { content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 10px solid #ff6b9d; }
+    /* 礼物/往事 */
+    .gift { width: 46px; height: 40px; background: #ff6b9d; border-radius: 4px; position: relative; }
+    .gift::before { content: ''; position: absolute; top: 0; left: 50%; width: 6px; height: 100%; background: #fff; transform: translateX(-50%); }
+    .person { position: absolute; width: 130px; height: 160px; opacity: 0; z-index: 4; }
+    .person .head { width: 56px; height: 56px; border-radius: 50%; background: #3a2a2a; margin: 0 auto; border: 3px solid #ff9a63; }
+    .person .body { width: 85px; height: 75px; background: #3a2a2a; margin: -4px auto 0; border-radius: 28px 28px 0 0; border: 3px solid #ff9a63; border-top: none; }
+    .p-left { left: 120px; top: 280px; }
+    .p-right { right: 120px; top: 280px; transform: scaleX(-1); z-index: 4; }
+  </style>
+
+  <div id="root" data-composition-id="s2-anchor" data-width="1280" data-height="720">
+    <div class="bg-rays" id="rays"></div>
+    <div class="ring" id="r1"></div>
+    <div class="ring" id="r2"></div>
+    <!-- 背景社会元素 -->
+    <div class="icon family" id="i-family" style="left: 100px; top: 120px;">
+      <div class="p" style="left: 0;"><div class="h"></div><div class="b"></div></div>
+      <div class="p" style="left: 26px;"><div class="h" style="width:16px;height:16px;"></div><div class="b" style="width:20px;height:22px;"></div></div>
+      <div class="p" style="left: 52px;"><div class="h"></div><div class="b"></div></div>
+    </div>
+    <div class="icon glasses" id="i-glass" style="right: 120px; top: 130px;">
+      <div class="g g1"></div><div class="g g2"></div>
+    </div>
+    <div class="icon ring-icon" id="i-ring" style="left: 200px; bottom: 100px;"></div>
+    <div class="icon gift" id="i-gift" style="right: 200px; bottom: 110px;"></div>
+    <div class="big" id="big">舍不得</div>
+    <div class="small" id="small">—— 沉没成本谬误</div>
+    <div class="person p-left" id="pl"><div class="head" id="pl-head"></div><div class="body"></div></div>
+    <div class="person p-right" id="pr"><div class="head" id="pr-head"></div><div class="body"></div></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#rays", { opacity: 0, rotation: 0 }, { opacity: 1, rotation: 360, duration: 12, ease: "none" }, 0);
+    // 背景图标淡入
+    tl.fromTo("#i-family", { opacity: 0, y: -20 }, { opacity: 0.45, y: 0, duration: 0.8 }, 0.3);
+    tl.fromTo("#i-glass", { opacity: 0, y: -20 }, { opacity: 0.45, y: 0, duration: 0.8 }, 0.5);
+    tl.fromTo("#i-ring", { opacity: 0, scale: 0 }, { opacity: 0.45, scale: 1, duration: 0.8 }, 0.6);
+    tl.fromTo("#i-gift", { opacity: 0, scale: 0 }, { opacity: 0.45, scale: 1, duration: 0.8 }, 0.7);
+    // 碰杯动画
+    tl.to("#i-glass .g1", { rotation: -5, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 6 }, 1.5);
+    tl.to("#i-glass .g2", { rotation: 5, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 6 }, 1.5);
+    // 人物入场
+    tl.fromTo("#pl", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.7, ease: "back.out(1.6)" }, 0.5);
+    tl.fromTo("#pr", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: "back.out(1.6)" }, 0.7);
+    // 大字炸开
+    tl.fromTo("#big", { opacity: 0, scale: 3.5 }, { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }, 0.8);
+    tl.fromTo("#r1", { opacity: 0.8, scale: 0.5 }, { opacity: 0, scale: 4, duration: 1.5, ease: "power2.out" }, 1.0);
+    tl.fromTo("#r2", { opacity: 0.6, scale: 0.5 }, { opacity: 0, scale: 5.5, duration: 1.8, ease: "power2.out" }, 1.3);
+    tl.fromTo("#small", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 2.2);
+    // 人物抱头摆动
+    tl.to("#pl-head", { rotation: -10, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 5, transformOrigin: "bottom center" }, 2.0);
+    tl.to("#pr-head", { rotation: 10, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 5, transformOrigin: "bottom center" }, 2.2);
+    window.__timelines["s2-anchor"] = tl;
+  </script>
+</template>
+</body>
+</html>

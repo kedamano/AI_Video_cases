@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"></head>
+<body>
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0e1116; color: #f4f6f9; font-family: system-ui, sans-serif; }
+    .bg-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(99,164,255,0.15), transparent 60%); }
+    .bg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(99,164,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99,164,255,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+    .reset-key { position: absolute; left: 50%; top: 30%; transform: translate(-50%,-50%); width: 100px; height: 100px; border-radius: 50%; background: rgba(99,164,255,0.12); border: 3px solid #63a4ff; display: flex; align-items: center; justify-content: center; font-size: 44px; font-weight: 800; color: #63a4ff; opacity: 0; }
+    .headline { position: absolute; left: 80px; right: 80px; top: 55%; text-align: center; font-size: 48px; font-weight: 800; letter-spacing: 3px; opacity: 0; }
+    .sub { position: absolute; left: 0; right: 0; top: 68%; text-align: center; font-size: 24px; color: #aeb7c2; letter-spacing: 2px; opacity: 0; }
+    .hl { color: #63a4ff; }
+  </style>
+
+  <div id="root" data-composition-id="s4-ending" data-width="1280" data-height="720">
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    <div class="reset-key" id="rk">R</div>
+    <div class="headline" id="hl">沉没成本，<span class="hl">不参与重大决策</span></div>
+    <div class="sub" id="sub">错一次，不是终局，是重置键</div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // 重置键弹出（不是旋转spinner，是一个按钮）
+    tl.fromTo("#rk", { opacity: 0, scale: 0, rotation: -180 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.9, ease: "back.out(1.8)" }, 0.2);
+    // 重置键呼吸脉冲
+    tl.to("#rk", { boxShadow: "0 0 40px rgba(99,164,255,0.5)", duration: 1.0, ease: "sine.inOut", yoyo: true, repeat: 5 }, 1.2);
+    tl.to("#rk", { scale: 1.08, duration: 1.0, ease: "sine.inOut", yoyo: true, repeat: 5 }, 1.2);
+    // 主标题
+    tl.fromTo("#hl", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 0.8);
+    // 副标题
+    tl.fromTo("#sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 1.8);
+    window.__timelines["s4-ending"] = tl;
+  </script>
+</template>
+</body>
+</html>

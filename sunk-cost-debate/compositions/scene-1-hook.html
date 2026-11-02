@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"></head>
+<body>
+<template>
+  <style>
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0e1116; color: #f4f6f9; font-family: system-ui, sans-serif; }
+    .bg-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(99,164,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(99,164,255,0.06) 1px, transparent 1px); background-size: 60px 60px; }
+    .bg-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 30%, rgba(99,164,255,0.15), transparent 50%), radial-gradient(ellipse at 75% 70%, rgba(255,154,99,0.1), transparent 50%); }
+    /* 生活元素图标层 */
+    .icon { position: absolute; opacity: 0.5; }
+    .heart { width: 50px; height: 50px; background: #ff6b9d; position: relative; transform: rotate(-45deg); }
+    .heart::before, .heart::after { content: ''; position: absolute; width: 50px; height: 50px; border-radius: 50%; background: #ff6b9d; }
+    .heart::before { top: -25px; left: 0; }
+    .heart::after { left: 25px; top: 0; }
+    .briefcase { width: 56px; height: 44px; background: #8b95a5; border-radius: 6px; position: relative; }
+    .briefcase::before { content: ''; position: absolute; top: -8px; left: 14px; width: 28px; height: 10px; border: 3px solid #8b95a5; border-bottom: none; border-radius: 4px 4px 0 0; }
+    .dice { width: 44px; height: 44px; background: #f0f2f5; border-radius: 8px; position: relative; }
+    .dice::before { content: ''; position: absolute; top: 10px; left: 10px; width: 8px; height: 8px; background: #0e1116; border-radius: 50%; box-shadow: 20px 0 0 #0e1116, 0 20px 0 #0e1116, 20px 20px 0 #0e1116, 10px 10px 0 #0e1116; }
+    .clock { width: 48px; height: 48px; border: 3px solid #aeb7c2; border-radius: 50%; position: relative; }
+    .clock::before { content: ''; position: absolute; top: 50%; left: 50%; width: 2px; height: 18px; background: #aeb7c2; transform: translate(-50%, -100%); }
+    .clock::after { content: ''; position: absolute; top: 50%; left: 50%; width: 14px; height: 2px; background: #aeb7c2; transform: translate(0, -50%); }
+    .family { position: absolute; width: 80px; height: 60px; }
+    .family .person { position: absolute; bottom: 0; }
+    .family .p-head { width: 20px; height: 20px; border-radius: 50%; background: #c8d0db; margin: 0 auto; }
+    .family .p-body { width: 26px; height: 28px; background: #c8d0db; border-radius: 10px 10px 0 0; margin: -2px auto 0; }
+    .title { position: absolute; left: 80px; top: 120px; font-size: 56px; font-weight: 700; letter-spacing: 2px; opacity: 0; z-index: 5; }
+    .subtitle { position: absolute; left: 80px; top: 235px; font-size: 26px; color: #aeb7c2; opacity: 0; z-index: 5; }
+    .cards { position: absolute; left: 80px; bottom: 80px; display: flex; gap: 18px; z-index: 5; }
+    .card { padding: 20px 24px; border: 1px solid rgba(99,164,255,0.35); border-radius: 12px; background: rgba(14,17,22,0.85); font-size: 19px; opacity: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+    .card .num { color: #63a4ff; font-weight: 700; font-size: 24px; margin-right: 6px; }
+    .person { position: absolute; right: 140px; top: 180px; width: 160px; height: 200px; opacity: 0; z-index: 5; }
+    .head { width: 72px; height: 72px; border-radius: 50%; background: #2a3548; margin: 0 auto; border: 3px solid #63a4ff; }
+    .body { width: 110px; height: 90px; background: #2a3548; margin: -5px auto 0; border-radius: 36px 36px 0 0; border: 3px solid #63a4ff; border-top: none; }
+  </style>
+
+  <div id="root" data-composition-id="s1-hook" data-width="1280" data-height="720">
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    <!-- 背景生活元素 -->
+    <div class="icon heart" id="i-heart" style="left: 200px; top: 150px;"></div>
+    <div class="icon briefcase" id="i-bag" style="left: 700px; top: 130px;"></div>
+    <div class="icon dice" id="i-dice" style="left: 950px; top: 350px;"></div>
+    <div class="icon clock" id="i-clock" style="left: 400px; top: 400px;"></div>
+    <div class="icon family" id="i-family" style="left: 1000px; top: 150px;">
+      <div class="person" style="left: 0;"><div class="p-head"></div><div class="p-body"></div></div>
+      <div class="person" style="left: 28px;"><div class="p-head" style="width:14px;height:14px;"></div><div class="p-body" style="width:18px;height:20px;"></div></div>
+      <div class="person" style="left: 48px;"><div class="p-head"></div><div class="p-body"></div></div>
+    </div>
+    <div class="title" id="t1">你有没有过这样的时刻？</div>
+    <div class="subtitle" id="t2">明明知道不对，却怎么也走不出来</div>
+    <div class="person" id="person">
+      <div class="head" id="p-head"></div>
+      <div class="body"></div>
+    </div>
+    <div class="cards">
+      <div class="card" id="c1"><span class="num">5年</span>撑不下去的感情</div>
+      <div class="card" id="c2"><span class="num">3年</span>熬不出头的工作</div>
+      <div class="card" id="c3"><span class="num">2小时</span>下不停的赌局</div>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // 背景图标淡入
+    tl.fromTo("#i-heart", { opacity: 0, y: -20 }, { opacity: 0.5, y: 0, duration: 0.8 }, 0.2);
+    tl.fromTo("#i-bag", { opacity: 0, y: -20 }, { opacity: 0.5, y: 0, duration: 0.8 }, 0.4);
+    tl.fromTo("#i-dice", { opacity: 0, y: -20 }, { opacity: 0.5, y: 0, duration: 0.8 }, 0.6);
+    tl.fromTo("#i-clock", { opacity: 0, scale: 0 }, { opacity: 0.5, scale: 1, duration: 0.8 }, 0.5);
+    tl.fromTo("#i-family", { opacity: 0, y: 20 }, { opacity: 0.5, y: 0, duration: 0.8 }, 0.7);
+    // 图标轻微漂浮
+    tl.to("#i-heart", { y: -15, duration: 2, ease: "sine.inOut", yoyo: true, repeat: 3 }, 1.5);
+    tl.to("#i-bag", { y: -10, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 3 }, 1.8);
+    tl.to("#i-dice", { rotation: 15, duration: 1.5, ease: "sine.inOut", yoyo: true, repeat: 4 }, 2.0);
+    tl.to("#i-clock", { rotation: 360, duration: 8, ease: "none" }, 2.0);
+    // 主文字
+    tl.fromTo("#t1", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 0.3);
+    tl.fromTo("#t2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }, 1.3);
+    // 人物
+    tl.fromTo("#person", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" }, 1.0);
+    tl.to("#p-head", { rotation: -8, duration: 0.8, ease: "sine.inOut", yoyo: true, repeat: 3, transformOrigin: "bottom center" }, 2.5);
+    // 卡片
+    tl.fromTo("#c1", { opacity: 0, y: 50, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 2.8);
+    tl.fromTo("#c2", { opacity: 0, y: 50, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 3.4);
+    tl.fromTo("#c3", { opacity: 0, y: 50, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 4.0);
+    window.__timelines["s1-hook"] = tl;
+  </script>
+</template>
+</body>
+</html>
