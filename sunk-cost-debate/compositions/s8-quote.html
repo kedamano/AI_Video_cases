@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(99,164,255,0.15),transparent 60%);}
+.h{position:absolute;left:80px;right:80px;top:220px;text-align:center;font-size:48px;font-weight:800;letter-spacing:2px;opacity:0;}
+.h .hl{color:#63a4ff;}
+.s{position:absolute;left:0;right:0;top:340px;text-align:center;font-size:26px;color:#aeb7c2;opacity:0;}
+</style>
+<div id="root" data-composition-id="s8-quote" data-width="1280" data-height="720">
+<div class="bg"></div>
+<div class="h" id="h1">沉没成本，<span class="hl">不参与重大决策</span></div>
+<div class="s" id="s1">错一次，不是终局，是重置键</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#h1",{opacity:0,y:30},{opacity:1,y:0,duration:0.6,ease:"power3.out"},0.1);
+tl.fromTo("#s1",{opacity:0,y:20},{opacity:1,y:0,duration:0.4},0.8);
+window.__timelines["s8-quote"]=tl;
+</script>
+</template></body></html>

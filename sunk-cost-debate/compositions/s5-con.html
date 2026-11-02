@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#0e1418;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.tag{position:absolute;right:80px;top:140px;text-align:right;font-size:18px;letter-spacing:4px;color:#63a4ff;opacity:0;}
+.h{position:absolute;right:80px;top:190px;text-align:right;font-size:48px;font-weight:800;opacity:0;}
+.pt{position:absolute;right:80px;top:320px;text-align:right;font-size:24px;color:#c8d0db;opacity:0;line-height:1.8;}
+</style>
+<div id="root" data-composition-id="s5-con" data-width="1280" data-height="720">
+<div class="tag" id="tag">反方</div>
+<div class="h" id="h1">沉没成本，不是成本</div>
+<div class="pt" id="p1">已经花出去的，像泼出去的水<br>真正影响下一步的，只有未来</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#tag",{opacity:0,x:20},{opacity:1,x:0,duration:0.3},0.1);
+tl.fromTo("#h1",{opacity:0,y:30},{opacity:1,y:0,duration:0.5,ease:"power3.out"},0.3);
+tl.fromTo("#p1",{opacity:0,y:20},{opacity:1,y:0,duration:0.4},0.8);
+window.__timelines["s5-con"]=tl;
+</script>
+</template></body></html>

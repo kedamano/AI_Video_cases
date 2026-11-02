@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:#1a1f2e;border:2px solid #ffd166;color:#ffd166;font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;opacity:0;}
+.l{position:absolute;left:80px;top:200px;font-size:26px;color:#ff6b6b;opacity:0;line-height:1.6;}
+.r{position:absolute;right:80px;top:200px;text-align:right;font-size:26px;color:#63a4ff;opacity:0;line-height:1.6;}
+</style>
+<div id="root" data-composition-id="s6-clash" data-width="1280" data-height="720">
+<div class="l" id="l1">为了不浪费过去五年<br>再赔上未来五年</div>
+<div class="vs" id="vs">VS</div>
+<div class="r" id="r1">承认选错了<br>把日子留给值得的事</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#l1",{opacity:0,x:-30},{opacity:1,x:0,duration:0.4,ease:"power3.out"},0.1);
+tl.fromTo("#r1",{opacity:0,x:30},{opacity:1,x:0,duration:0.4,ease:"power3.out"},0.3);
+tl.fromTo("#vs",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(2)"},0.6);
+tl.to("#vs",{scale:1.15,duration:0.5,ease:"sine.inOut",yoyo:true,repeat:5},1.2);
+window.__timelines["s6-clash"]=tl;
+</script>
+</template></body></html>

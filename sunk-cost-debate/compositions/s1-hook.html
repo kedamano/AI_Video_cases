@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(99,164,255,0.15),transparent 60%);}
+.t{position:absolute;left:80px;top:240px;font-size:64px;font-weight:800;letter-spacing:2px;opacity:0;}
+.s{position:absolute;left:80px;top:360px;font-size:28px;color:#aeb7c2;opacity:0;}
+.dot{position:absolute;width:10px;height:10px;border-radius:50%;background:#63a4ff;opacity:0;}
+</style>
+<div id="root" data-composition-id="s1-hook" data-width="1280" data-height="720">
+<div class="bg"></div>
+<div class="dot" id="d1" style="left:200px;top:180px;"></div>
+<div class="dot" id="d2" style="left:900px;top:200px;"></div>
+<div class="dot" id="d3" style="left:1050px;top:500px;"></div>
+<div class="t" id="t1">你有没有过这样的时刻？</div>
+<div class="s" id="t2">明明知道不对，却走不出来</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#d1",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.3},0.1);
+tl.fromTo("#d2",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.3},0.2);
+tl.fromTo("#d3",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.3},0.3);
+tl.fromTo("#t1",{opacity:0,y:30},{opacity:1,y:0,duration:0.5,ease:"power3.out"},0.2);
+tl.fromTo("#t2",{opacity:0,y:20},{opacity:1,y:0,duration:0.4,ease:"power2.out"},0.8);
+window.__timelines["s1-hook"]=tl;
+</script>
+</template></body></html>
