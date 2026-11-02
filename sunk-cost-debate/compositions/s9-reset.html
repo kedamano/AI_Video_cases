@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-2"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.text{position:absolute;left:80px;top:120px;width:450px;}
+.h{font-size:44px;font-weight:800;line-height:1.3;opacity:0;}
+.p{font-size:22px;color:#c8d0db;margin-top:16px;line-height:1.6;opacity:0;}
+.scene{position:absolute;right:60px;bottom:60px;width:450px;height:500px;}
+.ruins{position:absolute;bottom:0;left:0;width:220px;height:180px;opacity:0.3;}
+.r1{position:absolute;bottom:0;left:10px;width:70px;height:130px;background:#2a2a2a;border-radius:2px;}
+.r2{position:absolute;bottom:0;left:90px;width:50px;height:90px;background:#2a2a2a;border-radius:2px;}
+.r3{position:absolute;bottom:0;left:150px;width:60px;height:150px;background:#2a2a2a;border-radius:2px;}
+.road{position:absolute;bottom:0;left:240px;width:180px;height:4px;background:linear-gradient(to right,#63a4ff,transparent);transform-origin:left;}
+.person{position:absolute;bottom:0;left:260px;opacity:0;}
+.person::before{content:'';position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:#63a4ff;}
+.person::after{content:'';position:absolute;top:0;left:0;width:30px;height:80px;background:#63a4ff;border-radius:4px 4px 0 0;}
+</style>
+<div id="root" data-composition-id="s9-reset" data-width="1280" data-height="720">
+<div class="text">
+<div class="h" id="h1">翻盘，不是否定过去<br>是不被过去绑架</div>
+<div class="p" id="p1">按下重置键，从现在开始重新算</div>
+</div>
+<div class="scene">
+<div class="ruins" id="ruins">
+<div class="r1"></div><div class="r2"></div><div class="r3"></div>
+</div>
+<div class="road" id="road"></div>
+<div class="person" id="person"></div>
+</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#h1",{opacity:0,y:20},{opacity:1,y:0,duration:0.6,ease:"power3.out"},0.1);
+tl.fromTo("#p1",{opacity:0,y:15},{opacity:1,y:0,duration:0.4},0.7);
+tl.fromTo("#ruins",{opacity:0.2,x:-20},{opacity:0.3,x:0,duration:0.8},0.6);
+tl.fromTo("#person",{opacity:0,y:20},{opacity:1,y:0,duration:0.7,ease:"bounce.out"},1.0);
+tl.fromTo("#road",{opacity:0,scaleX:0},{opacity:1,scaleX:1,duration:0.8,ease:"power2.out"},1.3);
+window.__timelines["s9-reset"]=tl;
+</script>
+</template></body></html>

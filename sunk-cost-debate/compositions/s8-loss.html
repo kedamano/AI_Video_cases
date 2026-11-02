@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-2"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.text{position:absolute;left:80px;top:120px;width:450px;}
+.h{font-size:44px;font-weight:800;line-height:1.3;opacity:0;}
+.h .hl{color:#ff9a63;}
+.p{font-size:22px;color:#c8d0db;margin-top:16px;line-height:1.6;opacity:0;}
+.scene{position:absolute;right:80px;bottom:100px;width:400px;height:350px;}
+.pivot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:24px;height:80px;background:#6a6a6a;border-radius:4px;}
+.beam{position:absolute;top:50%;left:20px;right:20px;height:5px;background:#8a8a8a;transform-origin:center;}
+.weightL{position:absolute;top:calc(50% + 15px);left:40px;width:70px;height:60px;background:#ff6b6b;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;}
+.weightR{position:absolute;top:calc(50% + 15px);right:40px;width:70px;height:25px;background:#63a4ff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;}
+</style>
+<div id="root" data-composition-id="s8-loss" data-width="1280" data-height="720">
+<div class="text">
+<div class="h" id="h1">舍不得，不是深情<br>是<span class="hl">损失厌恶</span></div>
+<div class="p" id="p1">丢掉 100 块的痛苦，远大于捡到 100 块的快乐</div>
+</div>
+<div class="scene">
+<div class="pivot"></div>
+<div class="beam" id="beam"></div>
+<div class="weightL" id="wl">已失去</div>
+<div class="weightR" id="wr">可获得</div>
+</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#h1",{opacity:0,y:20},{opacity:1,y:0,duration:0.6,ease:"power3.out"},0.1);
+tl.fromTo("#p1",{opacity:0,y:15},{opacity:1,y:0,duration:0.4},0.7);
+tl.fromTo("#wl",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(1.6)"},0.6);
+tl.fromTo("#wr",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(1.6)"},1.0);
+tl.to("#beam",{rotation:10,duration:0.8,ease:"sine.inOut",yoyo:true,repeat:3},1.5);
+window.__timelines["s8-loss"]=tl;
+</script>
+</template></body></html>

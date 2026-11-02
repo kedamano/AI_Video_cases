@@ -1,26 +1,44 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"></head><body><template>
 <style>
 #root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
-.bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(99,164,255,0.15),transparent 60%);}
-.t{position:absolute;left:80px;top:240px;font-size:64px;font-weight:800;letter-spacing:2px;opacity:0;}
-.s{position:absolute;left:80px;top:360px;font-size:28px;color:#aeb7c2;opacity:0;}
-.dot{position:absolute;width:10px;height:10px;border-radius:50%;background:#63a4ff;opacity:0;}
+.bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 60%,rgba(99,164,255,0.08),transparent 70%);}
+.paths{position:absolute;bottom:0;left:0;right:0;height:400px;}
+.path{position:absolute;bottom:0;height:2px;background:linear-gradient(to right,rgba(99,164,255,0.6),transparent);transform-origin:left;}
+.p1{left:10%;width:200px;transform:rotate(-8deg);}
+.p2{left:25%;width:250px;transform:rotate(3deg);}
+.p3{left:45%;width:180px;transform:rotate(-2deg);}
+.p4{left:60%;width:220px;transform:rotate(5deg);}
+.p5{left:75%;width:180px;transform:rotate(-6deg);}
+.people{position:absolute;bottom:0;display:flex;gap:40px;justify-content:center;left:0;right:0;}
+.fig{width:20px;height:60px;background:rgba(74,90,122,0.4);border-radius:4px 4px 0 0;position:relative;}
+.fig::before{content:'';position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:rgba(74,90,122,0.4);}
+.main{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:30px;height:90px;opacity:0;}
+.main::before{content:'';position:absolute;top:-25px;left:50%;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:#63a4ff;}
+.main::after{content:'';position:absolute;top:0;left:0;width:30px;height:90px;background:#63a4ff;border-radius:6px 6px 0 0;}
+.text{position:absolute;left:0;right:0;top:100px;text-align:center;}
+.t{font-size:48px;font-weight:700;letter-spacing:1px;opacity:0;}
+.s{font-size:26px;color:#aeb7c2;margin-top:14px;opacity:0;}
 </style>
 <div id="root" data-composition-id="s1-hook" data-width="1280" data-height="720">
 <div class="bg"></div>
-<div class="dot" id="d1" style="left:200px;top:180px;"></div>
-<div class="dot" id="d2" style="left:900px;top:200px;"></div>
-<div class="dot" id="d3" style="left:1050px;top:500px;"></div>
-<div class="t" id="t1">你有没有过这样的时刻？</div>
-<div class="s" id="t2">明明知道不对，却走不出来</div>
+<div class="text"><div class="t" id="t1">你有没有过这样的时刻？</div><div class="s" id="t2">走过的路，成了走不出去的理由</div></div>
+<div class="paths">
+<div class="path p1"></div><div class="path p2"></div><div class="path p3"></div><div class="path p4"></div><div class="path p5"></div>
+</div>
+<div class="people">
+<div class="fig"></div><div class="fig"></div><div class="fig"></div><div class="fig"></div><div class="fig"></div><div class="fig"></div><div class="fig"></div>
+</div>
+<div class="main" id="main"></div>
 </div>
 <script>
 const tl=gsap.timeline({paused:true});
-tl.fromTo("#d1",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.3},0.1);
-tl.fromTo("#d2",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.3},0.2);
-tl.fromTo("#d3",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.3},0.3);
-tl.fromTo("#t1",{opacity:0,y:30},{opacity:1,y:0,duration:0.5,ease:"power3.out"},0.2);
-tl.fromTo("#t2",{opacity:0,y:20},{opacity:1,y:0,duration:0.4,ease:"power2.out"},0.8);
+tl.fromTo("#t1",{opacity:0,y:20},{opacity:1,y:0,duration:0.6,ease:"power3.out"},0.2);
+tl.fromTo("#t2",{opacity:0,y:15},{opacity:1,y:0,duration:0.5},0.8);
+document.querySelectorAll(".path").forEach((el,i)=>{
+  tl.fromTo(el,{opacity:0,scaleX:0},{opacity:1,scaleX:1,duration:0.6,ease:"power2.out"},0.3+i*0.15);
+});
+tl.fromTo(".fig",{opacity:0,y:10},{opacity:1,y:0,duration:0.5,stagger:0.1},0.5);
+tl.fromTo("#main",{opacity:0,y:30},{opacity:1,y:0,duration:0.8,ease:"bounce.out"},1.0);
 window.__timelines["s1-hook"]=tl;
 </script>
 </template></body></html>

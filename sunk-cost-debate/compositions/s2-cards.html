@@ -1,25 +1,50 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"></head><body><template>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-2"></head><body><template>
 <style>
 #root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
-.cards{position:absolute;left:80px;top:260px;display:flex;gap:20px;}
-.card{padding:24px 30px;border:1px solid rgba(99,164,255,0.35);border-radius:12px;background:rgba(99,164,255,0.08);font-size:22px;opacity:0;}
-.card .n{color:#63a4ff;font-weight:700;font-size:28px;margin-right:8px;}
-.h{position:absolute;left:80px;top:160px;font-size:32px;color:#aeb7c2;opacity:0;}
+.text{position:absolute;left:0;right:0;top:70px;text-align:center;}
+.h{font-size:30px;color:#aeb7c2;opacity:0;}
+.scenes{position:absolute;bottom:100px;left:0;right:0;display:flex;justify-content:center;gap:80px;}
+.scene{width:220px;height:280px;opacity:0;position:relative;}
+.couple{position:relative;height:200px;}
+.personL{position:absolute;bottom:0;left:30px;width:30px;height:80px;background:#ff6b6b;border-radius:4px 4px 0 0;}
+.personL::before{content:'';position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:#ff6b6b;}
+.personR{position:absolute;bottom:0;right:30px;width:30px;height:80px;background:#c85a5a;border-radius:4px 4px 0 0;}
+.personR::before{content:'';position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:#c85a5a;}
+.gap{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);width:60px;height:2px;background:#ff6b6b;opacity:0.5;}
+.building{position:relative;height:200px;display:flex;align-items:flex-end;justify-content:center;}
+.bldg{width:80px;height:180px;background:#3a4a6a;border-radius:4px 4px 0 0;position:relative;}
+.bldg::after{content:'';position:absolute;top:15px;left:10px;right:10px;bottom:10px;background:repeating-linear-gradient(0deg,transparent 0,transparent 18px,rgba(255,209,102,0.4) 18px,rgba(255,209,102,0.4) 24px);}
+.table{position:relative;height:200px;display:flex;align-items:center;justify-content:center;}
+.dtable{width:140px;height:20px;background:#5a3a3a;border-radius:10px;position:relative;}
+.dtable::before{content:'';position:absolute;top:-15px;left:20px;width:15px;height:15px;background:#ffd166;border-radius:3px;transform:rotate(15deg);}
+.dtable::after{content:'';position:absolute;top:-10px;right:30px;width:12px;height:12px;background:#ff6b6b;border-radius:3px;transform:rotate(-10deg);}
+.desc{margin-top:20px;text-align:center;}
+.n{font-size:28px;font-weight:800;color:#63a4ff;}
+.d{font-size:20px;color:#c8d0db;margin-top:4px;}
 </style>
 <div id="root" data-composition-id="s2-cards" data-width="1280" data-height="720">
-<div class="h" id="h1">那些放不下的事——</div>
-<div class="cards">
-<div class="card" id="c1"><span class="n">5年</span>撑不下去的感情</div>
-<div class="card" id="c2"><span class="n">3年</span>熬不出头的工作</div>
-<div class="card" id="c3"><span class="n">2小时</span>下不停的赌局</div>
+<div class="text"><div class="h" id="h1">那些你舍不得的——</div></div>
+<div class="scenes">
+<div class="scene" id="i1">
+<div class="couple"><div class="personL"></div><div class="gap"></div><div class="personR"></div></div>
+<div class="desc"><div class="n">5年</div><div class="d">撑不下去的感情</div></div>
+</div>
+<div class="scene" id="i2">
+<div class="building"><div class="bldg"></div></div>
+<div class="desc"><div class="n">3年</div><div class="d">熬不出头的工作</div></div>
+</div>
+<div class="scene" id="i3">
+<div class="table"><div class="dtable"></div></div>
+<div class="desc"><div class="n">2小时</div><div class="d">下不停的赌局</div></div>
+</div>
 </div>
 </div>
 <script>
 const tl=gsap.timeline({paused:true});
-tl.fromTo("#h1",{opacity:0,y:-15},{opacity:1,y:0,duration:0.35},0.1);
-tl.fromTo("#c1",{opacity:0,y:40,scale:0.9},{opacity:1,y:0,scale:1,duration:0.4,ease:"back.out(1.7)"},0.4);
-tl.fromTo("#c2",{opacity:0,y:40,scale:0.9},{opacity:1,y:0,scale:1,duration:0.4,ease:"back.out(1.7)"},0.7);
-tl.fromTo("#c3",{opacity:0,y:40,scale:0.9},{opacity:1,y:0,scale:1,duration:0.4,ease:"back.out(1.7)"},1.0);
+tl.fromTo("#h1",{opacity:0,y:-15},{opacity:1,y:0,duration:0.4},0.1);
+tl.fromTo("#i1",{opacity:0,y:40},{opacity:1,y:0,duration:0.6,ease:"back.out(1.6)"},0.4);
+tl.fromTo("#i2",{opacity:0,y:40},{opacity:1,y:0,duration:0.6,ease:"back.out(1.6)"},0.9);
+tl.fromTo("#i3",{opacity:0,y:40},{opacity:1,y:0,duration:0.6,ease:"back.out(1.6)"},1.4);
 window.__timelines["s2-cards"]=tl;
 </script>
 </template></body></html>

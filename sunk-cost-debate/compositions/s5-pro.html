@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-2"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#1a1216;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.text{position:absolute;left:80px;top:120px;width:450px;}
+.tag{font-size:16px;letter-spacing:4px;color:#ff6b6b;opacity:0;}
+.h{font-size:42px;font-weight:800;margin-top:12px;opacity:0;line-height:1.3;}
+.p{font-size:22px;color:#c8d0db;margin-top:16px;line-height:1.6;opacity:0;}
+.scene{position:absolute;right:100px;bottom:60px;width:300px;height:500px;}
+.person{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:35px;height:100px;}
+.person::before{content:'';position:absolute;top:-25px;left:50%;transform:translateX(-50%);width:24px;height:24px;border-radius:50%;background:#8b3a3a;}
+.person::after{content:'';position:absolute;top:0;left:0;width:35px;height:100px;background:#8b3a3a;border-radius:6px 6px 0 0;}
+.bag{position:absolute;left:50%;transform:translateX(-50%);width:70px;height:50px;background:#5a2a2a;border-radius:6px;opacity:0;}
+.bag .label{font-size:12px;color:#fff;text-align:center;line-height:50px;}
+</style>
+<div id="root" data-composition-id="s5-pro" data-width="1280" data-height="720">
+<div class="text">
+<div class="tag" id="tag">正方</div>
+<div class="h" id="h1">错一次，就完了</div>
+<div class="p" id="p1">每多投入一年，背上的包袱就重一分，直到走不动为止</div>
+</div>
+<div class="scene">
+<div class="person" id="person">
+<div class="bag" id="b1" style="top:-30px;"><div class="label">5年感情</div></div>
+<div class="bag" id="b2" style="top:-85px;"><div class="label">3年工作</div></div>
+<div class="bag" id="b3" style="top:-140px;"><div class="label">金钱</div></div>
+</div>
+</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#tag",{opacity:0,x:-20},{opacity:1,x:0,duration:0.4},0.1);
+tl.fromTo("#h1",{opacity:0,y:20},{opacity:1,y:0,duration:0.5,ease:"power3.out"},0.4);
+tl.fromTo("#p1",{opacity:0,y:15},{opacity:1,y:0,duration:0.4},0.9);
+tl.fromTo("#person",{opacity:0,x:-30},{opacity:1,x:0,duration:0.6},0.6);
+tl.fromTo("#b1",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(1.6)"},1.0);
+tl.fromTo("#b2",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(1.6)"},1.5);
+tl.fromTo("#b3",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(1.6)"},2.0);
+tl.to("#person",{skewX:8,duration:0.6,ease:"sine.inOut",yoyo:true,repeat:4},2.5);
+window.__timelines["s5-pro"]=tl;
+</script>
+</template></body></html>

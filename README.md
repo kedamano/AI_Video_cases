@@ -10,7 +10,7 @@
 [![Cases](https://img.shields.io/badge/cases-2-ff4d1a?style=flat-square)](#案例库)
 [![Shots](https://img.shields.io/badge/shots-18-ff8c42?style=flat-square)](#案例-01--玻璃之后)
 [![Duration](https://img.shields.io/badge/duration-25s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
-[![Code Video](https://img.shields.io/badge/code%20video-60s-63a4ff?style=flat-square)](#案例-02--沉没成本辩论)
+[![Code Video](https://img.shields.io/badge/code%20video-120s-63a4ff?style=flat-square)](#案例-02--沉没成本辩论)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
 
 ![《玻璃之后》预览](assets/preview.gif)
@@ -42,7 +42,7 @@
 | 案例 | 规格 | 核心难点 | 状态 |
 | --- | --- | --- | --- |
 | [01 · 玻璃之后](#案例-01--玻璃之后) | 25s / 18 镜 / 1080p / 24fps | 同一角色跨 18 镜面部不崩、不脏 | ✅ 完成 |
-| [02 · 沉没成本辩论](#案例-02--沉没成本辩论) | 60s / 8 场景 / 720p / 30fps | 纯代码动画 + GSAP 时间线 + Kokoro TTS 中文配音 | ✅ 完成 |
+| [02 · 沉没成本辩论](#案例-02--沉没成本辩论) | 120s / 10 场景 / 720p / 30fps | 纯代码场景化动画 + GSAP 时间线 + Vibe 知识大赏风格 | ✅ 完成 |
 
 ## 为什么值得 Star
 
@@ -176,18 +176,20 @@ python make_final.py
 - **Kokoro TTS**（onnx-community/Kokoro-82M）：中文女声 `zf_xiaobei`，7 段旁白
 - **CSS 图形**：简笔人物、家庭剪影、戒指、骰子、砝码、门等生活元素图标
 
-**8 个场景**：
+**10 个场景（Vibe 知识大赏风格 · 场景化叙事）**：
 
-| 时间 | 场景 | 动画 |
+| 时间 | 场景 | 画面内容 |
 | --- | --- | --- |
-| 0-7s | 钩子：你有没有过这样的时刻？ | 标题快速上移淡入 + 散点弹出 |
-| 7-14s | 三张卡片 | 5年/3年/2小时依次弹入 |
-| 14-21s | 锚词：舍不得 | 大字 scale 3.5→1 炸开 + 扩散圆环 |
-| 21-28s | 正方：错一次就完了 | 红底左对齐滑入 |
-| 28-35s | 反方：沉没成本不是成本 | 蓝底右对齐滑入 |
-| 35-43s | 交锋 VS | 两边论据对撞 + VS 脉冲 |
-| 43-51s | 结辩：损失厌恶 | 关键词高亮 |
-| 51-60s | 金句收尾 | 主标题 + 副标题淡入 |
+| 0-10s | 钩子：你有没有过这样的时刻？ | 5条路向不同方向延伸 + 7个模糊人影 + 中间亮色主角 |
+| 10-20s | 三个舍不得 | 两人剪影缝隙（感情）+ 亮灯办公楼（工作）+ 赌桌筹码（赌局） |
+| 20-30s | 锚词：舍不得 | 大字炸开 + 扩散圆环 + 橙色光晕 |
+| 30-40s | 定义：沉没成本 | 8枚硬币叠成高塔 + 人站在塔底仰望 |
+| 40-50s | 正方：错一次就完了 | 人背3个包袱（5年感情/3年工作/金钱）弯腰摇摆 |
+| 50-60s | 反方：沉没成本不是成本 | 亮着光的门 + 人站在门前 |
+| 60-70s | VS 交锋 | 左边背重物弯腰 vs 右边张开双臂，中间VS脉冲 |
+| 70-80s | 损失厌恶 | 天平极端倾斜，左边"已失去"重物压得很低 |
+| 80-90s | 重置键 | 身后废墟建筑 + 前面新路 + 人站在新起点 |
+| 90-120s | 金句收尾 | 城市剪影 + 光路伸向远方 + 主标题呼吸 |
 
 **三条关键设计**：
 
@@ -195,7 +197,7 @@ python make_final.py
 2. **生活元素背景层** —— 半透明 CSS 图标（爱心/公文包/骰子/家庭剪影/戒指/砝码/门）铺在背景，不抢主文字，各自有漂浮/摆动动画，让抽象概念有视觉锚点。
 3. **TTS 本地化** —— Kokoro onnx 模型 + espeak-ng 中文（语言码 `cmn` 而非 `zh`），声音文件按单 bin 下载后用 `np.fromfile` 重塑为 (510,1,256) 再打包 npz。
 
-**相关文件**：[主组合](sunk-cost-debate/index.html) · [场景子组合](sunk-cost-debate/compositions/) · [配音脚本](sunk-cost-debate/gen_voice.py) · [成片](sunk-cost-debate/sunk-cost-debate-60s-v4.mp4)
+**相关文件**：[主组合](sunk-cost-debate/index.html) · [场景子组合](sunk-cost-debate/compositions/) · [成片](sunk-cost-debate/sunk-cost-debate-2min-v3.mp4)
 
 ## 方法论
 

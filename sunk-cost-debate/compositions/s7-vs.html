@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-2"></head><body><template>
+<style>
+#root{position:absolute;inset:0;overflow:hidden;background:#0e1116;color:#f4f6f9;font-family:system-ui,sans-serif;}
+.side{position:absolute;bottom:100px;width:320px;text-align:center;}
+.left{left:60px;}
+.right{right:60px;}
+.figure{position:relative;width:80px;height:140px;margin:0 auto;}
+.left .head{position:absolute;top:0;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:#ff6b6b;}
+.left .body{position:absolute;top:35px;left:50%;transform:translateX(-50%);width:45px;height:80px;background:#ff6b6b;border-radius:6px 6px 0 0;}
+.right .head{position:absolute;top:0;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:#63a4ff;}
+.right .body{position:absolute;top:35px;left:50%;transform:translateX(-50%);width:45px;height:80px;background:#63a4ff;border-radius:6px 6px 0 0;}
+.bag{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:60px;height:40px;background:#8b3a3a;border-radius:4px;opacity:0;}
+.bag2{top:-25px;}
+.text{font-size:22px;margin-top:20px;line-height:1.6;}
+.left .text{color:#ff6b6b;}
+.right .text{color:#63a4ff;}
+.vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:90px;height:90px;border-radius:50%;background:#1a1f2e;border:2px solid #ffd166;color:#ffd166;font-size:32px;font-weight:800;display:flex;align-items:center;justify-content:center;opacity:0;}
+</style>
+<div id="root" data-composition-id="s7-vs" data-width="1280" data-height="720">
+<div class="side left" id="sl">
+<div class="figure">
+<div class="head"></div><div class="body"></div>
+<div class="bag bag1" id="b1"></div>
+<div class="bag bag2" id="b2"></div>
+</div>
+<div class="text">为了不浪费过去五年<br>再赔上未来五年</div>
+</div>
+<div class="side right" id="sr">
+<div class="figure">
+<div class="head"></div><div class="body"></div>
+</div>
+<div class="text">承认选错了<br>把日子留给值得的事</div>
+</div>
+<div class="vs" id="vs">VS</div>
+</div>
+<script>
+const tl=gsap.timeline({paused:true});
+tl.fromTo("#sl",{opacity:0,x:-40},{opacity:1,x:0,duration:0.6,ease:"power3.out"},0.1);
+tl.fromTo("#sr",{opacity:0,x:40},{opacity:1,x:0,duration:0.6,ease:"power3.out"},0.3);
+tl.fromTo("#vs",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.6,ease:"back.out(2)"},0.6);
+tl.fromTo("#b1",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(1.6)"},0.8);
+tl.fromTo("#b2",{opacity:0,scale:0},{opacity:1,scale:1,duration:0.5,ease:"back.out(1.6)"},1.1);
+tl.to("#vs",{scale:1.15,duration:0.6,ease:"sine.inOut",yoyo:true,repeat:6},1.5);
+window.__timelines["s7-vs"]=tl;
+</script>
+</template></body></html>
