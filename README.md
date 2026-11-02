@@ -7,9 +7,10 @@
 [![Stars](https://img.shields.io/github/stars/kedamano/AI_Video_cases?style=flat-square&color=ff4d1a)](https://github.com/kedamano/AI_Video_cases/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases/commits/main)
 [![Repo Size](https://img.shields.io/github/repo-size/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases)
-[![Cases](https://img.shields.io/badge/cases-1-ff4d1a?style=flat-square)](#案例库)
+[![Cases](https://img.shields.io/badge/cases-2-ff4d1a?style=flat-square)](#案例库)
 [![Shots](https://img.shields.io/badge/shots-18-ff8c42?style=flat-square)](#案例-01--玻璃之后)
 [![Duration](https://img.shields.io/badge/duration-25s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
+[![Code Video](https://img.shields.io/badge/code%20video-60s-63a4ff?style=flat-square)](#案例-02--沉没成本辩论)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
 
 ![《玻璃之后》预览](assets/preview.gif)
@@ -41,7 +42,7 @@
 | 案例 | 规格 | 核心难点 | 状态 |
 | --- | --- | --- | --- |
 | [01 · 玻璃之后](#案例-01--玻璃之后) | 25s / 18 镜 / 1080p / 24fps | 同一角色跨 18 镜面部不崩、不脏 | ✅ 完成 |
-| 02 · 待定 | — | 多角色对话的一致性 | 🚧 规划中 |
+| [02 · 沉没成本辩论](#案例-02--沉没成本辩论) | 60s / 4 场景 / 720p / 30fps | 纯代码动画 + GSAP 时间线 + Kokoro TTS 中文配音 | ✅ 完成 |
 
 ## 为什么值得 Star
 
@@ -162,6 +163,35 @@ python make_final.py
 3. **同角色跨镜一致** —— 所有含脸镜头共用同一段 `CLEAN BEAUTY` 描述词块，靠提示词锁脸，不依赖参考图。
 
 **相关文件**：[分镜脚本](玻璃之后_视频脚本提示词.html) · [首帧总览](contact_sheet.png) · [抽帧核对](成片抽帧核对.png) · [成片](玻璃之后_成片.mp4)
+
+### 案例 02 · 沉没成本辩论
+
+**60 秒 / 4 场景 / 1280×720 / 30fps · 纯代码动画（无 AI 生图）**
+
+主题：人生是不是选择错一次就没有翻盘的机会了？为什么说沉没成本不参与重大决策。
+
+**技术栈**：
+- **HyperFrames**（HeyGen 开源）：HTML + GSAP 时间线驱动，模块化子组合架构
+- **GSAP**：每场景独立 timeline，入场淡入/弹入/缩放/旋转，全程确定性无随机
+- **Kokoro TTS**（onnx-community/Kokoro-82M）：中文女声 `zf_xiaobei`，7 段旁白
+- **CSS 图形**：简笔人物、家庭剪影、戒指、骰子、砝码、门等生活元素图标
+
+**4 个场景**：
+
+| 时间 | 场景 | 动画 |
+| --- | --- | --- |
+| 0-12s | 钩子：你有没有过这样的时刻？ | 标题上移淡入 + 3 张卡片（5年感情/3年工作/2小时赌局）依次弹入 + 思考人物头部摆动 |
+| 12-25s | 锚词：舍不得 | 大字 scale 3.5→1 炸开 + 双层扩散圆环 + 两侧抱头人物 + 放射线旋转 |
+| 25-45s | 正反辩论 | 红/蓝面板左右滑入 + VS 脉冲 + 双方论据逐条滑入 + 争论人物头部摆动 |
+| 45-60s | 金句收尾 | 重置键 R 按钮旋转弹出 + 光晕呼吸 + 主标题淡入 |
+
+**三条关键设计**：
+
+1. **模块化子组合** —— 每个 scene 是独立 HTML（`<template>` 包裹），主 `index.html` 用 `data-composition-src` 挂载，时间线 key 三者一致，lint 自动校验。
+2. **生活元素背景层** —— 半透明 CSS 图标（爱心/公文包/骰子/家庭剪影/戒指/砝码/门）铺在背景，不抢主文字，各自有漂浮/摆动动画，让抽象概念有视觉锚点。
+3. **TTS 本地化** —— Kokoro onnx 模型 + espeak-ng 中文（语言码 `cmn` 而非 `zh`），声音文件按单 bin 下载后用 `np.fromfile` 重塑为 (510,1,256) 再打包 npz。
+
+**相关文件**：[主组合](sunk-cost-debate/index.html) · [场景子组合](sunk-cost-debate/compositions/) · [配音脚本](sunk-cost-debate/gen_voice.py) · [成片](sunk-cost-debate/sunk-cost-debate-60s-v3.mp4)
 
 ## 方法论
 
