@@ -7,7 +7,7 @@
 [![Stars](https://img.shields.io/github/stars/kedamano/AI_Video_cases?style=flat-square&color=ff4d1a)](https://github.com/kedamano/AI_Video_cases/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases/commits/main)
 [![Repo Size](https://img.shields.io/github/repo-size/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases)
-[![Cases](https://img.shields.io/badge/cases-3-ff4d1a?style=flat-square)](#案例库)
+[![Cases](https://img.shields.io/badge/cases-4-ff4d1a?style=flat-square)](#案例库)
 [![Shots](https://img.shields.io/badge/shots-18-ff8c42?style=flat-square)](#案例-01--玻璃之后)
 [![Duration](https://img.shields.io/badge/duration-25s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
 [![Code Video](https://img.shields.io/badge/code%20video-120s-63a4ff?style=flat-square)](#案例-02--沉没成本辩论)
@@ -44,6 +44,7 @@
 | [01 · 玻璃之后](#案例-01--玻璃之后) | 25s / 18 镜 / 1080p / 24fps | 同一角色跨 18 镜面部不崩、不脏 | ✅ 完成 |
 | [02 · 沉没成本辩论](#案例-02--沉没成本辩论) | 120s / 10 场景 / 720p / 30fps | 纯代码场景化动画 + GSAP 时间线 + Vibe 知识大赏风格 | ✅ 完成 |
 | [03 · 雨夜对谈](#案例-03--雨夜对谈) | 30s / 12 镜 / 720p / 24fps | 双角色对话场景，跨角色一致性与过肩镜头身份锁定 | ✅ 完成 |
+| [04 · 夏日午后](#案例-04--夏日午后) | 22s / 6 镜 / 720p / 24fps | 日系电影感美学，自然光影与静物叙事 | ✅ 完成 |
 
 ## 为什么值得 Star
 
@@ -254,6 +255,40 @@ python make_final.py
 
 **相关文件**：[分镜脚本](rainy-night-talk/雨夜对谈_视频脚本提示词.html) · [首帧图](rainy-night-talk/frames/) · [视频片段](rainy-night-talk/videos/) · [案例 README](rainy-night-talk/README.md)
 
+### 案例 04 · 夏日午后
+
+**22 秒 / 6 镜 / 1280×720 / 24fps · 日系电影感美学短片**
+
+主题：一个充满夏日氛围、宁静、文艺的剪辑短片，通过一系列富有诗意的静态与动态画面，营造出安详、舒适的生活美学感受。
+
+**风格定位**：日系电影感美学风格，温暖、柔和、诗意。低饱和度暖色调为主，绿色和棕色调偏多，阳光透过树叶洒下的斑驳光影，胶片颗粒感。
+
+**主体与场景**：
+- **青苹果**：一颗新鲜的青苹果，表皮有水珠，漂浮在清澈水面上
+- **女孩**：长发，白色吊带裙，坐在窗边看书
+- **场景**：古朴木质窗户，窗外茂密绿色植物，窗台上有玻璃鱼缸（两条金鱼）
+
+**6 个镜头（静动交替节奏）**：
+
+| 时间 | 镜头 | 画面内容 |
+| --- | --- | --- |
+| 0-2s | 特写 · 青苹果 | 青苹果漂浮在清澈水面，鹅卵石水底，水珠停留在苹果表皮，水面有波纹 |
+| 2-4s | 中景 · 风铃 | 银色金属管风铃悬挂在木质屋檐下，背景是茂密绿色植物和阳光 |
+| 5-8s | 近景 · 麻雀 | 棕色麻雀停在树枝上，先静止，然后突然展翅飞走，镜头右移跟随 |
+| 9-13s | 中景 · 窗边 | 前景金鱼缸（两条橙色金鱼游动），背景女孩坐在窗边安静看书 |
+| 14-18s | 近景 · 女孩侧脸 | 女孩侧脸和背部近景，安静地翻书，暖光从窗外洒入 |
+| 19-22s | 俯视全景 | 从高处俯瞰窗户、老旧瓦片屋顶和周围绿色植物，女孩在窗户中显得小而安静 |
+
+**三条关键设计**：
+
+1. **自然声音先行** —— 流水声、鸟鸣、风铃、翻书声、风声，所有音效都是环境自然声，BGM 只做极轻的钢琴垫底，不抢戏。
+
+2. **静与动的节奏** —— 前两镜全静（苹果、风铃），第三镜一个小动态（麻雀飞走），后三镜回到人物的安静状态。动的只有麻雀这一个"事件"，其余全部是舒缓的呼吸感。
+
+3. **光斑作为视觉母题** —— 阳光透过树叶洒下的斑驳光影贯穿所有镜头：水面光斑、风铃周围光斑、女孩脸上的光斑、屋顶植物的光斑。光影本身就是叙事。
+
+**相关文件**：[首帧图](summer-afternoon/frames/) · [案例 README](summer-afternoon/README.md)
+
 ## 方法论
 
 完整版见 **[docs/methodology.md](docs/methodology.md)** —— 综合三篇行业复盘与本项目实测合成。
@@ -392,6 +427,7 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 - [x] 方法论与审片清单沉淀
 - [x] 案例 02：沉没成本辩论（代码渲染路线，HyperFrames）
 - [x] 案例 03：多角色对话场景（测试跨角色一致性）
+- [x] 案例 04：日系电影感美学（静物+人物，光影叙事）
 - [ ] 9:16 竖版重制
 - [ ] 真实环境音采样替代合成底噪
 - [ ] 把审片清单做成 `scripts/review.py`，自动检测时长分布 / 切换点 / 音轨峰值
