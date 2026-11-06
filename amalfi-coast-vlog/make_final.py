@@ -20,7 +20,7 @@ import subprocess
 import wave
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 FRAMES = os.path.join(BASE, "frames")
@@ -30,7 +30,6 @@ os.makedirs(TMP, exist_ok=True)
 
 W, H, FPS = 1280, 720, 24
 FINAL = os.path.join(BASE, "阿马尔菲海岸_成片.mp4")
-WATERMARK = os.path.join(TMP, "watermark.png")
 BGM = os.path.join(TMP, "bgm.wav")
 
 # 分镜表逐镜时长（秒），合计 43 秒
@@ -65,21 +64,6 @@ def run(args, label):
     if p.returncode != 0:
         print("ERR", label, ":\n", p.stderr[-1500:])
         sys.exit(1)
-
-
-def make_watermark():
-    """脚本固定要素：抖音 ID 常驻左下角，半透明白字。"""
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    d = ImageDraw.Draw(img)
-    font_path = "C:/Windows/Fonts/msyh.ttc"
-    if not os.path.exists(font_path):
-        font_path = "C:/Windows/Fonts/simhei.ttf"
-    font = ImageFont.truetype(font_path, 25) if os.path.exists(font_path) else ImageFont.load_default()
-    x, y = 38, H - 96
-    for text, yy in (("抖音号：203388120", y), ("Q swing_窝", y + 36)):
-        d.text((x + 2, yy + 2), text, font=font, fill=(0, 0, 0, 90))
-        d.text((x, yy), text, font=font, fill=(255, 255, 255, 205))
-    img.save(WATERMARK)
 
 
 def make_bgm():
@@ -238,7 +222,6 @@ def build_clips():
 
 def main():
     print("总时长 %ds / %d 镜 / %dx%d / %dfps" % (TOTAL, len(DUR), W, H, FPS))
-    make_watermark()
     make_bgm()
     make_contact_sheet()
     clips = build_clips()
@@ -248,10 +231,10 @@ def main():
         for c in clips:
             f.write("file '%s'\n" % c.replace("\\", "/"))
 
+    # 不叠加任何 ID / 字幕 / 水印文字，保持纯净画面
     cmd = [FF, "-y", "-f", "concat", "-safe", "0", "-i", lst,
-           "-loop", "1", "-i", WATERMARK, "-i", BGM,
-           "-filter_complex", "[0:v][1:v]overlay=0:0:shortest=1[v]",
-           "-map", "[v]", "-map", "2:a",
+           "-i", BGM,
+           "-map", "0:v", "-map", "1:a",
            "-c:v", "libx264", "-preset", "medium", "-crf", "20",
            "-c:a", "aac", "-b:a", "192k", "-shortest",
            "-movflags", "+faststart", FINAL]
