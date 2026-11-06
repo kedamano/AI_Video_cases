@@ -318,7 +318,9 @@ python make_final.py
 
 **本案例新增踩坑**：当前图生视频模型强制带音轨（传 `enable_audio=false` 直接报错）→ 拼装阶段 `-an` 统一去轨；生图右下角模型水印 → 统一裁 16:9 时顺带裁掉；24 镜全量图生视频性价比低 → 脚本标注「固定机位」的 10 镜用首帧 Ken Burns 微动兜底；git 传输被代理拦截 → 改走 Git Data API 单 commit 提交（本案例视频因此以普通 blob 入仓，未走 LFS，clone 后无需 `git lfs pull` 即可播放）。完整 13 条踩坑与复现步骤见案例 README。
 
-**相关文件**：[分镜脚本](amalfi-coast-vlog/阿马尔菲海岸_视频脚本提示词.html) · [首帧图](amalfi-coast-vlog/frames/) · [视频片段](amalfi-coast-vlog/videos/) · [案例 README](amalfi-coast-vlog/README.md) · [成片](amalfi-coast-vlog/阿马尔菲海岸_成片.mp4)
+**审片自动化**：本案例新增仓库级 `scripts/review.py`，对成片自动检测「时长分布 / 切换点 / 音轨峰值」三项硬指标并输出 `review_report.json`。据其首轮发现并修复了三处缺陷 —— 画面淡入淡出导致首/末帧黑场、AAC 编码后峰值 +1.28 dBFS 且 84 个采样削波、按秒 trim 造成 ±1 帧切点偏差；收紧 headroom + limiter 并改用按整数帧 trim 后，复验 5 PASS / 0 FAIL（峰值 −2.18 dBFS、削波 0、23 切点 0 ms 偏差）。
+
+**相关文件**：[分镜脚本](amalfi-coast-vlog/阿马尔菲海岸_视频脚本提示词.html) · [首帧图](amalfi-coast-vlog/frames/) · [视频片段](amalfi-coast-vlog/videos/) · [案例 README](amalfi-coast-vlog/README.md) · [审片脚本](amalfi-coast-vlog/scripts/review.py) · [成片](amalfi-coast-vlog/阿马尔菲海岸_成片.mp4)
 
 ## 方法论
 

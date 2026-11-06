@@ -83,6 +83,16 @@
 | 12 | 图生视频画幅由首帧决定 | 传 `aspect_ratio` 会报错（案例 01 已记录） | 不传，交由首帧 + 拼装阶段统一裁切 |
 | 13 | 推送通道被代理拦截 | `git clone` / `git push` 走 HTTPS 时 CONNECT 隧道返回 502，`api.github.com` 的 GET/POST 正常 | 用 GitHub Git Data API 单 commit 提交（blobs → tree → commit → PATCH ref）。**本案例视频因此以普通 blob 入仓，未走 LFS**，`git clone` 后无需 `git lfs pull` 即可播放；若需统一到 LFS，可执行 `git lfs migrate import --include="*.mp4"` |
 
+### 审片脚本发现并修复的三处缺陷（`scripts/review.py`）
+
+把发布前的人工抽帧改成可脚本化的自动检测后，首轮跑出两个问题、复验又发现一个：
+
+| # | 缺陷 | 审片指标 | 现象 | 修复 |
+| --- | --- | --- | --- | --- |
+| 14 | 首/末帧黑场 | 首/末帧亮度 | `fade=t=in/out` 让首帧与末帧变成纯黑 | 画面不再做淡入淡黑，淡入淡出只由 BGM 承担（`make_bgm` 已做 1.5s 淡入 / 3s 淡出）；首帧亮度恢复到 136.8、末帧 89.3 |
+| 15 | AAC 编码后削波 | 音轨峰值 dBFS / 削波采样数 | 原生 AAC 在瞬态 overshoot，峰值 +1.28 dBFS、84 个采样削波 | 混音前留 headroom（归一化到 0.55）+ `alimiter=limit=0.55`；复验峰值 −2.18 dBFS、削波 0 |
+| 16 | 帧级切点偏差 | 切换点对齐 | 按 `-t` 取整秒 trim 与 24fps 取整帧有 ±1 帧错位，检测把镜内运动误判成切点 | 改用 `-frames:v` 按整数帧精确 trim；检测端只在期望位置无峰时才取窗口最强峰。复验 23 个切点全部 0 ms 偏差 |
+
 ## 文件结构
 
 ```
@@ -90,11 +100,30 @@ amalfi-coast-vlog/
 ├── README.md                        # 本文件
 ├── 阿马尔菲海岸_视频脚本提示词.html   # 24 镜完整分镜脚本（画面/构图/运动/BGM/字幕）
 ├── make_final.py                    # 43s 成片拼装 + 合成 BGM + 总览图（无叠加文字）
+├── scripts/review.py                # 自动审片：时长分布 / 切换点 / 音轨峰值
+├── scripts/review_report.json       # 最近一次审片输出（本地生成，可重跑覆盖）
 ├── frames/shot01–24.jpg             # ImageGen 首帧（24 张，960×640 压缩存档；本地原始 PNG 亦可）
 ├── videos/shotNN.mp4                # VideoGen 图生视频原片（14 段，5s）
 ├── contact_sheet.png                # 24 镜首帧总览
 └── 阿马尔菲海岸_成片.mp4             # 成品 43s / 720p / H.264 + AAC
 ```
+
+## 审片自动化（scripts/review.py）
+
+仓库级工具，不绑定案例目录，对任意成片做三项硬指标检测，输出机器可读的 `review_report.json`：
+
+1. **时长分布** —— 逐镜时长与分镜表 `DUR` 比对，超 ±2 帧告警；统计 1s 快切占比、最长镜、平均镜长。
+2. **切换点** —— 用逐帧帧差检测 23 个硬切点，核对是否精确落在期望 cut 时刻（容差 1 帧），并给出每个切点的帧差强度。
+3. **音轨峰值** —— 峰值 dBFS、削波采样数、逐秒 RMS、逐镜峰值、长静音段；峰值 > −1 dBFS 或存在削波即 FAIL。
+
+```bash
+pip install pillow numpy
+python scripts/review.py                 # 默认检测 amalfi-coast-vlog/阿马尔菲海岸_成片.mp4
+python scripts/review.py --tolerance 1   # 切点容差收紧到 1 帧（CI 用）
+# → scripts/review_report.json
+```
+
+本案例当前结果：5 PASS / 0 WARN / 0 FAIL（时长分布、切换点、音轨峰值三项全 PASS）。
 
 ## 复现
 
@@ -104,6 +133,8 @@ cd AI_Video_cases/amalfi-coast-vlog
 pip install pillow numpy imageio-ffmpeg   # 或系统 PATH 里有 ffmpeg
 python make_final.py
 # → 阿马尔菲海岸_成片.mp4（43.00s）
+python scripts/review.py
+# → scripts/review_report.json（自动校验时长分布/切换点/音轨峰值）
 ```
 
 `make_final.py` 会读取 `frames/` 与 `videos/`；缺哪一段视频就自动用对应首帧做 Ken Burns 微动，所以只保留首帧也能出片。

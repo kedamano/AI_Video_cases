@@ -135,7 +135,8 @@ def make_bgm():
 
     audio *= np.clip(t / 1.5, 0, 1) * np.clip((TOTAL - t) / 3.0, 0, 1)
     peak = max(1e-9, float(np.max(np.abs(audio))))
-    audio = audio / peak * 0.82
+    # 留出 AAC 编码 headroom：原生 AAC 会在瞬态 overshoot，见审片脚本「音轨峰值」
+    audio = audio / peak * 0.55
     pcm = (audio * 32767).astype(np.int16)
     stereo = np.repeat(pcm[:, None], 2, axis=1)
     with wave.open(BGM, "wb") as w:
@@ -192,15 +193,14 @@ def build_clips():
         fpath = frame_path(i)
         # 统一裁成 16:9，同时裁掉生图右下角的模型水印
         crop = "crop=iw:iw*9/16:0:(ih-iw*9/16)/2"
+        # 审片清单「首尾完整」：首帧不能黑场、末帧要停在有效画面上。
+        # ffmpeg 的 fade=t=in/out 会让首帧与末帧变纯黑，因此画面不做淡入淡黑，
+        # 淡入淡出只由 BGM 承担（make_bgm 已做 1.5s 淡入 / 3s 淡出）。
         tail = ""
-        if i == 1:
-            tail = ",fade=t=in:st=0:d=0.4"
-        if i == len(DUR):
-            tail += ",fade=t=out:st=%.2f:d=0.6" % (d - 0.6)
 
         if os.path.exists(vpath):
             vf = "%s,scale=%d:%d,%s,fps=%d,format=yuv420p%s" % (crop, W, H, grade, FPS, tail)
-            cmd = [FF, "-y", "-i", vpath, "-t", str(d), "-vf", vf, "-an",
+            cmd = [FF, "-y", "-i", vpath, "-frames:v", str(int(d * FPS)), "-vf", vf, "-an",
                    "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", str(FPS), out]
             kind = "VideoGen"
         elif os.path.exists(fpath):
@@ -208,7 +208,7 @@ def build_clips():
             zp = "zoompan=%s:d=1:s=%dx%d:fps=%d" % (zoom_expr(mode, int(d * FPS)), W, H, FPS)
             vf = "%s,scale=1600:900,%s,%s,format=yuv420p%s" % (crop, zp, grade, tail)
             cmd = [FF, "-y", "-loop", "1", "-framerate", str(FPS), "-i", fpath,
-                   "-t", str(d), "-vf", vf, "-an",
+                   "-frames:v", str(int(d * FPS)), "-vf", vf, "-an",
                    "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-r", str(FPS), out]
             kind = "KenBurns:" + mode
         else:
@@ -236,6 +236,7 @@ def main():
            "-i", BGM,
            "-map", "0:v", "-map", "1:a",
            "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+           "-af", "alimiter=limit=0.55:level=disabled",
            "-c:a", "aac", "-b:a", "192k", "-shortest",
            "-movflags", "+faststart", FINAL]
     run(cmd, "final")
