@@ -7,7 +7,7 @@
 [![Stars](https://img.shields.io/github/stars/kedamano/AI_Video_cases?style=flat-square&color=ff4d1a)](https://github.com/kedamano/AI_Video_cases/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases/commits/main)
 [![Repo Size](https://img.shields.io/github/repo-size/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases)
-[![Cases](https://img.shields.io/badge/cases-2-ff4d1a?style=flat-square)](#案例库)
+[![Cases](https://img.shields.io/badge/cases-3-ff4d1a?style=flat-square)](#案例库)
 [![Shots](https://img.shields.io/badge/shots-18-ff8c42?style=flat-square)](#案例-01--玻璃之后)
 [![Duration](https://img.shields.io/badge/duration-25s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
 [![Code Video](https://img.shields.io/badge/code%20video-120s-63a4ff?style=flat-square)](#案例-02--沉没成本辩论)
@@ -43,6 +43,7 @@
 | --- | --- | --- | --- |
 | [01 · 玻璃之后](#案例-01--玻璃之后) | 25s / 18 镜 / 1080p / 24fps | 同一角色跨 18 镜面部不崩、不脏 | ✅ 完成 |
 | [02 · 沉没成本辩论](#案例-02--沉没成本辩论) | 120s / 10 场景 / 720p / 30fps | 纯代码场景化动画 + GSAP 时间线 + Vibe 知识大赏风格 | ✅ 完成 |
+| [03 · 雨夜对谈](#案例-03--雨夜对谈) | 30s / 12 镜 / 720p / 24fps | 双角色对话场景，跨角色一致性与过肩镜头身份锁定 | ✅ 完成 |
 
 ## 为什么值得 Star
 
@@ -199,6 +200,60 @@ python make_final.py
 
 **相关文件**：[主组合](sunk-cost-debate/index.html) · [场景子组合](sunk-cost-debate/compositions/) · [成片](sunk-cost-debate/sunk-cost-debate-2min-v3.mp4)
 
+### 案例 03 · 雨夜对谈
+
+**30 秒 / 12 镜 / 1280×720 / 24fps · 双角色对话场景（实拍路线）**
+
+主题：深夜咖啡馆里，两个人对坐聊天——从开口、沉默到一起笑了一下。没有台词，只有表情、手势、眼神交换。核心测试：正反打、过肩镜头、双人同框中的跨角色身份一致性。
+
+**技术栈**：
+- **首帧生图**：AI 图像生成，16:9，1280×720
+- **图生视频**：AI 视频生成，每段 5s
+- **角色锁定**：两套独立词块，6 维识别冗余（脸型/眼型/肤色/发型/眼镜/服装）
+- **锚点策略**：每 3-4 镜插一个双人同框，重置观众身份认知
+
+**两个角色（6 维识别冗余）**：
+
+| 角色 | 脸型 | 眼型 | 肤色 | 发型 | 眼镜 | 服装 |
+| --- | --- | --- | --- | --- | --- | --- |
+| A · 林夏（女） | 圆脸 | 内双 | 白皙 | 低马尾 | 细金框 | 米白针织衫 |
+| B · 陈默（男） | 长脸 | 单眼皮 | 小麦色 | 短碎发 | 粗黑框 | 深灰卫衣 |
+
+**12 个镜头（对话场景正反打结构）**：
+
+| # | 时长 | 镜头类型 | 内容 |
+| --- | --- | --- | --- |
+| 01 | 3s | 全景 · 双人锚点 | 两人对坐，窗外雨夜，蜡烛跳动 |
+| 02 | 2s | 中景 · 双人 | A 抬手做手势解释，B 点头 |
+| 03 | 3s | 近景 · 角色 A | A 说话，嘴唇开合，眼神认真 |
+| 04 | 2s | 过肩拍 A | 从 B 肩膀后拍 A 的脸，前景 B 虚焦 |
+| 05 | 3s | 近景 · 角色 B | B 回应，眉头微皱，思考状 |
+| 06 | 2s | 过肩拍 B | 从 A 肩膀后拍 B 的脸，前景 A 虚焦 |
+| 07 | 3s | 特写 · 角色 A 眼部 | 瞳孔里有暖黄灯光和冷蓝霓虹 |
+| 08 | 2s | 特写 · 角色 B 手部 | 手指摩挲咖啡杯柄 |
+| 09 | 3s | 侧面中景 · 双人 | 沉默，两人各自看自己的杯子 |
+| 10 | 2s | 近景 · 角色 A | A 忽然笑了，梨涡出现 |
+| 11 | 2s | 近景 · 角色 B | B 跟着笑了，嘴角上扬 |
+| 12 | 3s | 全景 · 收尾 | 两人都笑着，蜡烛还在烧，雨还在下 |
+
+**三条关键设计**：
+
+1. **词块锁定法** —— 每个角色一套完整描述词块（脸型/眼型/肤色/发型/眼镜/服装），所有含该角色的镜头完整复制，一个字不能改。过肩镜头的前景虚焦角色也要完整写进提示词。
+
+2. **锚点镜头法** —— 每 3-4 镜插一个双人同框全景（Shot 01 → 09 → 12），重置观众身份认知。先建立基准印象，再切单人特写，观众不会搞混谁是谁。
+
+3. **视觉锚点强化** —— 眼镜（细金框 vs 粗黑框）是成本最低、效果最强的识别锚点——AI 生成时最不容易丢的就是硬几何元素。服装冷暖对比（米白 vs 深灰）兜底，即使脸糊了衣服也能分。
+
+**实测结论（跨角色一致性测试全部通过）**：
+
+- ✅ 双人同框：两个角色明显可区分，无"双胞胎"问题
+- ✅ 单人近景：单独出现时特征与双人镜头完全对应
+- ✅ 过肩镜头：前景虚焦角色靠服装+发型也能分清
+- ✅ 表情变化：从抿嘴到笑出来，脸型/眼镜/服装全程不漂移
+- ✅ 侧面角度：侧面剪影也能区分两人轮廓
+
+**相关文件**：[分镜脚本](rainy-night-talk/雨夜对谈_视频脚本提示词.html) · [首帧图](rainy-night-talk/frames/) · [视频片段](rainy-night-talk/videos/) · [案例 README](rainy-night-talk/README.md)
+
 ## 方法论
 
 完整版见 **[docs/methodology.md](docs/methodology.md)** —— 综合三篇行业复盘与本项目实测合成。
@@ -335,8 +390,8 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 - [x] 18 镜面部质感统一
 - [x] Git LFS 托管视频资产
 - [x] 方法论与审片清单沉淀
-- [ ] 案例 02：多角色对话场景（测试跨角色一致性）
-- [ ] 案例 03：代码渲染路线（HyperFrames / Remotion 对比实拍路线）
+- [x] 案例 02：沉没成本辩论（代码渲染路线，HyperFrames）
+- [x] 案例 03：多角色对话场景（测试跨角色一致性）
 - [ ] 9:16 竖版重制
 - [ ] 真实环境音采样替代合成底噪
 - [ ] 把审片清单做成 `scripts/review.py`，自动检测时长分布 / 切换点 / 音轨峰值
