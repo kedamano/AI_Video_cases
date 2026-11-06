@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案例 05 · 阿马尔菲柠檬海岸 — 视频分镜脚本</title>
+<style>
+  :root{
+    --blue:#0b6ea8; --blue-soft:#e8f4fb; --yellow:#f5b400; --yellow-soft:#fff8e1;
+    --orange:#f2771a; --ink:#1d2733; --muted:#5b6b7b; --line:#dfe8ef; --bg:#f7fafd;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,-apple-system,sans-serif;
+       line-height:1.75;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1440px;margin:0 auto;padding:32px 28px 80px}
+  header{background:linear-gradient(120deg,#0b6ea8 0%,#1287bd 48%,#f5b400 140%);
+         color:#fff;border-radius:18px;padding:34px 38px;box-shadow:0 12px 32px rgba(11,110,168,.18)}
+  header .kicker{font-size:13px;letter-spacing:2px;opacity:.85;margin:0 0 8px}
+  header h1{margin:0 0 8px;font-size:32px;letter-spacing:1px}
+  header p{margin:0;opacity:.92;font-size:15px;max-width:900px}
+  .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:20px 0 8px}
+  .spec{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);
+        border-radius:12px;padding:12px 16px;backdrop-filter:blur(4px)}
+  .spec b{display:block;font-size:20px;line-height:1.3}
+  .spec span{font-size:12px;opacity:.85}
+  h2{font-size:21px;margin:38px 0 14px;padding-left:12px;border-left:5px solid var(--yellow)}
+  h3{font-size:16px;margin:22px 0 8px;color:var(--blue)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px;
+        box-shadow:0 3px 14px rgba(20,60,90,.05)}
+  .card + .card{margin-top:16px}
+  ul{margin:8px 0 0;padding-left:22px}
+  li{margin:5px 0}
+  li::marker{color:var(--orange)}
+  .tag{display:inline-block;background:var(--yellow-soft);color:#8a6300;border:1px solid #f2dfa4;
+       border-radius:6px;padding:1px 8px;font-size:12px;margin-right:6px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  table.meta{width:100%;border-collapse:collapse;font-size:14px}
+  table.meta th,table.meta td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  table.meta th{background:var(--blue-soft);color:#0a557e;width:150px;font-weight:600}
+  .board{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+         box-shadow:0 3px 14px rgba(20,60,90,.05)}
+  .scroll{overflow-x:auto}
+  table.shots{width:100%;min-width:1180px;border-collapse:collapse;font-size:13px}
+  table.shots thead th{position:sticky;top:0;z-index:2;background:var(--blue);color:#fff;
+       font-weight:600;text-align:left;padding:12px 10px;white-space:nowrap}
+  table.shots td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);
+       padding:11px 10px;vertical-align:top}
+  table.shots tbody tr:nth-child(even){background:#fbfdff}
+  table.shots tbody tr:hover{background:var(--yellow-soft)}
+  .no{font-weight:700;color:var(--blue);font-size:15px;text-align:center;width:46px}
+  .time{font-family:Consolas,Monaco,monospace;font-size:12px;color:#0a557e;white-space:nowrap}
+  .motion{color:#8a4b00}
+  .sub{font-size:12px;color:var(--muted);white-space:nowrap}
+  .src{font-size:11px;border-radius:5px;padding:2px 6px;white-space:nowrap;display:inline-block}
+  .src.ai{background:#e3f4ff;color:#0a628f;border:1px solid #b9dff3}
+  .src.kb{background:#fff2dc;color:#8a6300;border:1px solid #f0d79c}
+  .note{background:var(--blue-soft);border-left:4px solid var(--blue);border-radius:0 10px 10px 0;
+        padding:12px 18px;font-size:13px;color:#215b7b;margin:14px 0}
+  code{background:#eef3f7;border-radius:4px;padding:1px 5px;font-size:12px;color:#0a557e}
+  pre{background:#12222e;color:#dcecf7;border-radius:10px;padding:16px 18px;overflow-x:auto;
+      font-size:12.5px;line-height:1.7}
+  video{width:100%;max-width:760px;border-radius:12px;border:1px solid var(--line);background:#000;display:block;margin-top:10px}
+  footer{margin-top:44px;text-align:center;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">AI VIDEO CASES · CASE 05 · STORYBOARD</p>
+  <h1>阿马尔菲柠檬海岸 · 视频分镜脚本</h1>
+  <p>一段剪辑精良、节奏轻快、充满异域风情的意大利旅行 vlog。快速镜头切换，把阿马尔菲海岸的绝美景色（波西塔诺小镇、湛蓝海水、悬崖建筑）和当地人文风情（露天市场、特色美食、休闲的人们）完美结合，营造阳光明媚、惬意悠闲的度假氛围，画面色彩鲜艳，令人向往。</p>
+  <div class="specs">
+    <div class="spec"><b>43.00 s</b><span>成片时长</span></div>
+    <div class="spec"><b>24 镜</b><span>1–3 秒快切</span></div>
+    <div class="spec"><b>1280×720</b><span>16:9 / 24fps</span></div>
+    <div class="spec"><b>24 张</b><span>ImageGen 首帧</span></div>
+    <div class="spec"><b>14 段</b><span>VideoGen 图生视频</span></div>
+  </div>
+</header>
+
+<h2>一、视频整体分析</h2>
+<div class="card">
+  <h3>视频主题及要点</h3>
+  <ul>
+    <li><b>视频主题描述</b>：一段剪辑精良、节奏轻快、充满异域风情的意大利旅行 vlog。</li>
+    <li><b>视频要点</b>：通过快速的镜头切换，将意大利阿马尔菲海岸的绝美景色（如波西塔诺小镇、湛蓝的海水、悬崖建筑）和当地人文风情（如露天市场、特色美食、休闲的人们）完美结合，营造出一种阳光明媚、惬意悠闲的度假氛围，画面色彩鲜艳，令人向往。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>视频固定要素分析 · 视觉风格（地中海夏日度假风）</h3>
+  <table class="meta">
+    <tr><th>整体色调</th><td>高饱和度、高亮度，以明亮的蓝（天空与海水）、鲜艳的黄（柠檬与建筑）和温暖的橙色为主，色彩对比强烈。</td></tr>
+    <tr><th>光线</th><td>阳光充足，多为晴朗的白天拍摄，光线自然、明亮，部分镜头有强烈的逆光效果，制造出光斑和耀眼的光晕。</td></tr>
+    <tr><th>画质</th><td>4K 高清，画面干净，细节锐利，无噪点。</td></tr>
+    <tr><th>构图</th><td><b>广角镜头</b>：多个航拍或高位俯视镜头，展示宏大的海岸线全景和错落有致的建筑群；<b>特写镜头</b>：聚焦手捧柠檬、美食特写或人物表情，增加细节和情感表达；<b>对称构图</b>：少数镜头如门框内海景，利用建筑结构形成对称，增强美感。</td></tr>
+    <tr><th>滤镜</th><td>偏向于暖色调，饱和度提升，色彩鲜明，营造出梦幻般的油画质感。</td></tr>
+  </table>
+</div>
+
+<div class="grid2" style="margin-top:16px">
+  <div class="card">
+    <h3>主体要素 · 旅行博主（女性）</h3>
+    <ul>
+      <li><b>人物形象</b>：亚洲年轻女性，长发及肩，身材苗条，笑容甜美。</li>
+      <li><b>服装与配饰</b>：白色/淡黄色连衣裙，材质轻薄飘逸；草编宽檐帽；草编手提包；白色运动鞋或凉鞋。</li>
+      <li><b>动作与状态</b>：轻松自在，在各个景点打卡拍照，与场景互动（如手拿柠檬、在海边眺望），面部表情享受而愉悦。</li>
+    </ul>
+    <h3>主体要素 · 柠檬</h3>
+    <ul>
+      <li><b>外观</b>：个头巨大，形状饱满，表皮厚实，颜色呈鲜亮的黄色，部分有青色点缀。</li>
+      <li><b>场景</b>：市场或路边小摊堆满整个货架或草编篮；被制作成美食或饮料（柠檬冰沙）；作为道具被博主手持拍照。</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>场景要素</h3>
+    <ul>
+      <li><b>① 波西塔诺小镇（Positano）</b>：位于意大利南部阿马尔菲海岸，依山而建，面朝大海。密集彩色房屋层层叠叠分布在悬崖峭壁上，白/黄/粉/橙为主、红色瓦片屋顶；狭窄蜿蜒台阶石路；湛蓝清澈的地中海、各式游艇船只；悬崖植被与三角梅；标志性圆顶教堂。</li>
+      <li><b>② 阿马尔菲大教堂（Duomo di Amalfi）</b>：混合拜占庭、哥特和巴洛克风格的罗马式建筑，主立面色彩斑斓；小镇中心、台阶高耸；周边露天咖啡馆、小商店与来往游客。</li>
+      <li><b>③ 市场与小巷</b>：摊位陈列柠檬、橘子、香蕉、樱桃、辣椒、大蒜，木制与藤编材质充满乡村质感；小巷狭窄曲折，彩色房屋外墙有壁画，墙壁挂手工艺品，充满艺术气息。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px">
+  <h3>其他固定要素 · 视频过渡与特效</h3>
+  <ul>
+    <li><b>转场效果</b>：<span class="tag">快切</span>镜头在不同场景间快速切换，节奏紧凑；<span class="tag">跳切</span>同一场景内的连续动作被剪辑成不连续的镜头，增加动感；<span class="tag">缩放</span>镜头快速拉近或拉远，强调画面主体。</li>
+    <li><b>叠加字幕</b>：<code>抖音号：203388120</code> 与 <code>Q swing_窝</code> 始终位于画面左下角，呈半透明或白色。</li>
+    <li><b>音乐</b>：背景音乐为配乐，风格浪漫、轻松；轻柔舒缓钢琴旋律，中段节奏加快，全景段更具气势，结尾逐渐淡出。</li>
+  </ul>
+</div>
+
+<h2>二、视频分镜头脚本（24 镜 / 43 秒）</h2>
+<div class="note">全片 24 镜均为<b>硬切</b>；「后期字幕」列对每一镜都相同（左下角常驻抖音 ID），下表统一标注为「常驻」。素材来源列：<span class="src ai">VideoGen</span> 为图生视频原片，<span class="src kb">KenBurns</span> 为脚本标注「固定机位」的镜头，由首帧微动生成。</div>
+<div class="board"><div class="scroll">
+<table class="shots">
+<thead><tr>
+  <th>镜号</th><th>时间轴</th><th>图片提示词（场景 / 主体 / 构图）</th>
+  <th>视频提示词（镜头 / 画面内运动）</th><th>音频信息</th><th>后期字幕</th><th>素材</th>
+</tr></thead>
+<tbody>
+<tr><td class="no">1</td><td class="time">00:00–00:01</td><td>阿马尔菲大教堂前的露天咖啡馆区域。背景是大教堂雄伟立面，罗马式和拜占庭风格的塔楼高耸。前景挂有「SPREMUTA DI ARANCIA」「SPREMUTA DI LIMONE」标牌的柠檬摊位，草编篮装满个头巨大、饱满、鲜亮的柠檬，摊位后方咖啡座上人们悠闲地坐着。<b>构图</b>：主体柠檬摊位占据画面底部，大教堂占据上半部分，通过透视关系展现纵深感。</td><td class="motion">镜头运动：无明显运动，固定机位拍摄。柠檬高光微闪、咖啡座客人轻动。</td><td>BGM：轻柔、舒缓的钢琴旋律，充满异域风情。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">2</td><td class="time">00:01–00:03</td><td>波西塔诺小镇的高位阳台。视野开阔，俯瞰湛蓝的地中海。前景是白色遮阳伞的露天休息区，背景是地中海上星罗棋布的游艇和船只。<b>构图</b>：镜头从阳台位置俯视，天空、大海和建筑构成分明的水平层次，画面上部为天空，中间是海面，下部是阳台和部分建筑，色彩以蓝白为主。</td><td class="motion">镜头运动：无明显运动，固定机位拍摄。伞面轻拂、游艇缓移、海面波光。</td><td>BGM：同上，音乐节奏加快，变得更活泼。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">3</td><td class="time">00:03–00:05</td><td>波西塔诺小镇依山而建的街道。背景是色彩丰富、层层叠叠的房屋和郁郁葱葱的植被。一辆天蓝色的老爷车（菲亚特 500）停在路边，车顶绑着木质行李箱，车内坐着几位轻松自在的游客。<b>构图</b>：车辆占据画面大部分，背景是房屋和山体，色彩对比鲜明；镜头为平视，突出车辆和人物。</td><td class="motion">画面内元素运动：车内人物向镜头方向看去并露出笑容，轻松惬意。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">4</td><td class="time">00:05–00:07</td><td>一处柠檬和水果摊位，木架搭建，悬挂香蕉、大蒜和辣椒等农产品；个头巨大的柠檬堆满藤编篮，旁边有樱桃和橘子。<b>主体</b>：旅行博主坐在摊位旁，头戴草编帽，身穿黄色碎花吊带上衣和白色长裙，手持两个柠檬，面带甜美笑容。<b>构图</b>：旅行博主居中，水果摊位作为背景，形成色彩鲜艳、充满生活气息的画面。</td><td class="motion">画面内元素运动：旅行博主对着镜头微笑，并将手中柠檬举起。</td><td>BGM：同上，音乐更具节奏感。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">5</td><td class="time">00:07–00:09</td><td>波西塔诺小镇高处的观景台。背景是层叠的彩色房屋、远处山脉和湛蓝的地中海。<b>主体</b>：旅行博主身穿白色连衣裙，戴草编帽，坐在观景台的石墙上。<b>构图</b>：博主居画面右侧，身体朝向左侧地中海方向，形成视线引导；背景房屋和海面形成丰富层次感，石墙上写着各种街巷名称。</td><td class="motion">镜头运动：无明显运动，固定机位拍摄。衣发随风轻动。</td><td>BGM：同上，音乐渐缓。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">6</td><td class="time">00:09–00:11</td><td>波西塔诺小镇的蜿蜒公路。背景是色彩丰富的房屋和高耸的山体，一辆天蓝色的小巴士正在行驶。<b>构图</b>：镜头从侧面捕捉巴士，背景的山体和房屋占据大部分画面，画面左侧是罗马式的街灯和路牌。</td><td class="motion">画面内元素运动：小巴士从左向右行驶。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">7</td><td class="time">00:11–00:13</td><td>地中海边的一处礁石悬崖，悬崖边有许多穿泳衣的人正在晒太阳或准备下水。<b>画面中心</b>：一名男子从礁石上跳入湛蓝的海水。<b>构图</b>：镜头从侧面高处拍摄，礁石、人物和海面构成层次分明的画面；海水呈现明亮的蓝色，阳光洒在水面上，波光粼粼。</td><td class="motion">画面内元素运动：男子跳水，溅起水花。</td><td>BGM：同上，音乐节奏感再次加强。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">8</td><td class="time">00:13–00:14</td><td>波西塔诺小镇的一处阶梯小径，小径上方有藤蔓缠绕形成自然拱门，两边是咖啡馆的菜单和花盆。<b>主体</b>：旅行博主身穿白色连衣裙，戴草编帽，拎着草编包，从阶梯上走下来。<b>构图</b>：镜头通过藤蔓形成的拱门取景，博主处于画面中央；背景是湛蓝的地中海和远处的山脉。</td><td class="motion">画面内元素运动：旅行博主从远处向镜头走来。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">9</td><td class="time">00:14–00:16</td><td>波西塔诺小镇的露台，背景是层层叠叠的彩色房屋和湛蓝的地中海。<b>主体</b>：旅行博主身穿白色连衣裙，戴草编帽，坐在露台的白色沙发上，面朝大海，双臂张开。<b>构图</b>：博主居中、占据画面大部分，身后是波西塔诺小镇全景，形成前景与背景的对比。</td><td class="motion">画面内元素运动：旅行博主缓缓转头，看向镜头。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">10</td><td class="time">00:16–00:17</td><td>波西塔诺小镇的露台。<b>主体</b>：一只手拿着一个用柠檬制成的冰沙甜点，盛在印有「Collina Positano Bakery」字样的纸杯中，背景是波西塔诺小镇层层叠叠的房屋和地中海。<b>构图</b>：甜点特写占据画面主体，背景虚化，突出食物。</td><td class="motion">画面内元素运动：无明显运动，为固定机位拍摄（缓慢推近）。</td><td>BGM：同上，音乐节奏更轻快。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">11</td><td class="time">00:17–00:19</td><td>波西塔诺小镇某酒店的泳池，镜头从高处俯瞰。前景是泳池，有几位游客正在游泳，背景是湛蓝的地中海和色彩丰富的房屋。<b>构图</b>：泳池、建筑和海面形成分明的区域划分，色彩鲜艳、高饱和度。</td><td class="motion">画面内元素运动：泳池中的人们在戏水、游泳。</td><td>BGM：同上，音乐更加舒缓。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">12</td><td class="time">00:19–00:21</td><td>阿马尔菲海岸的一段海岸线。背景是高耸的悬崖和色彩丰富的房屋，有一座石桥横跨在海面上。<b>构图</b>：镜头从侧面拍摄，石桥、建筑、山体和海面共同构成一幅壮丽的画面；色彩以蓝天、白云、蓝色海水和白色、粉色、黄色的建筑为主。</td><td class="motion">镜头运动：无明显运动，为固定机位拍摄（缓慢推近）。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">13</td><td class="time">00:21–00:23</td><td>波西塔诺小镇某酒店房间内，透过巨大的落地窗可以看到湛蓝的地中海。前景是白色纱帘和白色扶手椅。<b>构图</b>：纱帘和窗框构成了画面的边框，将地中海海景框在其中，形成画中画效果；色彩以蓝天、蓝色海水和白色窗帘为主。</td><td class="motion">镜头运动：无明显运动，为固定机位拍摄（缓慢左移）。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">14</td><td class="time">00:23–00:25</td><td>阿马尔菲大教堂前的露天咖啡馆区域。<b>主体</b>：旅行博主身穿黄色碎花吊带上衣，头戴草编帽，手持一个巨大的柠檬，对着镜头甜美微笑；背景是阿马尔菲大教堂。<b>构图</b>：博主居画面左侧，大教堂居右侧，形成左右对称。</td><td class="motion">画面内元素运动：旅行博主对着镜头微笑。</td><td>BGM：同上，音乐逐渐变大。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">15</td><td class="time">00:25–00:27</td><td>波西塔诺小镇的沙滩，镜头从高处俯瞰。沙滩上停放着几艘船只，海面上有浮动平台，悬崖边有许多白色和红色的遮阳伞和沙滩椅。<b>构图</b>：俯视构图，海面、沙滩和悬崖形成层次分明的画面；海水清澈透明，可以清晰看到水底的礁石。</td><td class="motion">镜头运动：无明显运动，为固定机位拍摄（缓慢推近）。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">16</td><td class="time">00:27–00:28</td><td>柠檬和水果摊位，镜头特写水果摊位，个头巨大的柠檬堆成小山，旁边还有新鲜的樱桃、橘子、香蕉和大蒜。<b>构图</b>：镜头聚焦于水果摊，色彩高饱和度，展示出水果的新鲜和丰盛。</td><td class="motion">镜头运动：无明显运动，为固定机位拍摄（缓慢推近）。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">17</td><td class="time">00:28–00:29</td><td>波西塔诺小镇的狭窄小巷，两边是天蓝色的房屋，墙壁上装饰着壁画和艺术品。<b>主体</b>：旅行博主身穿浅绿色连衣裙，头戴草编帽，从巷子的尽头向镜头走来。<b>构图</b>：博主背对镜头、走在画面中央；小巷两边的房屋形成强烈的透视效果，引导视线。</td><td class="motion">画面内元素运动：旅行博主从远处沿小巷走动。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">18</td><td class="time">00:29–00:30</td><td>波西塔诺小镇的露台，背景是层层叠叠的房屋，其中一座建筑顶部的圆顶教堂被三角梅和树枝遮挡，充满神秘感；牌子上写着「PALO BORRACHO open-air Boutique」。<b>构图</b>：前景的树枝和花朵形成画面边框，将背景的教堂和地中海框在其中。</td><td class="motion">镜头运动：无明显运动，为固定机位拍摄（缓慢推近）。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">19</td><td class="time">00:30–00:32</td><td>海边台阶，水面上波光粼粼。<b>主体</b>：旅行博主身穿白色衬衫，戴草编帽，侧身背对镜头坐在海边的台阶上，她的草编包放在身边。<b>构图</b>：博主占画面大部分，海面占据上半部分，金色的阳光洒在水面上，形成高饱和度的金色光斑。</td><td class="motion">镜头运动：无明显运动，为固定机位拍摄（缓慢左移）。</td><td>BGM：同上，音乐变得抒情。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">20</td><td class="time">00:32–00:35</td><td>波西塔诺小镇的全景，镜头从高处拍摄，俯瞰整个小镇。色彩丰富、层层叠叠的房屋和湛蓝的地中海交相辉映。<b>构图</b>：镜头从高处俯瞰，展示波西塔诺小镇的宏大与壮观，房屋的色彩和海面的蓝色形成强烈的视觉冲击。</td><td class="motion">镜头运动：镜头缓慢地向上移动，从局部全景变为整个小镇全景（上移 Ken Burns）。</td><td>BGM：同上，音乐变得更具气势。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">21</td><td class="time">00:35–00:37</td><td>地中海海面，金色的阳光洒在湛蓝的海水上，形成高饱和度的金色光斑，几位游客正在海水中游泳、嬉戏。<b>构图</b>：镜头平视，以海水为主体，阳光下的光斑是画面的亮点。</td><td class="motion">画面内元素运动：游客在海水中游泳、移动（缓慢推近 + 水面波光）。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">22</td><td class="time">00:37–00:39</td><td>波西塔诺小镇某酒店的露台。<b>主体</b>：一棵树生长在露台上，远处的地中海和停泊的游艇清晰可见。<b>构图</b>：镜头从侧面拍摄，露台的黄色建筑和湛蓝的海面形成对比；树木的绿色和建筑的黄色构成亮丽的色彩。</td><td class="motion">镜头运动：镜头缓慢地向上移动，从局部变为广角（上移 Ken Burns）。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src kb">KenBurns</span></td></tr>
+<tr><td class="no">23</td><td class="time">00:39–00:41</td><td>波西塔诺小镇的观景台。<b>主体</b>：旅行博主身穿白色连衣裙，戴草编帽，沿着观景台的围栏走动，围栏上挂着盛开的三角梅，背景是层层叠叠的彩色房屋和地中海。<b>构图</b>：博主背对镜头，沿着围栏从左向右走动，背景的房屋和海面形成广阔的画面。</td><td class="motion">画面内元素运动：旅行博主从左向右走动。</td><td>BGM：同上。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+<tr><td class="no">24</td><td class="time">00:41–00:43</td><td>阿马尔菲大教堂附近的街道。<b>构图</b>：镜头透过一个拱形门洞拍摄，门洞将街道、房屋和远处的教堂框在其中；天色渐暗，路灯亮起，街上车辆来往，行人稀少。</td><td class="motion">画面内元素运动：车辆在道路上行驶。</td><td>BGM：同上，音乐逐渐淡出。</td><td class="sub">常驻</td><td><span class="src ai">VideoGen</span></td></tr>
+</tbody>
+</table>
+</div></div>
+
+<h2>三、生成管线与常量词块</h2>
+<div class="card">
+  <h3>提示词结构（每镜一条，词块锁定法）</h3>
+  <pre>【风格词块｜24 镜完全一致】
+Amalfi Coast summer travel vlog still frame, 4K ultra clean sharp detail,
+high saturation high brightness, vivid Mediterranean blue sky and sea,
+bright lemon yellow and warm orange, sunny midday natural light with soft
+backlit flare, warm color grade, painterly travel-film look,
+clean image, no CGI, photorealistic travel photography.
+
+【人物词块｜含人物的镜头一字不改】
+A young Asian female travel vlogger, shoulder-length dark hair, slim figure,
+sweet smile, CLEAN BEAUTY face, clean image,
+wearing &lt;白裙 / 黄色碎花吊带上衣 / 浅绿连衣裙 / 白衬衫&gt; and straw wide-brim hat,
+carrying a woven straw tote bag.
+
+【场景 + 构图层】
+逐镜见上表「图片提示词」列，末尾追加 COMPOSITION: ...（景别 / 主体位置 / 视线引导 / 画中画）
+
+【视频提示词】
+锁定机位 locked-off camera + 上表「视频提示词」列的单一运动事件 +
+vivid saturated Mediterranean colors, clean 4K detail, photorealistic travel vlog.</pre>
+  <div class="note">图生视频不传 <code>aspect_ratio</code>（画幅由首帧决定）；当前模型强制生成音轨，不能传 <code>enable_audio=false</code>，改在拼装阶段用 <code>-an</code> 统一去轨后统一混音。</div>
+  <h3>拼装</h3>
+  <p><code>python make_final.py</code>：按分镜表 <code>DUR</code> 逐段 trim → 统一裁 16:9（顺带裁掉首帧右下角模型水印）→ <code>eq=saturation=1.10:contrast=1.03</code> 统一调色 → 硬切拼接 → 左下角半透明抖音 ID 水印 → 合成钢琴 BGM（节奏前疏、中密、末段渐缓淡出）→ 输出 43.00 s 成片。</p>
+  <video controls preload="metadata" src="阿马尔菲海岸_成片.mp4"></video>
+  <p class="sub">本地直接打开本 HTML 可播放同目录下的成片 mp4。</p>
+</div>
+
+<footer>AI Video Cases · 案例 05 · 阿马尔菲柠檬海岸 · 43s / 24 镜 / 1280×720 · 由 WorkBuddy ImageGen + VideoGen + ffmpeg 生成</footer>
+</div>
+</body>
+</html>

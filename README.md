@@ -7,7 +7,7 @@
 [![Stars](https://img.shields.io/github/stars/kedamano/AI_Video_cases?style=flat-square&color=ff4d1a)](https://github.com/kedamano/AI_Video_cases/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases/commits/main)
 [![Repo Size](https://img.shields.io/github/repo-size/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases)
-[![Cases](https://img.shields.io/badge/cases-4-ff4d1a?style=flat-square)](#案例库)
+[![Cases](https://img.shields.io/badge/cases-5-ff4d1a?style=flat-square)](#案例库)
 [![Shots](https://img.shields.io/badge/shots-18-ff8c42?style=flat-square)](#案例-01--玻璃之后)
 [![Duration](https://img.shields.io/badge/duration-25s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
 [![Code Video](https://img.shields.io/badge/code%20video-120s-63a4ff?style=flat-square)](#案例-02--沉没成本辩论)
@@ -45,6 +45,7 @@
 | [02 · 沉没成本辩论](#案例-02--沉没成本辩论) | 120s / 10 场景 / 720p / 30fps | 纯代码场景化动画 + GSAP 时间线 + Vibe 知识大赏风格 | ✅ 完成 |
 | [03 · 雨夜对谈](#案例-03--雨夜对谈) | 30s / 12 镜 / 720p / 24fps | 双角色对话场景，跨角色一致性与过肩镜头身份锁定 | ✅ 完成 |
 | [04 · 夏日午后](#案例-04--夏日午后) | 22s / 6 镜 / 720p / 24fps | 日系电影感美学，自然光影与静物叙事 | ✅ 完成 |
+| [05 · 阿马尔菲柠檬海岸](#案例-05--阿马尔菲柠檬海岸) | 43s / 24 镜 / 720p / 24fps | 高饱和地中海色调、24 镜快切节奏、跨镜人物一致性 | ✅ 完成 |
 
 ## 为什么值得 Star
 
@@ -58,7 +59,7 @@
 
 - [这是什么](#这是什么) · [30 秒看懂](#30-秒看懂) · [为什么值得 Star](#为什么值得-star)
 - [快速开始](#快速开始) · [复现管线](#复现管线)
-- [案例库](#案例库) → [案例 01 · 玻璃之后](#案例-01--玻璃之后)
+- [案例库](#案例库) → [案例 01 · 玻璃之后](#案例-01--玻璃之后) · [案例 05 · 阿马尔菲柠檬海岸](#案例-05--阿马尔菲柠檬海岸)
 - [方法论](docs/methodology.md) · [踩坑笔记](#踩坑笔记) · [审片清单](#审片清单)
 - [工具与资源索引](#工具与资源索引) · [仓库结构](#仓库结构)
 - [版本与留档](#版本与留档) · [路线图](#路线图) · [贡献](#贡献) · [许可](#许可)
@@ -293,6 +294,32 @@ python make_final.py
 
 **相关文件**：[首帧图](summer-afternoon/frames/) · [案例 README](summer-afternoon/README.md)
 
+### 案例 05 · 阿马尔菲柠檬海岸
+
+**43 秒 / 24 镜 / 1280×720 / 24fps · 地中海夏日度假风旅行 vlog**
+
+![阿马尔菲柠檬海岸 24 镜首帧总览](amalfi-coast-vlog/contact_sheet.png)
+
+主题：一段剪辑精良、节奏轻快、充满异域风情的意大利旅行 vlog。快速镜头切换把波西塔诺小镇、湛蓝海水、悬崖建筑与露天市场、柠檬美食、休闲人群结合，营造阳光明媚、惬意悠闲的度假氛围。
+
+| 项目 | 参数 |
+| --- | --- |
+| 时长 / 画幅 / 帧率 | 43.00 s / 1280×720（16:9） / 24 fps |
+| 镜头数 | 24（单镜 1–3 秒，全片硬切） |
+| 单镜时长 | `1,2,2,2,2,2,2,1,2,1,2,2,2,2,2,1,1,1,2,3,2,2,2,2` |
+| 生成方式 | WorkBuddy `ImageGen` 首帧 24 张 + `VideoGen` 图生视频 14 段 + 10 镜 Ken Burns 微动 |
+| 色调 | 高饱和明亮蓝 / 鲜艳柠檬黄 / 温暖橙，统一 `eq` 调色 |
+
+**三条关键设计**：
+
+1. **常量词块锁定** —— 风格词块 + 人物词块（含 `CLEAN BEAUTY face`、草编帽、白裙）24 镜一字不改，靠服装与帽子这类硬几何元素兜底跨镜一致性。
+2. **柠檬黄作为色彩母题** —— 镜头 01 / 04 / 10 / 14 / 16 用高饱和柠檬黄串联海景、街景与人物，把 24 个分散场景缝成一条线。
+3. **节奏由分镜表控制，不由模型控制** —— 视频素材一律 5 秒，拼装阶段按 `DUR` 逐段 trim；1 秒镜（01/08/10/16/17/18）制造快切密度，3 秒全景镜（20）做释放，末镜淡出；左下角抖音 ID 常驻，合成钢琴 BGM 前疏、中密、末段渐缓。
+
+**本案例新增踩坑**：当前图生视频模型强制带音轨（传 `enable_audio=false` 直接报错）→ 拼装阶段 `-an` 统一去轨；生图右下角模型水印 → 统一裁 16:9 时顺带裁掉；24 镜全量图生视频性价比低 → 脚本标注「固定机位」的 10 镜用首帧 Ken Burns 微动兜底；git 传输被代理拦截 → 改走 Git Data API 单 commit 提交（本案例视频因此以普通 blob 入仓，未走 LFS，clone 后无需 `git lfs pull` 即可播放）。完整 13 条踩坑与复现步骤见案例 README。
+
+**相关文件**：[分镜脚本](amalfi-coast-vlog/阿马尔菲海岸_视频脚本提示词.html) · [首帧图](amalfi-coast-vlog/frames/) · [视频片段](amalfi-coast-vlog/videos/) · [案例 README](amalfi-coast-vlog/README.md) · [成片](amalfi-coast-vlog/阿马尔菲海岸_成片.mp4)
+
 ## 方法论
 
 完整版见 **[docs/methodology.md](docs/methodology.md)** —— 综合三篇行业复盘与本项目实测合成。
@@ -432,6 +459,7 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 - [x] 案例 02：沉没成本辩论（代码渲染路线，HyperFrames）
 - [x] 案例 03：多角色对话场景（测试跨角色一致性）
 - [x] 案例 04：日系电影感美学（静物+人物，光影叙事）
+- [x] 案例 05：地中海夏日度假风旅行 vlog（24 镜快切 / 高饱和色调 / 混合管线）
 - [ ] 9:16 竖版重制
 - [ ] 真实环境音采样替代合成底噪
 - [ ] 把审片清单做成 `scripts/review.py`，自动检测时长分布 / 切换点 / 音轨峰值
