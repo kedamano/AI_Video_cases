@@ -34,7 +34,7 @@
 三条原则：
 
 - **实测优先** —— 写进仓库的每个结论都在本项目里撞过，不是转述别人的经验。
-- **可复现** —— `git clone` → `git lfs pull` → `python make_final.py`，三步出片。
+- **可复现** —— `git clone` → `git lfs pull` → `python case1/make_final.py`，三步出片。
 - **只说有用的话** —— 没有「AI 很强大」这类空话，只有「传这个参数会报错」这类能省你两小时的话。
 
 ## 30 秒看懂
@@ -74,12 +74,12 @@ cd AI_Video_cases
 git lfs pull
 
 # 2. 直接看成片
-#    macOS:  open 玻璃之后_成片.mp4
-#    Windows: start 玻璃之后_成片.mp4
+#    macOS:  open case1/玻璃之后_成片.mp4
+#    Windows: start case1\玻璃之后_成片.mp4
 
 # 3. 从现有素材重新出片（不需要预装 ffmpeg）
 pip install imageio-ffmpeg
-python make_final.py
+python case1/make_final.py
 ```
 
 `make_final.py` 优先使用 `imageio-ffmpeg` 自带的二进制，找不到才回退系统 `PATH`。
@@ -89,6 +89,7 @@ python make_final.py
 ```
 ① 分镜脚本            ② 首帧生图              ③ 图生视频              ④ 拼装成片
 玻璃之后_视频脚本提示词.html → frames/shotNN.png → videos/shotNN.mp4 → 玻璃之后_成片.mp4
+（均位于 case1/ 目录下）
    （画面/运动/时长）      ImageGen 1280×720       VideoGen 5s / 1080p      ffmpeg trim+concat+mix
 ```
 
@@ -105,7 +106,7 @@ WorkBuddy ImageGen
 
 ```text
 WorkBuddy VideoGen
-  image        = frames/shotNN.png   # 传入首帧即进入图生视频模式
+  image        = case1/frames/shotNN.png   # 传入首帧即进入图生视频模式
   seconds      = 5
   enable_audio = false               # 音轨统一在 ④ 阶段合成
   # 不要传 aspect_ratio：画幅由首帧决定，传了会报错
@@ -114,7 +115,7 @@ WorkBuddy VideoGen
 **④ 拼装成片**
 
 ```bash
-python make_final.py
+python case1/make_final.py
 ```
 
 内部做三件事：按 `DUR = [2,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2]` 逐段 trim 并统一到 1920×1080 / 24fps → concat 硬切 → 叠加棕噪雨声与 220/329.63Hz 正弦底垫并淡入淡出。
@@ -166,7 +167,7 @@ python make_final.py
 2. **音效后置** —— 视频阶段全部 `enable_audio=false`，统一在拼装阶段叠雨声与低频垫，保证 18 段音轨绝对连续。
 3. **同角色跨镜一致** —— 所有含脸镜头共用同一段 `CLEAN BEAUTY` 描述词块，靠提示词锁脸，不依赖参考图。
 
-**相关文件**：[分镜脚本](玻璃之后_视频脚本提示词.html) · [首帧总览](contact_sheet.png) · [抽帧核对](成片抽帧核对.png) · [成片](玻璃之后_成片.mp4)
+**相关文件**：[分镜脚本](case1/玻璃之后_视频脚本提示词.html) · [首帧总览](case1/contact_sheet.png) · [抽帧核对](case1/成片抽帧核对.png) · [成片](case1/玻璃之后_成片.mp4)
 
 ### 案例 02 · 沉没成本辩论
 
@@ -482,21 +483,23 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 ├── docs/
 │   └── methodology.md             # 方法论与复盘（路线/流程/一致性/审片/选型）
 ├── assets/
-│   └── preview.gif                # 开场动图预览
-├── 玻璃之后_视频脚本提示词.html   # 18 镜分镜脚本（画面/运动/时长/色调/BGM）
-├── make_final.py                  # 拼装 + 混音，一条命令出片
-├── frames/
-│   └── shot01–18.png              # WorkBuddy ImageGen 首帧
-├── videos/
-│   └── shot01–18.mp4              # WorkBuddy VideoGen 图生视频原片（LFS）
-├── 玻璃之后_成片.mp4               # 成品 25s / 1080p（LFS）
-├── contact_sheet.png              # 18 镜首帧总览
-└── 成片抽帧核对.png                # 成片逐镜抽帧校验图
-
-sunk-cost-debate/                  # 案例 02 · 沉没成本辩论（HyperFrames 纯代码动画）
-rainy-night-talk/                  # 案例 03 · 雨夜对谈（双角色对话一致性）
-summer-afternoon/                  # 案例 04 · 夏日午后（日系电影感美学）
-amalfi-coast-vlog/                 # 案例 05 · 阿马尔菲柠檬海岸（24 镜旅行 vlog）
+│   └── preview.gif                # 开场动图预览（案例 01）
+│
+├── case1/                         # 案例 01 · 玻璃之后（18 镜雨夜都市纪实）
+│   ├── 玻璃之后_视频脚本提示词.html   # 18 镜分镜脚本（画面/运动/时长/色调/BGM）
+│   ├── make_final.py              # 拼装 + 混音，一条命令出片
+│   ├── make_video.py              # 早期合成脚本（Ken Burns 版，留档）
+│   ├── frames/shot01–18.png       # WorkBuddy ImageGen 首帧
+│   ├── videos/shot01–18.mp4       # WorkBuddy VideoGen 图生视频原片（LFS）
+│   ├── 玻璃之后_成片.mp4           # 成品 25s / 1080p（LFS）
+│   ├── contact_sheet.png          # 18 镜首帧总览
+│   ├── 成片抽帧核对.png            # 成片逐镜抽帧校验图
+│   └── 面部优化_7镜首帧.png        # v2 面部修复批次留档
+│
+├── sunk-cost-debate/              # 案例 02 · 沉没成本辩论（HyperFrames 纯代码动画）
+├── rainy-night-talk/              # 案例 03 · 雨夜对谈（双角色对话一致性）
+├── summer-afternoon/              # 案例 04 · 夏日午后（日系电影感美学）
+├── amalfi-coast-vlog/             # 案例 05 · 阿马尔菲柠檬海岸（24 镜旅行 vlog）
 
 case6/                             # 案例 06 · 海风来信（独立子目录）
 ├── 案例6_海风来信_视频脚本.html   # 17 镜分镜脚本（画面/运动/色调/时长）
