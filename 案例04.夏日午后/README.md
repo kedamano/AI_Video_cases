@@ -54,7 +54,7 @@
 ## 文件结构
 
 ```
-summer-afternoon/
+案例04.夏日午后/
 ├── README.md          # 本文件
 ├── frames/            # 首帧图（6 张）
 │   ├── shot01.png     # 青苹果浮水

@@ -34,7 +34,7 @@
 三条原则：
 
 - **实测优先** —— 写进仓库的每个结论都在本项目里撞过，不是转述别人的经验。
-- **可复现** —— `git clone` → `git lfs pull` → `python case1/make_final.py`，三步出片。
+- **可复现** —— `git clone` → `git lfs pull` → `python 案例01.玻璃之后/make_final.py`，三步出片。
 - **只说有用的话** —— 没有「AI 很强大」这类空话，只有「传这个参数会报错」这类能省你两小时的话。
 
 ## 30 秒看懂
@@ -74,12 +74,12 @@ cd AI_Video_cases
 git lfs pull
 
 # 2. 直接看成片
-#    macOS:  open case1/玻璃之后_成片.mp4
+#    macOS:  open 案例01.玻璃之后/玻璃之后_成片.mp4
 #    Windows: start case1\玻璃之后_成片.mp4
 
 # 3. 从现有素材重新出片（不需要预装 ffmpeg）
 pip install imageio-ffmpeg
-python case1/make_final.py
+python 案例01.玻璃之后/make_final.py
 ```
 
 `make_final.py` 优先使用 `imageio-ffmpeg` 自带的二进制，找不到才回退系统 `PATH`。
@@ -89,7 +89,7 @@ python case1/make_final.py
 ```
 ① 分镜脚本            ② 首帧生图              ③ 图生视频              ④ 拼装成片
 玻璃之后_视频脚本提示词.html → frames/shotNN.png → videos/shotNN.mp4 → 玻璃之后_成片.mp4
-（均位于 case1/ 目录下）
+（均位于 案例01.玻璃之后/ 目录下）
    （画面/运动/时长）      ImageGen 1280×720       VideoGen 5s / 1080p      ffmpeg trim+concat+mix
 ```
 
@@ -106,7 +106,7 @@ WorkBuddy ImageGen
 
 ```text
 WorkBuddy VideoGen
-  image        = case1/frames/shotNN.png   # 传入首帧即进入图生视频模式
+  image        = 案例01.玻璃之后/frames/shotNN.png   # 传入首帧即进入图生视频模式
   seconds      = 5
   enable_audio = false               # 音轨统一在 ④ 阶段合成
   # 不要传 aspect_ratio：画幅由首帧决定，传了会报错
@@ -115,7 +115,7 @@ WorkBuddy VideoGen
 **④ 拼装成片**
 
 ```bash
-python case1/make_final.py
+python 案例01.玻璃之后/make_final.py
 ```
 
 内部做三件事：按 `DUR = [2,1,2,1,1,2,1,1,2,1,1,2,1,1,2,1,1,2]` 逐段 trim 并统一到 1920×1080 / 24fps → concat 硬切 → 叠加棕噪雨声与 220/329.63Hz 正弦底垫并淡入淡出。
@@ -167,7 +167,7 @@ python case1/make_final.py
 2. **音效后置** —— 视频阶段全部 `enable_audio=false`，统一在拼装阶段叠雨声与低频垫，保证 18 段音轨绝对连续。
 3. **同角色跨镜一致** —— 所有含脸镜头共用同一段 `CLEAN BEAUTY` 描述词块，靠提示词锁脸，不依赖参考图。
 
-**相关文件**：[分镜脚本](case1/玻璃之后_视频脚本提示词.html) · [首帧总览](case1/contact_sheet.png) · [抽帧核对](case1/成片抽帧核对.png) · [成片](case1/玻璃之后_成片.mp4)
+**相关文件**：[分镜脚本](案例01.玻璃之后/玻璃之后_视频脚本提示词.html) · [首帧总览](案例01.玻璃之后/contact_sheet.png) · [抽帧核对](案例01.玻璃之后/成片抽帧核对.png) · [成片](案例01.玻璃之后/玻璃之后_成片.mp4)
 
 ### 案例 02 · 沉没成本辩论
 
@@ -202,13 +202,13 @@ python case1/make_final.py
 2. **生活元素背景层** —— 半透明 CSS 图标（爱心/公文包/骰子/家庭剪影/戒指/砝码/门）铺在背景，不抢主文字，各自有漂浮/摆动动画，让抽象概念有视觉锚点。
 3. **TTS 本地化** —— Kokoro onnx 模型 + espeak-ng 中文（语言码 `cmn` 而非 `zh`），声音文件按单 bin 下载后用 `np.fromfile` 重塑为 (510,1,256) 再打包 npz。
 
-**相关文件**：[主组合](sunk-cost-debate/index.html) · [场景子组合](sunk-cost-debate/compositions/) · [成片](sunk-cost-debate/sunk-cost-debate-2min-v3.mp4)
+**相关文件**：[主组合](案例02.沉没成本辩论/index.html) · [场景子组合](案例02.沉没成本辩论/compositions/) · [成片](案例02.沉没成本辩论/sunk-cost-debate-2min-v3.mp4)
 
 ### 案例 03 · 雨夜对谈
 
 **30 秒 / 12 镜 / 1280×720 / 24fps · 双角色对话场景（实拍路线）**
 
-![雨夜对谈预览](rainy-night-talk/预览.gif)
+![雨夜对谈预览](案例03.雨夜对谈/预览.gif)
 
 主题：深夜咖啡馆里，两个人对坐聊天——从开口、沉默到一起笑了一下。没有台词，只有表情、手势、眼神交换。核心测试：正反打、过肩镜头、双人同框中的跨角色身份一致性。
 
@@ -258,13 +258,13 @@ python case1/make_final.py
 - ✅ 表情变化：从抿嘴到笑出来，脸型/眼镜/服装全程不漂移
 - ✅ 侧面角度：侧面剪影也能区分两人轮廓
 
-**相关文件**：[分镜脚本](rainy-night-talk/雨夜对谈_视频脚本提示词.html) · [首帧图](rainy-night-talk/frames/) · [视频片段](rainy-night-talk/videos/) · [案例 README](rainy-night-talk/README.md)
+**相关文件**：[分镜脚本](案例03.雨夜对谈/雨夜对谈_视频脚本提示词.html) · [首帧图](案例03.雨夜对谈/frames/) · [视频片段](案例03.雨夜对谈/videos/) · [案例 README](案例03.雨夜对谈/README.md)
 
 ### 案例 04 · 夏日午后
 
 **22 秒 / 6 镜 / 1280×720 / 24fps · 日系电影感美学短片**
 
-![夏日午后预览](summer-afternoon/预览.gif)
+![夏日午后预览](案例04.夏日午后/预览.gif)
 
 主题：一个充满夏日氛围、宁静、文艺的剪辑短片，通过一系列富有诗意的静态与动态画面，营造出安详、舒适的生活美学感受。
 
@@ -294,13 +294,13 @@ python case1/make_final.py
 
 3. **光斑作为视觉母题** —— 阳光透过树叶洒下的斑驳光影贯穿所有镜头：水面光斑、风铃周围光斑、女孩脸上的光斑、屋顶植物的光斑。光影本身就是叙事。
 
-**相关文件**：[首帧图](summer-afternoon/frames/) · [案例 README](summer-afternoon/README.md)
+**相关文件**：[首帧图](案例04.夏日午后/frames/) · [案例 README](案例04.夏日午后/README.md)
 
 ### 案例 05 · 阿马尔菲柠檬海岸
 
 **43 秒 / 24 镜 / 1280×720 / 24fps · 地中海夏日度假风旅行 vlog**
 
-![阿马尔菲柠檬海岸 24 镜首帧总览](amalfi-coast-vlog/contact_sheet.png)
+![阿马尔菲柠檬海岸 24 镜首帧总览](案例05.阿马尔菲柠檬海岸/contact_sheet.png)
 
 主题：一段剪辑精良、节奏轻快、充满异域风情的意大利旅行 vlog。快速镜头切换把波西塔诺小镇、湛蓝海水、悬崖建筑与露天市场、柠檬美食、休闲人群结合，营造阳光明媚、惬意悠闲的度假氛围。
 
@@ -322,7 +322,7 @@ python case1/make_final.py
 
 **审片自动化**：本案例新增仓库级 `scripts/review.py`，对成片自动检测「时长分布 / 切换点 / 音轨峰值」三项硬指标并输出 `review_report.json`。据其首轮发现并修复了三处缺陷 —— 画面淡入淡出导致首/末帧黑场、AAC 编码后峰值 +1.28 dBFS 且 84 个采样削波、按秒 trim 造成 ±1 帧切点偏差；收紧 headroom + limiter 并改用按整数帧 trim 后，复验 5 PASS / 0 FAIL（峰值 −2.18 dBFS、削波 0、23 切点 0 ms 偏差）。
 
-**相关文件**：[分镜脚本](amalfi-coast-vlog/阿马尔菲海岸_视频脚本提示词.html) · [首帧图](amalfi-coast-vlog/frames/) · [视频片段](amalfi-coast-vlog/videos/) · [案例 README](amalfi-coast-vlog/README.md) · [审片脚本](amalfi-coast-vlog/scripts/review.py) · [成片](amalfi-coast-vlog/阿马尔菲海岸_成片.mp4)
+**相关文件**：[分镜脚本](案例05.阿马尔菲柠檬海岸/阿马尔菲海岸_视频脚本提示词.html) · [首帧图](案例05.阿马尔菲柠檬海岸/frames/) · [视频片段](案例05.阿马尔菲柠檬海岸/videos/) · [案例 README](案例05.阿马尔菲柠檬海岸/README.md) · [审片脚本](案例05.阿马尔菲柠檬海岸/scripts/review.py) · [成片](案例05.阿马尔菲柠檬海岸/阿马尔菲海岸_成片.mp4)
 
 ### 案例 06 · 海风来信
 
@@ -369,7 +369,7 @@ python case1/make_final.py
 2. **风格漂移防扩散** —— 四季转场最易把发型画丢，解决方式是把「肩长深棕发 + 空气刘海」写进场景描述本体，而不是只依赖开头锁脸段。
 3. **生成失败降级** —— 镜头 13 连续两次生成失败，用 ffmpeg `zoompan` 对首帧做 Ken Burns 缓推补位，观感无违和，不阻塞整条管线。
 
-**相关文件**：[分镜脚本](case6/案例6_海风来信_视频脚本.html) · [首帧总览](case6/contact_sheet.png) · [抽帧核对](case6/成片抽帧核对.png) · [成片](case6/海风来信_成片.mp4) · [拼装脚本](case6/make_final6.py)
+**相关文件**：[分镜脚本](案例06.海风来信/案例6_海风来信_视频脚本.html) · [首帧总览](案例06.海风来信/contact_sheet.png) · [抽帧核对](案例06.海风来信/成片抽帧核对.png) · [成片](案例06.海风来信/海风来信_成片.mp4) · [拼装脚本](案例06.海风来信/make_final6.py)
 
 ## 方法论
 
@@ -485,7 +485,7 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 ├── assets/
 │   └── preview.gif                # 开场动图预览（案例 01）
 │
-├── case1/                         # 案例 01 · 玻璃之后（18 镜雨夜都市纪实）
+├── 案例01.玻璃之后/               # 18 镜雨夜都市纪实
 │   ├── 玻璃之后_视频脚本提示词.html   # 18 镜分镜脚本（画面/运动/时长/色调/BGM）
 │   ├── make_final.py              # 拼装 + 混音，一条命令出片
 │   ├── make_video.py              # 早期合成脚本（Ken Burns 版，留档）
@@ -496,19 +496,19 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 │   ├── 成片抽帧核对.png            # 成片逐镜抽帧校验图
 │   └── 面部优化_7镜首帧.png        # v2 面部修复批次留档
 │
-├── sunk-cost-debate/              # 案例 02 · 沉没成本辩论（HyperFrames 纯代码动画）
-├── rainy-night-talk/              # 案例 03 · 雨夜对谈（双角色对话一致性）
-├── summer-afternoon/              # 案例 04 · 夏日午后（日系电影感美学）
-├── amalfi-coast-vlog/             # 案例 05 · 阿马尔菲柠檬海岸（24 镜旅行 vlog）
-
-case6/                             # 案例 06 · 海风来信（独立子目录）
-├── 案例6_海风来信_视频脚本.html   # 17 镜分镜脚本（画面/运动/色调/时长）
-├── make_final6.py                 # 拼装 + 混音（镜头13 Ken Burns 补位）
-├── frames/shot01–17.png           # ImageGen 首帧（日系海边少女）
-├── videos/shot01–17.mp4           # VideoGen 图生视频原片（LFS）
-├── 海风来信_成片.mp4               # 成品 22s / 1080p（LFS）
-├── contact_sheet.png              # 17 镜首帧总览
-└── 成片抽帧核对.png                # 成片抽帧校验图
+├── 案例02.沉没成本辩论/            # HyperFrames 纯代码动画
+├── 案例03.雨夜对谈/               # 双角色对话一致性
+├── 案例04.夏日午后/               # 日系电影感美学
+├── 案例05.阿马尔菲柠檬海岸/        # 24 镜旅行 vlog
+│
+└── 案例06.海风来信/               # 17 镜日系海边电影感
+    ├── 案例6_海风来信_视频脚本.html   # 17 镜分镜脚本（画面/运动/色调/时长）
+    ├── make_final6.py             # 拼装 + 混音（镜头13 Ken Burns 补位）
+    ├── frames/shot01–17.png       # ImageGen 首帧（日系海边少女）
+    ├── videos/shot01–17.mp4       # VideoGen 图生视频原片（LFS）
+    ├── 海风来信_成片.mp4           # 成品 22s / 1080p（LFS）
+    ├── contact_sheet.png          # 17 镜首帧总览
+    └── 成片抽帧核对.png            # 成片抽帧校验图
 ```
 
 ## 版本与留档

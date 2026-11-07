@@ -96,7 +96,7 @@
 ## 文件结构
 
 ```
-amalfi-coast-vlog/
+案例05.阿马尔菲柠檬海岸/
 ├── README.md                        # 本文件
 ├── 阿马尔菲海岸_视频脚本提示词.html   # 24 镜完整分镜脚本（画面/构图/运动/BGM/字幕）
 ├── make_final.py                    # 43s 成片拼装 + 合成 BGM + 总览图（无叠加文字）
@@ -118,7 +118,7 @@ amalfi-coast-vlog/
 
 ```bash
 pip install pillow numpy
-python scripts/review.py                 # 默认检测 amalfi-coast-vlog/阿马尔菲海岸_成片.mp4
+python scripts/review.py                 # 默认检测 案例05.阿马尔菲柠檬海岸/阿马尔菲海岸_成片.mp4
 python scripts/review.py --tolerance 1   # 切点容差收紧到 1 帧（CI 用）
 # → scripts/review_report.json
 ```

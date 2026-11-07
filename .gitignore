@@ -7,9 +7,9 @@ videos_v2/
 玻璃之后_成片_v2.mp4
 
 # ImageGen 原始输出（已复制为 frames/shotNN.png）
-frames/fixA/
-frames/fixB/
-frames/fixC/
+**/frames/fix*/
+
+
 
 # 中间产物与临时目录
 clips_tmp/
