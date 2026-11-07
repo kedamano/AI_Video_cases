@@ -7,9 +7,9 @@
 [![Stars](https://img.shields.io/github/stars/kedamano/AI_Video_cases?style=flat-square&color=ff4d1a)](https://github.com/kedamano/AI_Video_cases/stargazers)
 [![Last Commit](https://img.shields.io/github/last-commit/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases/commits/main)
 [![Repo Size](https://img.shields.io/github/repo-size/kedamano/AI_Video_cases?style=flat-square)](https://github.com/kedamano/AI_Video_cases)
-[![Cases](https://img.shields.io/badge/cases-5-ff4d1a?style=flat-square)](#案例库)
-[![Shots](https://img.shields.io/badge/shots-18-ff8c42?style=flat-square)](#案例-01--玻璃之后)
-[![Duration](https://img.shields.io/badge/duration-25s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
+[![Cases](https://img.shields.io/badge/cases-6-ff4d1a?style=flat-square)](#案例库)
+[![Shots](https://img.shields.io/badge/shots-87-ff8c42?style=flat-square)](#案例-01--玻璃之后)
+[![Duration](https://img.shields.io/badge/duration-262s-2b2b2b?style=flat-square)](#案例-01--玻璃之后)
 [![Code Video](https://img.shields.io/badge/code%20video-120s-63a4ff?style=flat-square)](#案例-02--沉没成本辩论)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](#贡献)
 
@@ -46,12 +46,13 @@
 | [03 · 雨夜对谈](#案例-03--雨夜对谈) | 30s / 12 镜 / 720p / 24fps | 双角色对话场景，跨角色一致性与过肩镜头身份锁定 | ✅ 完成 |
 | [04 · 夏日午后](#案例-04--夏日午后) | 22s / 6 镜 / 720p / 24fps | 日系电影感美学，自然光影与静物叙事 | ✅ 完成 |
 | [05 · 阿马尔菲柠檬海岸](#案例-05--阿马尔菲柠檬海岸) | 43s / 24 镜 / 720p / 24fps | 高饱和地中海色调、24 镜快切节奏、跨镜人物一致性 | ✅ 完成 |
+| [06 · 海风来信](#案例-06--海风来信) | 22s / 17 镜 / 1080p / 24fps | 跨四季场景风格漂移中锁住同一张脸 | ✅ 完成 |
 
 ## 为什么值得 Star
 
 - **一条能跑起来的完整管线**，不是拼图式灵感：脚本 → 首帧 → 图生视频 → 按分镜表硬切 → 混音，每步都有对应文件。
-- **18 个镜头的真实参数**：哪一镜用什么焦段、什么光位、什么运动描述，逐条可查。
-- **7 条撞墙记录**：从「提示词把脸画脏」到「并行生图目录被合并」，都是花过钱、返过工的结论。
+- **87 个镜头的真实参数**：哪一镜用什么焦段、什么光位、什么运动描述，逐条可查。
+- **9 条撞墙记录**：从「提示词把脸画脏」到「ffmpeg 9 滤镜图解析变化」，都是花过钱、返过工的结论。
 - **9 条审片清单**：把「感觉不对」变成可勾选的检查项。
 - **16 个工具索引**：按任务而非星数选型，附每个工具解决的**具体**问题。
 
@@ -59,7 +60,7 @@
 
 - [这是什么](#这是什么) · [30 秒看懂](#30-秒看懂) · [为什么值得 Star](#为什么值得-star)
 - [快速开始](#快速开始) · [复现管线](#复现管线)
-- [案例库](#案例库) → [案例 01 · 玻璃之后](#案例-01--玻璃之后) · [案例 05 · 阿马尔菲柠檬海岸](#案例-05--阿马尔菲柠檬海岸)
+- [案例库](#案例库) → [案例 01 · 玻璃之后](#案例-01--玻璃之后) · [案例 05 · 阿马尔菲柠檬海岸](#案例-05--阿马尔菲柠檬海岸) · [案例 06 · 海风来信](#案例-06--海风来信)
 - [方法论](docs/methodology.md) · [踩坑笔记](#踩坑笔记) · [审片清单](#审片清单)
 - [工具与资源索引](#工具与资源索引) · [仓库结构](#仓库结构)
 - [版本与留档](#版本与留档) · [路线图](#路线图) · [贡献](#贡献) · [许可](#许可)
@@ -322,6 +323,53 @@ python make_final.py
 
 **相关文件**：[分镜脚本](amalfi-coast-vlog/阿马尔菲海岸_视频脚本提示词.html) · [首帧图](amalfi-coast-vlog/frames/) · [视频片段](amalfi-coast-vlog/videos/) · [案例 README](amalfi-coast-vlog/README.md) · [审片脚本](amalfi-coast-vlog/scripts/review.py) · [成片](amalfi-coast-vlog/阿马尔菲海岸_成片.mp4)
 
+### 案例 06 · 海风来信
+
+> 日系海边电影感 · 情绪化写实变装 · 草帽白衬衫少女的四季闭环
+
+| 项目 | 参数 |
+| --- | --- |
+| 时长 / 画幅 / 帧率 | 22.00 s / 1920×1080（16:9） / 24 fps |
+| 编码 / 体积 | H.264 + AAC 立体声 / 约 16.7 MB |
+| 镜头数 | 17 |
+| 单镜时长 | `4,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1` |
+| 色调 | 暖金海盐 → 冷蓝清晨 → 炉火暖调 → 黄昏闭环 |
+| 女主风格 | 参考图锁定：日系少女 · 深棕中长发 · 空气刘海 · 草帽白衬衫 · 金色逆光 |
+| 生成方式 | WorkBuddy `ImageGen` 首帧 + `VideoGen` 图生视频 |
+
+<details>
+<summary><b>展开 17 镜分镜时间轴</b></summary>
+
+| # | 时长 | 画面 |
+| --- | --- | --- |
+| 01 | 4s | 海边清晨，白阶回望镜头，草帽白衬衫，海面金光 |
+| 02 | 2s | 向日葵田木屋，淡黄连衣裙，转头微笑 |
+| 03 | 1s | 白裙特写，咬一朵白色小雏菊 |
+| 04 | 2s | 海边捧白花束，格纹围巾，发丝被海风吹动 |
+| 05 | 1s | 海边近景，直视镜头 |
+| 06 | 1s | 树林，白内搭棕毛绒外套，缓慢拉镜 |
+| 07 | 1s | 果园仰拍，双手举草帽过头顶 |
+| 08 | 1s | 背对大海张开双臂，白裙随风 |
+| 09 | 1s | 秋日树林举花束，随节奏轻摆 |
+| 10 | 1s | 田园黄昏，金色夕阳逆光 |
+| 11 | 1s | 清晨海边冷调，厚蓝格围巾，雪花飘落 |
+| 12 | 1s | 长椅抱膝取暖，白色灯塔背景 |
+| 13 | 1s | 木屋壁炉前背影，怀抱玩具熊（首帧缓推补位） |
+| 14 | 1s | 暮色海滩，黑高领棕毛绒外套 |
+| 15 | 1s | 白长椅看海鸟飞过，落雪 |
+| 16 | 1s | 果园捧切开的橙子 |
+| 17 | 1s | 老式胶片相机取景器里浮现她的脸 |
+
+</details>
+
+**三条关键设计**
+
+1. **跨场景锁脸升级** —— 案例01 只换机位，本案例场景横跨海边/花田/树林/雪地/壁炉，光照从暖金到冷蓝；除 `CLEAN BEAUTY` 外新增「角色锁定段」（年龄/发型/刘海/五官）放在每条 prompt 开头，17 镜拼图核对零崩脸。
+2. **风格漂移防扩散** —— 四季转场最易把发型画丢，解决方式是把「肩长深棕发 + 空气刘海」写进场景描述本体，而不是只依赖开头锁脸段。
+3. **生成失败降级** —— 镜头 13 连续两次生成失败，用 ffmpeg `zoompan` 对首帧做 Ken Burns 缓推补位，观感无违和，不阻塞整条管线。
+
+**相关文件**：[分镜脚本](case6/案例6_海风来信_视频脚本.html) · [首帧总览](case6/contact_sheet.png) · [抽帧核对](case6/成片抽帧核对.png) · [成片](case6/海风来信_成片.mp4) · [拼装脚本](case6/make_final6.py)
+
 ## 方法论
 
 完整版见 **[docs/methodology.md](docs/methodology.md)** —— 综合三篇行业复盘与本项目实测合成。
@@ -354,6 +402,8 @@ python make_final.py
 | 5 | 时长不可控 | 每段素材都是 5 秒，模型不会按你要的节奏走 | 生成阶段不管时长，拼装阶段按分镜表逐段 trim |
 | 6 | 拼接点爆音 | 多段各自带音轨，接缝处爆 | 全部 `enable_audio=false`，音轨统一后置合成 |
 | 7 | 大文件推不上 GitHub | 单文件虽 <100MB，总量数百 MB | `git lfs track "*.mp4"`，clone 端必须 `git lfs pull` |
+| 8 | ffmpeg 9 复杂滤镜图报错 | `-f lavfi -i "anoisesrc…[a]"` 报 `Invalid outpad name`（ffmpeg 9 解析行为变化） | 改用 `-filter_complex` 传同一滤镜图，v7 及以下无此问题 |
+| 9 | 单镜生成反复失败 | 同一首帧视频生成连续两次返回任务错误（案例06 镜头13） | 不重试第三次：用首帧 `zoompan` Ken Burns 缓推补位，管线不阻塞 |
 
 ### CLEAN BEAUTY 词块（可直接复用）
 
@@ -442,6 +492,20 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 ├── 玻璃之后_成片.mp4               # 成品 25s / 1080p（LFS）
 ├── contact_sheet.png              # 18 镜首帧总览
 └── 成片抽帧核对.png                # 成片逐镜抽帧校验图
+
+sunk-cost-debate/                  # 案例 02 · 沉没成本辩论（HyperFrames 纯代码动画）
+rainy-night-talk/                  # 案例 03 · 雨夜对谈（双角色对话一致性）
+summer-afternoon/                  # 案例 04 · 夏日午后（日系电影感美学）
+amalfi-coast-vlog/                 # 案例 05 · 阿马尔菲柠檬海岸（24 镜旅行 vlog）
+
+case6/                             # 案例 06 · 海风来信（独立子目录）
+├── 案例6_海风来信_视频脚本.html   # 17 镜分镜脚本（画面/运动/色调/时长）
+├── make_final6.py                 # 拼装 + 混音（镜头13 Ken Burns 补位）
+├── frames/shot01–17.png           # ImageGen 首帧（日系海边少女）
+├── videos/shot01–17.mp4           # VideoGen 图生视频原片（LFS）
+├── 海风来信_成片.mp4               # 成品 22s / 1080p（LFS）
+├── contact_sheet.png              # 17 镜首帧总览
+└── 成片抽帧核对.png                # 成片抽帧校验图
 ```
 
 ## 版本与留档
@@ -462,6 +526,7 @@ glossy black hair smooth and softly wavy, clean luminous complexion
 - [x] 案例 03：多角色对话场景（测试跨角色一致性）
 - [x] 案例 04：日系电影感美学（静物+人物，光影叙事）
 - [x] 案例 05：地中海夏日度假风旅行 vlog（24 镜快切 / 高饱和色调 / 混合管线）
+- [x] 案例 06《海风来信》：跨四季场景锁脸 + 生成失败降级方案
 - [ ] 9:16 竖版重制
 - [ ] 真实环境音采样替代合成底噪
 - [ ] 把审片清单做成 `scripts/review.py`，自动检测时长分布 / 切换点 / 音轨峰值

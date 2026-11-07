@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案例6《海风来信》视频脚本提示词</title>
+<style>
+  :root{--bg:#0f0c0d;--card:#1a1517;--ink:#f2ece6;--sub:#b9a99e;--accent:#ff8c42;--line:#2e2528;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.7;padding:32px 16px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  h1{font-size:26px;margin-bottom:6px;}
+  .hero{background:linear-gradient(135deg,#ff4d1a,#ff8c42);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700;}
+  .meta{color:var(--sub);font-size:14px;margin-bottom:24px;}
+  .toolbar{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+  button{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-size:14px;cursor:pointer;font-weight:600;}
+  button:hover{filter:brightness(1.1);}
+  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;font-size:13px;}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+  th{background:#241d20;color:var(--accent);white-space:nowrap;}
+  td.t{white-space:nowrap;color:var(--sub);}
+  td b{color:var(--accent);}
+  .tag{display:inline-block;background:#2e2528;color:var(--sub);border-radius:4px;padding:1px 8px;font-size:12px;margin-right:4px;}
+  .note{background:var(--card);border-left:3px solid var(--accent);border-radius:8px;padding:14px 16px;margin:24px 0;font-size:13px;color:var(--sub);}
+  textarea{position:fixed;opacity:0;z-index:-1;width:10px;height:10px;left:0;top:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>案例6 · <span class="hero">《海风来信》</span></h1>
+  <div class="meta">日系海边电影感变装短片 ｜ 17 镜 · 22 秒 · 16:9 · 1920×1080 · 24fps ｜ 女主风格参考：草帽白衬衫海盐少女（逆光金调）</div>
+
+  <div class="toolbar">
+    <button id="btnCopy">📋 复制全文脚本</button>
+    <button id="btnCopyImg">🖼️ 复制全部首帧提示词</button>
+  </div>
+
+  <table>
+    <thead><tr><th>镜</th><th>时间轴</th><th>画面提示词（首帧图）</th><th>视频提示词（运动）</th><th>色调</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="t">00:00-00:04</td><td><b>缓慢推镜</b> 胸部以上推至面部特写。海边清晨，少女坐白色石阶回望镜头，草帽+白色宽松亚麻衬衫，海面金色碎光，盐雾光斑飘落</td><td>眼神平静，嘴唇微张，光斑漂移，金色海光闪烁</td><td><span class="tag">暖金</span>低饱和</td></tr>
+      <tr><td>2</td><td class="t">00:04-00:06</td><td><b>固定镜头</b> 向日葵田+木屋，草编帽+淡黄连衣裙，中景偏近，人物偏右</td><td>脸由左转向镜头，露出微笑，花田轻摆</td><td><span class="tag">暖调</span>米白/棕</td></tr>
+      <tr><td>3</td><td class="t">00:06-00:07</td><td><b>特写</b> 白裙，咬一朵白色小雏菊，绿植背景，浅景深</td><td>轻咬雏菊，眼神平静看镜头，发丝微动</td><td><span class="tag">暖调</span>白/绿</td></tr>
+      <tr><td>4</td><td class="t">00:07-00:09</td><td><b>缓慢右移</b> 海边，白色复古衬衫+格子围巾，手捧白色花束，远处山脉湖面，人物位于右侧</td><td>眼神凝视远方，表情平静，发被风吹动</td><td><span class="tag">暖调</span>白/棕</td></tr>
+      <tr><td>5</td><td class="t">00:09-00:10</td><td><b>固定镜头</b> 海边近景，脸部居中，湖水远山背景</td><td>眼神直视镜头，表情平静</td><td><span class="tag">暖调</span>低饱和</td></tr>
+      <tr><td>6</td><td class="t">00:10-00:11</td><td><b>缓慢拉镜</b> 树林，白色内搭+棕色毛绒外套，高大树木背景</td><td>表情平静，眼神凝视镜头，树叶轻摆</td><td><span class="tag">绿色</span>低饱和</td></tr>
+      <tr><td>7</td><td class="t">00:11-00:12</td><td><b>中近景仰拍</b> 果园，白衬衫，双手举草帽过头顶，眼神向上</td><td>举帽过顶，眼神向上看，树叶沙沙</td><td><span class="tag">暖调</span>黄/绿/红</td></tr>
+      <tr><td>8</td><td class="t">00:12-00:13</td><td><b>中景背对</b> 海边，白裙背对镜头面向大海张开双臂，海风吹动</td><td>张开双臂，裙摆与长发随风飘动，海浪轻涌</td><td><span class="tag">暖调</span>白/蓝</td></tr>
+      <tr><td>9</td><td class="t">00:13-00:14</td><td><b>固定镜头</b> 秋日树林，格子衬衫+棕色针织背心，双手举起花束，头部被花束遮挡</td><td>微笑，随节奏轻摆身体，枯草摇曳</td><td><span class="tag">暖调</span>棕/绿</td></tr>
+      <tr><td>10</td><td class="t">00:14-00:15</td><td><b>缓慢推镜</b> 田园黄昏，白复古衬衫+针织背心，枯黄草地金色夕阳，近景浅景深</td><td>眼神凝视远方，表情平静，草浪轻摆</td><td><span class="tag">金黄</span>低饱和</td></tr>
+      <tr><td>11</td><td class="t">00:15-00:16</td><td><b>固定特写</b> 清晨海边冷色调，厚实蓝色格子围巾，远处松林，脸部居中</td><td>表情平静凝视镜头，雪花飘落，呼气可见</td><td><span class="tag">冷调</span>蓝灰</td></tr>
+      <tr><td>12</td><td class="t">00:16-00:17</td><td><b>固定中景</b> 坐长椅抱膝取暖，蓝格围巾+深色大衣，背景白色灯塔小屋</td><td>抱臂轻颤，雪花飘过，灯塔静立</td><td><span class="tag">冷调</span>蓝灰</td></tr>
+      <tr><td>13</td><td class="t">00:17-00:18</td><td><b>固定中景背对</b> 海边木屋，背对镜头看燃烧的壁炉，怀抱玩具熊，画面左侧</td><td>火焰跳动，暖光在轮廓上明灭（首帧 Ken Burns 补位）</td><td><span class="tag">暖调</span>高饱和</td></tr>
+      <tr><td>14</td><td class="t">00:18-00:19</td><td><b>缓慢右移</b> 暮色海滩，黑色高领+棕色毛绒外套，夕阳光线，近景</td><td>眼神凝视远方，表情平静</td><td><span class="tag">冷调</span>低饱和</td></tr>
+      <tr><td>15</td><td class="t">00:19-00:20</td><td><b>固定中景</b> 坐白色长椅，白色长大衣+贝雷帽+手套，看向右侧，海鸟从右侧飞过，雪地背景</td><td>看向右侧，白鸟飞过，落雪轻飘</td><td><span class="tag">冷调</span>低饱和</td></tr>
+      <tr><td>16</td><td class="t">00:20-00:21</td><td><b>固定近景</b> 秋季果园，白衬衫，双手捧切开的橙子，眼神看向左侧，人物偏右</td><td>轻咬橙子，眼神向左瞟，树叶轻摆</td><td><span class="tag">暖调</span>低饱和</td></tr>
+      <tr><td>17</td><td class="t">00:21-00:22</td><td><b>特写</b> 海边，老式胶片相机取景器屏幕被金色夕阳覆盖，屏幕内模糊显示少女面部</td><td>屏幕内面部缓慢浮现，阳光在玻璃上闪烁</td><td><span class="tag">暖调</span>金色</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <b style="color:var(--accent)">制作要点：</b>女主统一角色锁定词（20 岁日系少女 · 深棕中长发 · 空气刘海 · 清透裸妆）+ CLEAN BEAUTY 词块（替换雀斑/毛孔/真实皮肤纹理类描述）；图生视频不传 aspect_ratio（画幅由首帧决定）；镜头 13 视频生成两次失败，用首帧 Ken Burns 缓推补位；BGM 用海浪棕噪（600Hz 低通）+ 220/329.63Hz 正弦 pad 叠加，2s 淡入 3s 淡出。
+  </div>
+</div>
+<textarea id="ta"></textarea>
+<script>
+  var FULL = document.querySelector("table").innerText;
+  var IMG_PROMPTS = [
+    "Shot1: 海边清晨，少女坐白色石阶回望镜头，草帽+白色宽松亚麻衬衫，海面金色碎光，盐雾光斑，近景",
+    "Shot2: 向日葵田+木屋，草编帽+淡黄连衣裙，中景偏近，人物偏右，微笑",
+    "Shot3: 白裙特写，咬一朵白色小雏菊，绿植背景，浅景深",
+    "Shot4: 海边，白色复古衬衫+格子围巾，手捧白色花束，远处山脉湖面，人物偏右",
+    "Shot5: 海边近景，脸部居中，湖水远山背景，平静眼神",
+    "Shot6: 树林，白色内搭+棕色毛绒外套，高大树木背景",
+    "Shot7: 果园仰拍，白衬衫，双手举草帽过头顶，眼神向上",
+    "Shot8: 海边中景背对，白裙面向大海张开双臂，海风吹动",
+    "Shot9: 秋日树林，格子衬衫+棕色针织背心，双手举花束遮头，微笑",
+    "Shot10: 田园黄昏，白复古衬衫+针织背心，枯黄草地金色夕阳，近景浅景深",
+    "Shot11: 清晨海边冷色调，厚蓝格围巾，远处松林，特写，雪花飘落",
+    "Shot12: 坐长椅抱膝取暖，蓝格围巾+深色大衣，白色灯塔小屋背景",
+    "Shot13: 海边木屋，背对镜头看燃烧壁炉，怀抱玩具熊，画面左侧",
+    "Shot14: 暮色海滩，黑色高领+棕色毛绒外套，夕阳光线，近景",
+    "Shot15: 坐白色长椅，白色长大衣+贝雷帽+手套，看向右侧，海鸟飞过，雪地",
+    "Shot16: 秋季果园，白衬衫，双手捧切开的橙子，眼神向左，人物偏右",
+    "Shot17: 老式胶片相机取景器特写，金色夕阳，屏幕内模糊少女面部"
+  ].join("\n");
+
+  function copyText(text, okMsg) {
+    var ta = document.getElementById("ta");
+    ta.value = text;
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    if (!ok && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { alert(okMsg); },
+        function () { prompt("请手动复制（Ctrl+C）：", text); }
+      );
+      return;
+    }
+    if (ok) { alert(okMsg); } else { prompt("请手动复制（Ctrl+C）：", text); }
+  }
+  document.getElementById("btnCopy").onclick = function () { copyText(FULL, "全文脚本已复制"); };
+  document.getElementById("btnCopyImg").onclick = function () { copyText(IMG_PROMPTS, "首帧提示词已复制"); };
+</script>
+</body>
+</html>
